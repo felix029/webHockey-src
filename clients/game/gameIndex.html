@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/game.css" type="text/css">
+    <script src="../socket.io/socket.io.js"></script>
+    <script src="js/game.js"></script>
+    <title>Tiny hockey</title>
+</head>
+<body>
+    <div id="waiting-room">
+        <div id="content">
+            <div id="title">
+                <h1> Welcome to Tiny Hockey! </h1>
+            </div>
+            <div id="room-info">
+                <div class="team">
+                    <label>RED TEAM</label>
+                </div>
+                <div class="team">
+                    <label>BLUE TEAM</label>
+                </div>
+            
+                <div id="red-team">
+                    <ul>
+                        <li id="j1"></li>
+                        <li id="j2"></li>   
+                    </ul>
+                </div>
+                <div id="blue-team">
+                        <ul>
+                            <li id="j3"></li>
+                            <li id="j4"></li>
+                        </ul>
+                </div>
+
+                <button id="start">Start game</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game">
+        <div id="scoreboard">
+            
+            <!-- 1st row -->
+            <div></div>
+            
+            <div>
+                <label>TIME:</label><br>
+            </div>
+            
+            <div></div>
+
+            <!-- 2nd row -->
+        
+            <div></div>
+            
+            <div id="time">
+                20:00
+            </div>
+            
+            <div></div>
+
+            <!-- 3rd row -->
+            
+            <div>
+                <label>RED TEAM:</label>
+            </div>
+            <div>
+                <label>PERIOD:</label><br>
+            </div>
+            
+            <div>
+                <label>BLUE TEAM:</label>
+            </div>
+
+            <!-- 4th row -->
+
+            <div id="score-red">
+                01
+            </div>
+            <div id="period">
+                2
+            </div>
+            <div id="score-blue">
+                00
+            </div>
+        </div>
+        <div id="rink">
+            <canvas></canvas>
+        </div>
+    </div>
+</body>
+</html>

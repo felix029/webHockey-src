@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/mobile.css" type="text/css">
+    <script src="../socket.io/socket.io.js"></script>
+    <script src="js/controller.js"></script>
+    <title>Tiny hockey</title>
+</head>
+<body>
+    <!-- En cas ou le telephone est en mode paysage -->
+    <div id="controller-portrait">
+        Flip your device on landscape mode!
+    </div>
+
+    <!-- Télécommande -->
+    <div id="controller-landscape">
+        
+        <div id="login-screen">
+            <h1>Tiny hockey</h1>
+            <form action="mobileIndex.html" method="GET">
+                <div>
+                    <div>
+                        <label> Enter your username </label>
+                    </div>
+                    </div>
+                        <input type="text" id="username" placeholder="Your nickname">
+                    <div>
+                </div>
+                <div>
+                    <div>
+                        <label> Enter the room number (6 digits) </label>
+                    </div>
+                    <div>
+                        <input type="text" id="room" placeholder="Room number (6 digfits)">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label> Pick a team </label>
+                    </div>
+                    <div>
+                        <input type="radio" name="team" id="team" value="RED"> RED
+                        <input type="radio" name="team" id="team" value="BLUE"> BLUE
+                    </div>
+                </div>
+                <div>
+                    <button id="connect">Connect</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="controller">
+            <div id="directions">
+                <div></div>
+                <div>
+                    <button id="up"></button>
+                </div>
+                <div></div>
+
+                <div>
+                    <button id="left"></button>
+                </div>
+                <div></div>
+                <div>
+                    <button id="right"></button>
+                </div>
+
+                <div></div>
+                <div>
+                    <button id="down"></button>
+                </div>
+                <div></div>
+            </div>
+            <div id="actions">
+                <button id="action-a"></button>
+                <button id="action-b"></button>
+            </div>
+        </div>
+
+    </div>
+    
+    
+
+    </div>
+</body>
+</html>

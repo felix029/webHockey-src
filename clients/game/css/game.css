@@ -1,0 +1,161 @@
+@font-face{
+    font-family: "sport-title";
+    src: url("../fonts/SFSportsNight.ttf");
+}
+
+@font-face{
+    font-family: "sport-content";
+    src: url("../fonts/octin_college_rg.ttf");
+}
+
+@font-face{
+    font-family: "score";
+    src: url("../fonts/CursedTimerUlil-Aznm.ttf");
+}
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../images/bg.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+/* ------------------ WAITING ROOM ------------------- */
+
+#waiting-room{
+    width: 100vw;
+    height: 100vh;
+}
+
+#waiting-room h1{
+    font-family: "sport-title";
+    font-size: 4em;
+    color: white;
+    padding: 50px 0 50px 0;
+}
+
+#waiting-room h2{
+    font-family: "sport-title";
+    font-size: 2.5em;
+    color: white;
+}
+
+#title{
+    width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+#room-info{
+    font-family: "sport-content";
+    font-size: 2em;
+    width: 900px;
+    margin: auto;
+    color: white;
+    position: relative;
+    top: 125px;
+    display: grid;
+    grid-template-columns: 450px 450px;
+    grid-template-rows: 100px 300px;
+}
+
+.team{
+    align-self: flex-end;
+    justify-self: center;
+}
+
+#blue-team, #red-team{
+    background-color: white;
+    color: #21386f;
+    width: 400px;
+    height: 250px;
+    border: solid #be2f37 5px;
+    border-radius: 20px;
+    justify-self: center;
+}
+
+#start{
+    position: relative;
+    top: 140px;
+    background-color: #21386f;
+    border: solid white 5px;
+    border-radius: 20px;
+    color: white;
+    font-family: "sport-title";
+    font-size: 1em;
+    width: 300px;
+    height: 100px;
+    margin: auto;
+    grid-column: span 2;
+}
+
+ul{
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    list-style: none
+}
+
+li{
+    justify-self: center;
+    align-self: center;
+    font-size: 1.4em;
+}
+
+li:before{
+    content: '';
+    display: inline-block;
+    height: 41px;
+    width: 52px;
+    background-image: url("../images/puck.png");
+    background-repeat: no-repeat;
+    padding-right: 10px;
+}
+
+/* ----------------- GAME ------------------ */
+
+#game{
+    display: none;
+}
+
+#scoreboard{
+    font-family: "score";
+    color: white;
+    background-color: black;
+    border: ridge darkorange 10px;
+    border-radius: 20px;
+    width: 500px;
+    height: 176px;
+    margin: auto;
+    position: relative;
+    top: 10px;
+    font-size: 2em;
+
+    display: grid;
+    grid-template-columns: 200px 100px 200px;
+    grid-template-rows: 26px 62px 26px 62px;
+    justify-items: center;
+    align-items: center;
+}
+
+#scoreboard label{
+    font-family: "sport-content";
+    color: darkorange;
+    padding-bottom: 3px;
+    font-size: 0.7em;
+}
+
+#time, #score-red, #period, #score-blue{
+    background-color: #252525;
+    padding: 5px 5px 1px 5px;
+    border: groove darkorange 4px;
+    border-radius: 5px;
+}

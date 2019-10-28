@@ -1,0 +1,132 @@
+@font-face{
+    font-family: "sport-title";
+    src: url("../fonts/SFSportsNight.ttf");
+}
+
+@font-face{
+    font-family: "sport-content";
+    src: url("../fonts/octin_college_rg.ttf");
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-image: url("../images/bg.png");
+    background-size: auto;
+    background-repeat: no-repeat;
+    font-family: "sport-content";
+}
+
+h1{
+    font-family: "sport-title";
+}
+
+@media screen and (orientation: portrait){
+    #controller-landscape{
+        display: none;
+    }
+    #game{
+        display: none;
+    }
+
+    #controller-portrait{
+        width: 100vw;
+        height: 100vh;
+        font-size: 3em;
+        margin: auto;
+        text-align: center;
+        padding-top: 250px;
+        background-color: white;
+    }
+
+
+}
+
+@media screen and (orientation: landscape){
+    #controller-portrait{
+        display: none;
+    }
+    
+    
+    #login-screen{
+        width: 400px;
+        height: 275px;
+        margin: auto;
+        margin-top: 20px;
+        text-align: center;
+        background-color: white;
+        border: solid #be2f37 3px;
+        border-radius: 10px;
+        padding-bottom: 5px;
+    }
+    
+    #login-screen > div{
+        padding-top: 3vh;
+    }
+    
+    #controller{
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: lightgrey;
+        width: 100vw;
+        height: 100vh;
+        grid-template-columns: 1fr 0.7fr;
+        justify-items: center;
+        align-items: center;
+    }
+
+    #controller button{
+        background-color: transparent;
+        border: none;
+        background-size: cover;
+        width: 90px;
+        height: 90px;
+    }
+
+    #directions{
+        margin: 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+    }
+
+    #up{  
+        background-image: url("../images/up.png");
+    }
+
+    #down{       
+        background-image: url("../images/down.png");
+    }
+
+    #left{       
+        background-image: url("../images/left.png");
+    }
+
+    #right{        
+        background-image: url("../images/right.png");
+    }
+
+    #actions{
+        display: grid;
+    }
+
+    #action-a{       
+        background-image: url("../images/button-a.png");
+        justify-self: start;
+        align-self: flex-end;
+        margin-right: 110px;
+        margin-bottom: 10px;
+    }
+
+    #action-b{
+        background-image: url("../images/button-b.png");
+        justify-self: end;
+        margin-left: 110px;
+        margin-top: 10px;
+    }
+
+}
