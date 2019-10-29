@@ -59,10 +59,10 @@ body{
     margin: auto;
     color: white;
     position: relative;
-    top: 125px;
+    top: 80px;
     display: grid;
     grid-template-columns: 450px 450px;
-    grid-template-rows: 100px 300px;
+    grid-template-rows: 100px 300px 100px;
 }
 
 .team{
@@ -82,7 +82,7 @@ body{
 
 #start{
     position: relative;
-    top: 140px;
+    top: 100px;
     background-color: #21386f;
     border: solid white 5px;
     border-radius: 20px;
