@@ -2,20 +2,15 @@ window.addEventListener("load", () => {
 
     let socket = io.connect();
     
-    let username = "";
-    let roomNumber = 0;
-    let team = "";
-    let id = 0;
-    
     //Connect to a room
     let connectButton = document.querySelector("#connect");
     connectButton.onclick = e => {
         e.preventDefault();
 
-        let userInput = document.querySelector("#username").value;
-        let roomInput = parseInt(document.querySelector("#room").value);
-        let radio = document.getElementsByName("team")
-        let teamInput = "";
+        let userInput   = document.querySelector("#username").value;
+        let roomInput   = parseInt(document.querySelector("#room").value);
+        let radio       = document.getElementsByName("team")
+        let teamInput   = "";
         for(let i = 0; i < radio.length; i++){
             if(radio[i].checked){
                 teamInput = radio[i].value;
@@ -26,12 +21,8 @@ window.addEventListener("load", () => {
             alert("Missing informations.")
         }
         else{
-            socket.emit('roomConnect', userInput, roomInput, teamInput, function(data, idPlayer){
+            socket.emit('roomConnect', userInput, roomInput, teamInput, function(data){
                 if(data === "roomValid"){
-                    username = userInput;
-                    roomNumber = roomInput;
-                    team = teamInput;
-                    id = idPlayer;
     
                     document.querySelector("#login-screen").style.display = "none";
                     document.querySelector("#controller").style.display = "grid";
@@ -51,5 +42,79 @@ window.addEventListener("load", () => {
     }
 
     //Controller
+    let up      = document.querySelector("#up");    
+    let right   = document.querySelector("#right");
+    let down    = document.querySelector("#down");
+    let left    = document.querySelector("#left");
+
+    let actionA = document.querySelector("#action-a");
+    let actionB = document.querySelector("#action-b");
+
+    //Up events
+    up.ontouchstart = e =>{
+        e.preventDefault();
+
+        socket.emit('up-on');    
+    }
+
+    up.ontouchend = e =>{
+        e.preventDefault();
+
+        socket.emit('up-off');
+    }
+
+    //Right events
+    right.ontouchstart = e =>{
+        e.preventDefault();
+
+        socket.emit('right-on');       
+    }
+
+    right.ontouchend = e =>{
+        e.preventDefault();
+
+        socket.emit('right-off');
+    }
+
+    //Down events
+    down.ontouchstart = e =>{
+        e.preventDefault();
+    
+        socket.emit('down-on');    
+    }
+
+    down.ontouchend = e =>{
+        e.preventDefault();
+
+        socket.emit('down-off');
+    }
+
+    //Left events
+    left.ontouchstart = e =>{
+        e.preventDefault();
+    
+        socket.emit('left-on');    
+    }
+
+    left.ontouchend = e =>{
+        e.preventDefault();
+
+        socket.emit('left-off');
+    }
+
+    //Action a
+    actionA.ontouchend = e =>{
+        e.preventDefault();
+    
+        socket.emit('action-a');    
+    }
+
+    //Action b
+    actionB.ontouchend = e =>{
+        e.preventDefault();
+
+        socket.emit('action-b');  
+    }
+
 
 });

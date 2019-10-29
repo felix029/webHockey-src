@@ -40,5 +40,14 @@ window.addEventListener("load", () => {
         nameP3.nodeValue = blue[0];
         nameP4.nodeValue = blue[1];
     });
+
+    document.querySelector("#start").onclick = e =>{
+        e.preventDefault();
+
+        socket.emit('startGame');
+        document.querySelector('#waiting-room').style.display = "none";
+        document.querySelector('#game').style.display = "block";
+    }
+
 ;
 })

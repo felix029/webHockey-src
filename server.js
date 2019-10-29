@@ -59,7 +59,9 @@ io.sockets.on('connection', function(socket){
         callback(roomNumber);
         socket.room = roomNumber;
         socket.type = "Game";
-        rooms[roomNumber] = {"RED":[], "BLUE":[]};
+        //Status is at 1 if game is started
+        rooms[roomNumber] = {"RED":[], "BLUE":[], "STATUS":0};
+
 
         roomsSocket[roomNumber] = socket;
 
@@ -98,7 +100,12 @@ io.sockets.on('connection', function(socket){
 
 
     })
-
+    
+    //This function will change the game state to 1, meaning the game is going on
+    socket.on('startGame', function() {
+        rooms[socket.room]["STATUS"] = 1;
+    });
+    
     //This function will update the player list in the game waiting room when a player joins the room
     function updatePlayers(room){
         let teamRed = []
@@ -121,4 +128,52 @@ io.sockets.on('connection', function(socket){
         
         roomsSocket[room].emit('updatePlayers', teamRed, teamBlue);
     }
+
+    //Here the server will recieve the actions sent by the controllers and store them at the right place
+    
+    //UP
+    socket.on('up-on', function(){
+        console.log(socket.username, " pressed up in room ", socket.room);
+    });
+
+    socket.on('up-off', function(){
+        console.log(socket.username, " released up in room ", socket.room);
+    });
+
+    //RIGHT
+    socket.on('right-on', function(){
+        console.log(socket.username, " pressed right in room ", socket.room);
+    });
+
+    socket.on('right-off', function(){
+        console.log(socket.username, " released right in room ", socket.room);
+    });
+
+    //DOWN
+    socket.on('donw-on', function(){
+        console.log(socket.username, " pressed down in room ", socket.room);
+    });
+
+    socket.on('down-off', function(){
+        console.log(socket.username, " released down in room ", socket.room);
+    });
+
+    //LEFT
+    socket.on('left-on', function(){
+        console.log(socket.username, " pressed left in room ", socket.room);
+    });
+
+    socket.on('left-off', function(){
+        console.log(socket.username, " released left in room ", socket.room);
+    });
+
+    //ACTIONS
+    socket.on('action-a', function(){
+        console.log(socket.username, " pressed A in room ", socket.room);
+    });
+
+    socket.on('action-b', function(){
+        console.log(socket.username, " pressed B in room ", socket.room);
+    });
+
 })

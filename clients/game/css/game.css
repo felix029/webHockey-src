@@ -82,7 +82,7 @@ body{
 
 #start{
     position: relative;
-    top: 100px;
+    top: 110px;
     background-color: #21386f;
     border: solid white 5px;
     border-radius: 20px;
@@ -158,4 +158,22 @@ li:before{
     padding: 5px 5px 1px 5px;
     border: groove darkorange 4px;
     border-radius: 5px;
+}
+
+#rink{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    width: 900px;
+    height: 500px;
+    background-color: white;
+    color: black;
+    margin: auto;
+    position: relative;
+    top: 60px;
+}
+
+#c1, #c2, #c3, #c4{
+    border: solid black 4px;
+    overflow: scroll;
 }
