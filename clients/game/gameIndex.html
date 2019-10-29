@@ -6,8 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/game.css" type="text/css">
     <script src="../socket.io/socket.io.js"></script>
-    <script src="js/waitingRoom.js"></script>
-    <script src="js/game.js"></script>
+    <script src="js/room.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/sprites/Rink.js"></script>
+    <script src="js/sprites/Player.js"></script>
+    <script src="js/sprites/Goalie.js"></script>
+    <script src="js/sprites/AI.js"></script>
+    <script src="js/sprites/Puck.js"></script>
     <title>Tiny hockey</title>
 </head>
 <body>
@@ -90,12 +95,9 @@
             </div>
         </div>
         <div id="rink">
-            <div id="c1"></div>
-            <div id="c2"></div>
-            <div id="c3"></div>
-            <div id="c4"></div>
-            <!-- <canvas></canvas> -->
+            <div id="test"></div>
         </div>
+        <canvas></canvas>
     </div>
 </body>
 </html>

@@ -21,11 +21,12 @@ window.addEventListener("load", () => {
             alert("Missing informations.")
         }
         else{
-            socket.emit('roomConnect', userInput, roomInput, teamInput, function(data){
+            socket.emit('roomConnect', userInput, roomInput, teamInput, (data) => {
                 if(data === "roomValid"){
     
                     document.querySelector("#login-screen").style.display = "none";
                     document.querySelector("#controller").style.display = "grid";
+                    document.documentElement.webkitRequestFullScreen();
                 }
                 else if(data === "roomFull"){
                     alert("This room is full.");
@@ -115,6 +116,5 @@ window.addEventListener("load", () => {
 
         socket.emit('action-b');  
     }
-
 
 });

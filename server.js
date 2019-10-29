@@ -11,18 +11,18 @@ console.log("Server running");
 
 app.use(express.static('clients'));
 
-app.get('/', function(req, res){
+app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 })
 
-io.sockets.on('connection', function(socket){
+io.sockets.on('connection', socket => {
     
     //Add socket in connections list
     connections.push(socket);
     console.log('Connected, %s sockets connected', connections.length);
 
     //Disconnect
-    socket.on('disconnect', function(){
+    socket.on('disconnect', () => {
         if(socket.type === "Game"){
             delete rooms[socket.room];
             connections.splice(connections.indexOf(socket), 1);
@@ -30,9 +30,11 @@ io.sockets.on('connection', function(socket){
         }
         else if(socket.type === "Controller"){
             connections.splice(connections.indexOf(socket), 1);
-            rooms[socket.room][socket.team].splice(rooms[socket.room][socket.team].indexOf(socket), 1);
+            if(rooms[socket.room]){
+                rooms[socket.room][socket.team].splice(rooms[socket.room][socket.team].indexOf(socket), 1);
+                updatePlayers(socket.room);
+            }
             console.log('%s left %s team in room %s. %s sockets connected.', socket.username, socket.team, socket.room, connections.length);
-            updatePlayers(socket.room);
         }
         else{
             connections.splice(connections.indexOf(socket), 1);
@@ -43,7 +45,7 @@ io.sockets.on('connection', function(socket){
     })
 
     //Creating a room when a game page is loaded
-    socket.on('newRoom', function(callback){
+    socket.on('newRoom', callback => {
         let roomCheck = true;
         let roomNumber = 0;
 
@@ -59,6 +61,7 @@ io.sockets.on('connection', function(socket){
         callback(roomNumber);
         socket.room = roomNumber;
         socket.type = "Game";
+        socket.actions = [];
         //Status is at 1 if game is started
         rooms[roomNumber] = {"RED":[], "BLUE":[], "STATUS":0};
 
@@ -69,7 +72,7 @@ io.sockets.on('connection', function(socket){
     })
 
     //Connecting to room from a mobile browser, validating informations sent by user
-    socket.on('roomConnect', function(user, room, team, callback) {
+    socket.on('roomConnect', (user, room, team, callback) => {
  
         if(room in rooms){
             if(rooms[room]["RED"].length < 2 || rooms[room]["BLUE"].length < 2){
@@ -102,24 +105,24 @@ io.sockets.on('connection', function(socket){
     })
     
     //This function will change the game state to 1, meaning the game is going on
-    socket.on('startGame', function() {
+    socket.on('startGame', () => {
         rooms[socket.room]["STATUS"] = 1;
     });
     
     //This function will update the player list in the game waiting room when a player joins the room
-    function updatePlayers(room){
+    const updatePlayers = room => {
         let teamRed = []
         let teamBlue = []
 
         for(let i = 0; i < 2; i++){
             if(rooms[room]["RED"][i]){
-                teamRed.push(rooms[room]["RED"][i].username);
+                teamRed.push([rooms[room]["RED"][i].username, rooms[room]["RED"][i].id]);
             }
             else{
                 teamRed.push("...");
             }
             if(rooms[room]["BLUE"][i]){
-                teamBlue.push(rooms[room]["BLUE"][i].username);
+                teamBlue.push([rooms[room]["BLUE"][i].username, rooms[room]["BLUE"][i].id]);
             }
             else{
                 teamBlue.push("...");
@@ -129,51 +132,60 @@ io.sockets.on('connection', function(socket){
         roomsSocket[room].emit('updatePlayers', teamRed, teamBlue);
     }
 
-    //Here the server will recieve the actions sent by the controllers and store them at the right place
-    
+    //Here the server will recieve the actions sent by the controllers and store them at the right place ===================================================
     //UP
-    socket.on('up-on', function(){
-        console.log(socket.username, " pressed up in room ", socket.room);
+    socket.on('up-on', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'up']);
     });
 
-    socket.on('up-off', function(){
-        console.log(socket.username, " released up in room ", socket.room);
+    socket.on('up-off', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'up']);
     });
 
     //RIGHT
-    socket.on('right-on', function(){
-        console.log(socket.username, " pressed right in room ", socket.room);
+    socket.on('right-on', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'right']);
     });
 
-    socket.on('right-off', function(){
-        console.log(socket.username, " released right in room ", socket.room);
+    socket.on('right-off', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'right']);
     });
 
     //DOWN
-    socket.on('donw-on', function(){
-        console.log(socket.username, " pressed down in room ", socket.room);
+    socket.on('down-on', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'down']);
     });
 
-    socket.on('down-off', function(){
-        console.log(socket.username, " released down in room ", socket.room);
+    socket.on('down-off', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'down']);
     });
 
     //LEFT
-    socket.on('left-on', function(){
-        console.log(socket.username, " pressed left in room ", socket.room);
+    socket.on('left-on', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'left']);
     });
 
-    socket.on('left-off', function(){
-        console.log(socket.username, " released left in room ", socket.room);
+    socket.on('left-off', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'left']);
     });
 
     //ACTIONS
-    socket.on('action-a', function(){
-        console.log(socket.username, " pressed A in room ", socket.room);
+    socket.on('action-a', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'action-a']);
     });
 
-    socket.on('action-b', function(){
-        console.log(socket.username, " pressed B in room ", socket.room);
+    socket.on('action-b', () => {
+        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'action-b']);
+    });
+
+    //Here the server will receive a request from the game to fetch latest actions ========================================================================
+    //and give them back to the game via a callback
+    socket.on('fetch', callback =>{
+        //Sending back the list of actions that as been added since the last tick
+        callback(socket.actions);
+
+        //Clearing the actions list
+        socket.actions = [];
     });
 
 })

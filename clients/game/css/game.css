@@ -35,14 +35,14 @@ body{
 
 #waiting-room h1{
     font-family: "sport-title";
-    font-size: 4em;
+    font-size: 60px;
     color: white;
     padding: 50px 0 50px 0;
 }
 
 #waiting-room h2{
     font-family: "sport-title";
-    font-size: 2.5em;
+    font-size: 40px;
     color: white;
 }
 
@@ -54,7 +54,7 @@ body{
 
 #room-info{
     font-family: "sport-content";
-    font-size: 2em;
+    font-size: 40px;
     width: 900px;
     margin: auto;
     color: white;
@@ -62,7 +62,7 @@ body{
     top: 80px;
     display: grid;
     grid-template-columns: 450px 450px;
-    grid-template-rows: 100px 300px 100px;
+    grid-template-rows: 140px 300px 340px;
 }
 
 .team{
@@ -81,14 +81,12 @@ body{
 }
 
 #start{
-    position: relative;
-    top: 110px;
     background-color: #21386f;
     border: solid white 5px;
     border-radius: 20px;
     color: white;
     font-family: "sport-title";
-    font-size: 1em;
+    font-size: 35px;
     width: 300px;
     height: 100px;
     margin: auto;
@@ -161,9 +159,6 @@ li:before{
 }
 
 #rink{
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
     width: 900px;
     height: 500px;
     background-color: white;
@@ -173,7 +168,9 @@ li:before{
     top: 60px;
 }
 
-#c1, #c2, #c3, #c4{
+#test{
     border: solid black 4px;
     overflow: scroll;
+    color: black;
+    height: 500px;
 }
