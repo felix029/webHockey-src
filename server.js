@@ -50,8 +50,9 @@ io.sockets.on('connection', socket => {
         let roomNumber = 0;
 
         do{
-            roomNumber = Math.floor(100000 + Math.random() * 900000);
-
+            //retirer le commentaire apres les tests
+            //roomNumber = Math.floor(100000 + Math.random() * 900000);
+            
             if(roomNumber in rooms){
                 roomCheck = false;
             }

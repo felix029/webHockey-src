@@ -13,7 +13,7 @@ class Game {
         this.teamRed = [];
         for(let i = 0; i < 2; i++){
             if(teamRed[i]){
-                this.teamRed.push(new Player(teamRed[i][1], teamRed[i][0], "RED", this.ctx));
+                this.teamRed.push(new Player(i, teamRed[i][0], "RED", this.ctx));
             }
             else{
                 this.teamRed.push(new AI(i, "RED"));
@@ -23,7 +23,7 @@ class Game {
         this.teamBlue = [];
         for(let i = 0; i < 2; i++){
             if(teamBlue[i]){
-                this.teamBlue.push(new Player(teamBlue[i][1], teamBlue[i][0], "BLUE", this.ctx));
+                this.teamBlue.push(new Player(i, teamBlue[i][0], "BLUE", this.ctx));
             }
             else{
                 this.teamBlue.push(new AI(i, "BLUE"));

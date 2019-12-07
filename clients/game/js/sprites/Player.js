@@ -4,10 +4,7 @@ class Player{
         this.name = name;
         this.team = team;
         this.ctx = ctx;
-
-        //Adjust these variables in developpement
-        this.x = 200;
-        this.y = 100;
+        
         this.speed;
         this.velocity;
 
@@ -19,16 +16,41 @@ class Player{
         this.left = false;
         this.right = false;
 
-        let columnCount = 4;
-        let rowCount = 6;
-        let refreshDelay = 70;
-        let loopInColumns = false;
-        let scale = 2.0;
+        let columnCount = 2;
+        let rowCount = 9;
+        let refreshDelay = 200;
+        let loopInColumns = true;
+        let scale = 3.0;
+        let spriteImg = "";
+        this.flipped = false;
 
-        this.tiledImage = new TiledImage("images/sprites/player.png",
-                                          columnCount, rowCount, 
-                                          refreshDelay, loopInColumns,
-                                          scale);
+        if(this.team == "RED"){
+            spriteImg = "images/sprites/pRed.png";
+
+            if(this.id == 0){
+                this.x = 720;
+                this.y = 300;
+            }
+            else{
+                this.x = 600;
+                this.y = 200;
+            }
+        }
+        else{
+            spriteImg = "images/sprites/pBlue.png";
+            if(this.id == 0){
+                this.x = 780;
+                this.y = 300;
+            }
+            else{
+                this.x = 900;
+                this.y = 400;
+            }
+        }
+
+        this.tiledImage = new TiledImage(   spriteImg, columnCount, 
+                                            rowCount, refreshDelay, 
+                                            loopInColumns, scale);
 
         this.tiledImage.changeRow(0);
     }
@@ -39,10 +61,10 @@ class Player{
         //let node = document.querySelector("#test");
 
         //Directions
-        if(action === "up")     {   this.up = !this.up; console.log("up");        }
-        if(action === "down")   {   this.down = !this.down; console.log("down");     }
-        if(action === "left")   {   this.left = !this.left; console.log("left");     }
-        if(action === "right")  {   this.right = !this.right; console.log("right");   }
+        if(action === "up")     {   this.up = !this.up;         }
+        if(action === "down")   {   this.down = !this.down;     }
+        if(action === "left")   {   this.left = !this.left;     }
+        if(action === "right")  {   this.right = !this.right;   }
 
         //Actions
         if(action === "action-a"){
@@ -86,33 +108,52 @@ class Player{
     }
 
     tick() {
-        //let node = document.querySelector("#test");
-        //let newNode = document.createElement("div");
 
         if(this.up){
+            this.tiledImage.changeRow(4);
+
             this.y -= 1;
-            //let action = document.createTextNode(this.name + " in team " + this.team + " is moving UP.");
-            //newNode.appendChild(action);
+            this.tiledImage.setLooped(true);
         }
         if(this.down){
+            this.tiledImage.changeRow(2);
+
             this.y += 1;
-            //let action = document.createTextNode(this.name + " in team " + this.team + " is moving DOWN.");
-            //newNode.appendChild(action);
+            this.tiledImage.setLooped(true);
+          
         }
         if(this.left){
+            this.tiledImage.changeRow(0);
+
+            if(this.team == "RED"){
+                this.tiledImage.setFlipped(true);
+            }
+            else{
+                this.tiledImage.setFlipped(false);
+            }
+
             this.x -= 1;
-            //let action = document.createTextNode(this.name + " in team " + this.team + "is moving LEFT.");
-            //newNode.appendChild(action);
+            this.tiledImage.setLooped(true);
+           
         }
         if(this.right){
+            this.tiledImage.changeRow(0);
+
+            if(this.team == "BLUE"){
+                this.tiledImage.setFlipped(true);
+            }
+            else{
+                this.tiledImage.setFlipped(false);
+            }
+
             this.x += 1;
-            //et action = document.createTextNode(this.name + " in team " + this.team + " is moving RIGHT.");
-            //newNode.appendChild(action);
+            this.tiledImage.setLooped(true);
+           
+        }
+        if(!this.up && !this.down && !this.left && !this.right){
+            this.tiledImage.setLooped(false);
         }
 
-        //node.prepend(newNode);
-
-        console.log("X: " + this.x + " Y: " + this.y);
         this.tiledImage.tick(this.x, this.y, this.ctx);
         return true;
     }
