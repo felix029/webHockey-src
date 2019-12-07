@@ -4,9 +4,10 @@ class Player{
         this.name = name;
         this.team = team;
         this.ctx = ctx;
-        
-        this.speed;
-        this.velocity;
+
+        this.maxVelocity = 3;
+        this.Xvelocity = 0;
+        this.Yvelocity = 0;
 
         this.gotPuck = false;
         this.dizzy = false;
@@ -112,13 +113,19 @@ class Player{
         if(this.up){
             this.tiledImage.changeRow(4);
 
-            this.y -= 1;
+            if(Math.abs(this.Yvelocity) < this.maxVelocity){
+                this.Yvelocity -= 0.1;
+            }
+            
             this.tiledImage.setLooped(true);
         }
         if(this.down){
             this.tiledImage.changeRow(2);
 
-            this.y += 1;
+            if(Math.abs(this.Yvelocity) < this.maxVelocity){
+                this.Yvelocity += 0.1;
+            }
+
             this.tiledImage.setLooped(true);
           
         }
@@ -132,7 +139,10 @@ class Player{
                 this.tiledImage.setFlipped(false);
             }
 
-            this.x -= 1;
+            if(Math.abs(this.Xvelocity) < this.maxVelocity){
+                this.Xvelocity -= 0.1;
+            }
+
             this.tiledImage.setLooped(true);
            
         }
@@ -146,13 +156,41 @@ class Player{
                 this.tiledImage.setFlipped(false);
             }
 
-            this.x += 1;
+            if(Math.abs(this.Xvelocity) < this.maxVelocity){
+                this.Xvelocity += 0.1;
+            }
+
             this.tiledImage.setLooped(true);
            
         }
         if(!this.up && !this.down && !this.left && !this.right){
             this.tiledImage.setLooped(false);
+            
+            //Gliding effect when controls are released
+            if(this.Yvelocity != 0 && this.Yvelocity < 0){
+                this.Yvelocity += 0.05;
+            }
+            if(this.Yvelocity != 0 && this.Yvelocity > 0){
+                this.Yvelocity -= 0.05;
+            }
+            if(this.Xvelocity != 0 && this.Xvelocity < 0){
+                this.Xvelocity += 0.05;
+            }
+            if(this.Xvelocity != 0 && this.Xvelocity > 0){
+                this.Xvelocity -= 0.05;
+            }
+
+            if(Math.abs(this.Yvelocity) <= 0.1){
+                this.Yvelocity = 0;
+            }
+            if(Math.abs(this.Xvelocity) <= 0.1){
+                this.Xvelocity = 0;
+            }
+
         }
+
+        this.y += this.Yvelocity;
+        this.x += this.Xvelocity;
 
         this.tiledImage.tick(this.x, this.y, this.ctx);
         return true;
