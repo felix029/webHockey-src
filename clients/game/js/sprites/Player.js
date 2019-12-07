@@ -57,9 +57,6 @@ class Player{
     }
 
     move(action){
-        
-        //Temporary for tests
-        //let node = document.querySelector("#test");
 
         //Directions
         if(action === "up")     {   this.up = !this.up;         }
@@ -73,11 +70,6 @@ class Player{
                 this.shoot();
             }
 
-            //Temporary
-            //let action = document.createTextNode(this.name + " in team " + this.team + " pressed A.");
-            //let newNode = document.createElement("div");
-            //newNode.appendChild(action);
-            //node.prepend(newNode);
         }
 
         if(action === "action-b"){
@@ -87,12 +79,6 @@ class Player{
             else{
                 this.hit();
             }
-
-            //Temporary
-            //let action = document.createTextNode(this.name + " in team " + this.team + " pressed B.");
-            //let newNode = document.createElement("div");
-            //newNode.appendChild(action);
-            //node.prepend(action);
         }
     }
 
@@ -189,8 +175,19 @@ class Player{
 
         }
 
-        this.y += this.Yvelocity;
-        this.x += this.Xvelocity;
+        if( !Rink.boardCollision((this.x + this.Xvelocity), this.y) &&
+            !Rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
+            !Rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
+            
+                this.x += this.Xvelocity;
+        }
+
+        if( !Rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
+            !Rink.redZoneCollision(this.x, (this.y + this.Yvelocity)) &&
+            !Rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
+            
+                this.y += this.Yvelocity;
+        }
 
         this.tiledImage.tick(this.x, this.y, this.ctx);
         return true;
