@@ -1,4 +1,7 @@
 let game = null;
+// let canvas = null;
+// let ctx = null;
+// let bg = new Image();
 
 window.addEventListener("load", () => {
     
@@ -49,6 +52,10 @@ window.addEventListener("load", () => {
 
     });
 
+    // canvas = document.querySelector("canvas");
+    // ctx = canvas.getContext("2d");
+    // bg.src = "images/rink.png";
+
     document.querySelector("#start").onclick = e =>{
         e.preventDefault();
 
@@ -67,7 +74,10 @@ window.addEventListener("load", () => {
 });
 
 const tick = () => {
-    
+    // if(bg.complete){
+    //     ctx.drawImage(bg, 0, 0, 1500, 600);
+    // }
+
     game.tick();
 
     window.requestAnimationFrame(tick);

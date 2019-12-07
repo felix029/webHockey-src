@@ -159,9 +159,9 @@ li:before{
 }
 
 #rink{
-    width: 900px;
-    height: 500px;
-    background-color: white;
+    width: 1500px;
+    height: 600px;
+    /* background-color: white; */
     color: black;
     margin: auto;
     position: relative;
@@ -173,4 +173,8 @@ li:before{
     overflow: scroll;
     color: black;
     height: 500px;
+}
+
+canvas{
+    z-index: 1000;
 }

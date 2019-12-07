@@ -7,12 +7,13 @@ class Game {
         this.ctx = this.canvas.getContext("2d");
         this.spriteList = [];
         this.bg = new Image();
+        this.bg.src = "images/rink.png"
 
         //Creations of the players
         this.teamRed = [];
         for(let i = 0; i < 2; i++){
             if(teamRed[i]){
-                this.teamRed.push(new Player(teamRed[i][1], teamRed[i][0], "RED"));
+                this.teamRed.push(new Player(teamRed[i][1], teamRed[i][0], "RED", this.ctx));
             }
             else{
                 this.teamRed.push(new AI(i, "RED"));
@@ -22,7 +23,7 @@ class Game {
         this.teamBlue = [];
         for(let i = 0; i < 2; i++){
             if(teamBlue[i]){
-                this.teamBlue.push(new Player(teamBlue[i][1], teamBlue[i][0], "BLUE"));
+                this.teamBlue.push(new Player(teamBlue[i][1], teamBlue[i][0], "BLUE", this.ctx));
             }
             else{
                 this.teamBlue.push(new AI(i, "BLUE"));
@@ -37,6 +38,10 @@ class Game {
     }
 
     tick () {
+        if(this.bg.complete){
+            this.ctx.drawImage(this.bg, 0, 0, 1500, 600);
+        }
+
         this.socket.emit('fetch', (data) =>{
             if(data){
                 for(let i = 0; i < data.length; i++){
