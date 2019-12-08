@@ -118,4 +118,5 @@ window.onbeforeunload = () => {
     socket.emit('disconnect');
     sessionStorage.setItem("test", "working!");
     sessionStorage.setItem("socket", JSON.stringify(socket));
+    return null;
 };
