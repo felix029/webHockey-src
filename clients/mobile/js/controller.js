@@ -44,7 +44,7 @@ window.addEventListener("load", () => {
         }
     }
     else{
-        socket = sessionStorage.getItem("socket");
+        socket = JSON.parse(sessionStorage.getItem("socket"));
         document.querySelector("#login-screen").style.display = "none";
         document.querySelector("#controller").style.display = "grid";
     }
@@ -109,6 +109,6 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener("onbeforeunload", () => {
-    sessionStorage.setItem("socket", socket);
+    sessionStorage.setItem("socket", JSON.stringify(socket));
     //window.location.href = "tinyhockey.club/mobile/mobileIndex.html";
 })
