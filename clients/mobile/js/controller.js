@@ -112,8 +112,8 @@ window.addEventListener("load", () => {
 
 });
 
-window.addEventListener("beforeunload", () => {
+window.onbeforeunload = () => {
     alert('reload');
     socket.emit('disconnect');
     sessionStorage.setItem("socket", JSON.stringify(socket));
-})
+};
