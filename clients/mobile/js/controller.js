@@ -53,67 +53,47 @@ window.addEventListener("load", () => {
 
     //Up events
     up.ontouchstart = e =>{
-        e.preventDefault();
-
         socket.emit('up-on');    
     }
 
     up.ontouchend = e =>{
-        e.preventDefault();
-
         socket.emit('up-off');
     }
 
     //Right events
     right.ontouchstart = e =>{
-        e.preventDefault();
-
         socket.emit('right-on');       
     }
 
     right.ontouchend = e =>{
-        e.preventDefault();
-
         socket.emit('right-off');
     }
 
     //Down events
     down.ontouchstart = e =>{
-        e.preventDefault();
-    
         socket.emit('down-on');    
     }
 
     down.ontouchend = e =>{
-        e.preventDefault();
-
         socket.emit('down-off');
     }
 
     //Left events
     left.ontouchstart = e =>{
-        e.preventDefault();
-    
         socket.emit('left-on');    
     }
 
     left.ontouchend = e =>{
-        e.preventDefault();
-
         socket.emit('left-off');
     }
 
     //Action a
-    actionA.ontouchend = e =>{
-        e.preventDefault();
-    
+    actionA.ontouchend = e =>{    
         socket.emit('action-a');    
     }
 
     //Action b
     actionB.ontouchend = e =>{
-        e.preventDefault();
-
         socket.emit('action-b');  
     }
 
@@ -121,4 +101,5 @@ window.addEventListener("load", () => {
 
 window.addEventListener("onbeforeunload", () => {
     window.location.href = "tinyhockey.club/mobile/mobileIndex.html";
+    alert("YOUR FUCKING BROWSER DECIDED TO REFRESH, BUM");
 })
