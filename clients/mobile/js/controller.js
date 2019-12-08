@@ -2,7 +2,7 @@ window.addEventListener("load", () => {
 
     let socket = io.connect();
 
-    if(sessionStorage.getItem("room") == null && sessionStorage.getItem("team") == null && sessionStorage.getItem("id") == null){
+    if(localStorage.getItem("room") == null && localStorage.getItem("team") == null && localStorage.getItem("id") == null){
         //Connect to a room
         let connectButton = document.querySelector("#connect");
         connectButton.onclick = e => {
@@ -31,9 +31,9 @@ window.addEventListener("load", () => {
                         
                         document.querySelector("#login-screen").style.display = "none";
                         document.querySelector("#controller").style.display = "grid";
-                        sessionStorage.setItem("room", roomInput);
-                        sessionStorage.setItem("team", teamInput);
-                        sessionStorage.setItem("id", id);
+                        localStorage.setItem("room", roomInput);
+                        localStorage.setItem("team", teamInput);
+                        localStorage.setItem("id", id);
                         document.documentElement.webkitRequestFullScreen();
                     }
                     else if(data === "roomFull"){
@@ -51,9 +51,9 @@ window.addEventListener("load", () => {
         }
     }
     else{
-        let room = sessionStorage.getItem("room");
-        let team = sessionStorage.getItem("team");
-        let id = sessionStorage.getItem("id");
+        let room = localStorage.getItem("room");
+        let team = localStorage.getItem("team");
+        let id = localStorage.getItem("id");
         socket.emit('checkConnection', room, team, id, (data) => {
 
             if(data == 'reconnect'){
