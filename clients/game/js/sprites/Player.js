@@ -189,6 +189,8 @@ class Player{
                 this.y += this.Yvelocity;
         }
 
+        this.ctx.font = "15px sport-content";
+        this.ctx.fillText(this.name, this.x-20, this.y-25);
         this.tiledImage.tick(this.x, this.y, this.ctx);
         return true;
     }
