@@ -72,13 +72,21 @@ io.sockets.on('connection', socket => {
         console.log("Room " + roomNumber + " created.")
     })
 
-    //Connecting to room from a mobile browser, validating informations sent by user
+    //Connectiing to lobby with mobile user, waiting to join a room
+    socket.on('lobbyConnect', () => {
+        socket.type = "Controller";
+        socket.team = "NONE";
+        socket.username = "NONE";
+        socket.room = "NONE";
+        socket.id = "NONE";
+    });
+
+    //Connecting to room from a mobile browser, validating informations sent by user    
     socket.on('roomConnect', (user, room, team, callback) => {
  
         if(room in rooms){
             if(rooms[room]["RED"].length < 2 || rooms[room]["BLUE"].length < 2){
                 if(rooms[room][team].length < 2){
-                    socket.type = "Controller";
                     socket.team = team;
                     socket.username = user;
                     socket.room = room;

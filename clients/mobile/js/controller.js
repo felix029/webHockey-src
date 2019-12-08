@@ -3,6 +3,7 @@ window.addEventListener("load", () => {
     let socket = null;
     if(sessionStorage.getItem("socket") == null){
         socket = io.connect();
+        socket.emit("lobbyConnect");
         //Connect to a room
         let connectButton = document.querySelector("#connect");
         connectButton.onclick = e => {
