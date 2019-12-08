@@ -3,7 +3,7 @@ window.addEventListener("load", () => {
     let socket;
 
     console.log(sessionStorage.getItem("socket"));
-    
+
     if(sessionStorage.getItem("socket") == null){
         socket = io.connect();
         socket.emit("lobbyConnect");
@@ -113,6 +113,7 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener("onbeforeunload", () => {
+    console.log('reload');
     socket.emit('disconnect');
     sessionStorage.setItem("socket", JSON.stringify(socket));
     //window.location.href = "tinyhockey.club/mobile/mobileIndex.html";
