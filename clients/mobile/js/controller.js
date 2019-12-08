@@ -2,7 +2,6 @@ window.addEventListener("load", () => {
 
     let socket;
 
-    console.log(sessionStorage.getItem("test"));
     console.log(sessionStorage.getItem("socket"));
 
     if(sessionStorage.getItem("socket") == null){
@@ -47,6 +46,7 @@ window.addEventListener("load", () => {
             }
     
         }
+        sessionStorage.setItem("socket", JSON.stringify(socket));
     }
     else{
         socket = JSON.parse(sessionStorage.getItem("socket"));
@@ -112,18 +112,3 @@ window.addEventListener("load", () => {
     }
 
 });
-
-window.addEventListener("beforeunload", e => {
-   saveState();
-
-    (e || window.event).returnValue = null;
-    return null;
-});
-
-
-const saveState = () => {
-    window.alert('reload');
-    socket.emit('disconnect');
-    sessionStorage.setItem("test", "working!");
-    sessionStorage.setItem("socket", JSON.stringify(socket));
-}
