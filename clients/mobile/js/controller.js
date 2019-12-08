@@ -109,6 +109,7 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener("onbeforeunload", () => {
+    socket.emit('disconnect');
     sessionStorage.setItem("socket", JSON.stringify(socket));
     //window.location.href = "tinyhockey.club/mobile/mobileIndex.html";
 })
