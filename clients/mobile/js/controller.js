@@ -31,6 +31,7 @@ window.addEventListener("load", () => {
                     
                         document.querySelector("#login-screen").style.display = "none";
                         document.querySelector("#controller").style.display = "grid";
+                        sessionStorage.setItem("socket", socket);
                         document.documentElement.webkitRequestFullScreen();
                     }
                     else if(data === "roomFull"){
@@ -46,7 +47,6 @@ window.addEventListener("load", () => {
             }
     
         }
-        sessionStorage.setItem("socket", socket);
     }
     else{
         socket = sessionStorage.getItem("socket");
