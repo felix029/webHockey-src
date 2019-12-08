@@ -2,6 +2,7 @@ window.addEventListener("load", () => {
 
     let socket;
 
+    console.log(sessionStorage.getItem("test"));
     console.log(sessionStorage.getItem("socket"));
 
     if(sessionStorage.getItem("socket") == null){
@@ -115,5 +116,6 @@ window.addEventListener("load", () => {
 window.onbeforeunload = () => {
     alert('reload');
     socket.emit('disconnect');
+    sessionStorage.setItem("test", "working!");
     sessionStorage.setItem("socket", JSON.stringify(socket));
 };
