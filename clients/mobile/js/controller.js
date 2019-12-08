@@ -118,3 +118,7 @@ window.addEventListener("load", () => {
     }
 
 });
+
+window.addEventListener("onbeforeunload", () => {
+    window.location.href = "tinyhockey.club/mobile/mobileIndex.html";
+})
