@@ -25,7 +25,11 @@ window.addEventListener("load", () => {
             else{
                 socket.emit('roomConnect', userInput, roomInput, teamInput, (data, id) => {
                     if(data === "roomValid"){
-                    
+                        
+                        console.log("roomvalid");
+                        console.log(data);
+                        console.log(id);
+                        
                         document.querySelector("#login-screen").style.display = "none";
                         document.querySelector("#controller").style.display = "grid";
                         sessionStorage.setItem("room", roomInput);
@@ -52,6 +56,11 @@ window.addEventListener("load", () => {
         let team = sessionStorage.getItem("team");
         let id = sessionStorage.getItem("id");
         socket.emit('checkConnection', room, team, id, (data, oldSocket) => {
+            
+            console.log("checkConnection");
+            console.log(data);
+            console.log(oldSocket);
+
             if(data == 'reconnect'){
                 socket = oldSocket;
             }
