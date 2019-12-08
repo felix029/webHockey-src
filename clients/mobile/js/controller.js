@@ -2,11 +2,8 @@ window.addEventListener("load", () => {
 
     let socket;
 
-    console.log(sessionStorage.getItem("socket"));
-
-    if(sessionStorage.getItem("socket") == null){
+    if(sessionStorage.getItem("room") == null && sessionStorage.getItem("team") == null && sessionStorage.getItem("id") == null){
         socket = io.connect();
-        socket.emit("lobbyConnect");
         //Connect to a room
         let connectButton = document.querySelector("#connect");
         connectButton.onclick = e => {
@@ -26,12 +23,14 @@ window.addEventListener("load", () => {
                 alert("Missing informations.")
             }
             else{
-                socket.emit('roomConnect', userInput, roomInput, teamInput, (data) => {
+                socket.emit('roomConnect', userInput, roomInput, teamInput, (data, id) => {
                     if(data === "roomValid"){
                     
                         document.querySelector("#login-screen").style.display = "none";
                         document.querySelector("#controller").style.display = "grid";
-                        sessionStorage.setItem("socket", socket);
+                        sessionStorage.setItem("room", roomInput);
+                        sessionStorage.setItem("team", teamInput);
+                        sessionStorage.setItem("id", id);
                         document.documentElement.webkitRequestFullScreen();
                     }
                     else if(data === "roomFull"){
@@ -49,7 +48,17 @@ window.addEventListener("load", () => {
         }
     }
     else{
-        socket = sessionStorage.getItem("socket");
+        let room = sessionStorage.getItem("room");
+        let team = sessionStorage.getItem("team");
+        let id = sessionStorage.getItem("id");
+        socket.emit('checkConnection', room, team, id, (data, oldSocket) => {
+            if(data == 'reconnect'){
+                socket = oldSocket;
+            }
+            else if(data == 'firstconnect'){
+                window.location.href = "http://www.tinyhockey.club";
+            }
+        });
         document.querySelector("#login-screen").style.display = "none";
         document.querySelector("#controller").style.display = "grid";
     }

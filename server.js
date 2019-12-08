@@ -72,13 +72,22 @@ io.sockets.on('connection', socket => {
         console.log("Room " + roomNumber + " created.")
     })
 
-    //Connectiing to lobby with mobile user, waiting to join a room
-    socket.on('lobbyConnect', () => {
-        socket.type = "Controller";
-        socket.team = "NONE";
-        socket.username = "NONE";
-        socket.room = "NONE";
-        socket.id = "NONE";
+    //Checking if the socket already exists
+    socket.on('checkConnection', (id, room, team, callback) => {
+
+        if(rooms[room][team]){
+            for(let i = 0; i < rooms[room][team].length; i++){
+                if(rooms[room][team][i] == id){
+                    socket = rooms[room][team][i];
+                    callback("reconnect", rooms[room][team][i]);
+                    break;
+                }
+            }
+        }
+        else{
+            callback("firstconnect", 0);
+        }
+        
     });
 
     //Connecting to room from a mobile browser, validating informations sent by user    
