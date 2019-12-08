@@ -34,7 +34,7 @@ window.addEventListener("load", () => {
                         localStorage.setItem("room", roomInput);
                         localStorage.setItem("team", teamInput);
                         localStorage.setItem("id", id);
-                        document.documentElement.webkitRequestFullScreen();
+                        //document.documentElement.webkitRequestFullScreen();
                     }
                     else if(data === "roomFull"){
                         alert("This room is full.");
