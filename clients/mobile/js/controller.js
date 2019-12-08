@@ -46,10 +46,10 @@ window.addEventListener("load", () => {
             }
     
         }
-        sessionStorage.setItem("socket", JSON.stringify(socket));
+        sessionStorage.setItem("socket", socket);
     }
     else{
-        socket = JSON.parse(sessionStorage.getItem("socket"));
+        socket = sessionStorage.getItem("socket");
         document.querySelector("#login-screen").style.display = "none";
         document.querySelector("#controller").style.display = "grid";
     }
