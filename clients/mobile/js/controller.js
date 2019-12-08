@@ -1,6 +1,9 @@
 window.addEventListener("load", () => {
 
-    let socket = null;
+    let socket;
+
+    console.log(sessionStorage.getItem("socket"));
+    
     if(sessionStorage.getItem("socket") == null){
         socket = io.connect();
         socket.emit("lobbyConnect");
