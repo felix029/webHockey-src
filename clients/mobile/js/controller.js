@@ -100,6 +100,6 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener("onbeforeunload", () => {
+    alert("YOUR BROWSER DECIDED TO REFRESH, BUM");
     window.location.href = "tinyhockey.club/mobile/mobileIndex.html";
-    alert("YOUR FUCKING BROWSER DECIDED TO REFRESH, BUM");
 })
