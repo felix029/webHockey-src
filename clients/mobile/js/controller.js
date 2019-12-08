@@ -1,9 +1,8 @@
 window.addEventListener("load", () => {
 
-    let socket;
+    let socket = io.connect();
 
     if(sessionStorage.getItem("room") == null && sessionStorage.getItem("team") == null && sessionStorage.getItem("id") == null){
-        socket = io.connect();
         //Connect to a room
         let connectButton = document.querySelector("#connect");
         connectButton.onclick = e => {
@@ -55,16 +54,13 @@ window.addEventListener("load", () => {
         let room = sessionStorage.getItem("room");
         let team = sessionStorage.getItem("team");
         let id = sessionStorage.getItem("id");
-        socket.emit('checkConnection', room, team, id, (data, oldSocket) => {
-            
-            console.log("checkConnection");
-            console.log(data);
-            console.log(oldSocket);
+        socket.emit('checkConnection', room, team, id, (data) => {
 
             if(data == 'reconnect'){
-                socket = oldSocket;
+                console.log("reconnected");
             }
             else if(data == 'firstconnect'){
+                Storage.clear();
                 window.location.href = "http://www.tinyhockey.club";
             }
         });

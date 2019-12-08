@@ -73,21 +73,27 @@ io.sockets.on('connection', socket => {
     })
 
     //Checking if the socket already exists
-    socket.on('checkConnection', (id, room, team, callback) => {
+    socket.on('checkConnection', (room, team, id, callback) => {
 
         if(rooms[room][team]){
             for(let i = 0; i < rooms[room][team].length; i++){
-                if(rooms[room][team][i] == id){
-                    socket = rooms[room][team][i];
-                    callback("reconnect", rooms[room][team][i]);
+                if(rooms[room][team][i].id == id){
+                    socket.username = rooms[room][team][i].username;
+                    socket.room = room;
+                    socket.team = team;
+                    socket.id = id;
+                    rooms[room][team][i] = socket;
+                    console.log("Socket reassigned");
+                    callback("reconnect");
                     break;
                 }
             }
         }
         else{
-            callback("firstconnect", 0);
+            console.log("Socket doesn't exists... :(");
+            callback("firstconnect");
         }
-        
+
     });
 
     //Connecting to room from a mobile browser, validating informations sent by user    
