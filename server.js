@@ -159,47 +159,67 @@ io.sockets.on('connection', socket => {
     //Here the server will recieve the actions sent by the controllers and store them at the right place ===================================================
     //UP
     socket.on('up-on', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'up']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'up']);
+        }
     });
 
     socket.on('up-off', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'up']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'up']);
+        }
     });
 
     //RIGHT
     socket.on('right-on', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'right']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'right']);
+        }
     });
 
     socket.on('right-off', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'right']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'right']);
+        }
     });
 
     //DOWN
     socket.on('down-on', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'down']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'down']);
+        }
     });
 
     socket.on('down-off', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'down']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'down']);
+        }
     });
 
     //LEFT
     socket.on('left-on', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'left']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'left']);
+        }        
     });
 
     socket.on('left-off', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'left']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'left']);
+        }
     });
 
     //ACTIONS
     socket.on('action-a', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'action-a']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'action-a']);
+        }
     });
 
     socket.on('action-b', () => {
-        roomsSocket[socket.room].actions.push([socket.team, socket.id, 'action-b']);
+        if(roomsSocket[socket.room]){
+            roomsSocket[socket.room].actions.push([socket.team, socket.id, 'action-b']);
+        }
     });
 
     //Here the server will receive a request from the game to fetch latest actions ========================================================================
