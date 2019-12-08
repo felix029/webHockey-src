@@ -113,10 +113,17 @@ window.addEventListener("load", () => {
 
 });
 
-window.onbeforeunload = () => {
-    alert('reload');
+window.addEventListener("beforeunload", e => {
+   saveState();
+
+    (e || window.event).returnValue = null;
+    return null;
+});
+
+
+const saveState = () => {
+    window.alert('reload');
     socket.emit('disconnect');
     sessionStorage.setItem("test", "working!");
     sessionStorage.setItem("socket", JSON.stringify(socket));
-    return null;
-};
+}
