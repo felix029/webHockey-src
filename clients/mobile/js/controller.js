@@ -1,46 +1,55 @@
 window.addEventListener("load", () => {
 
-    let socket = io.connect();
-    
-    //Connect to a room
-    let connectButton = document.querySelector("#connect");
-    connectButton.onclick = e => {
-        e.preventDefault();
+    let socket = null;
+    if(sessionStorage.getItem("socket") == null){
+        socket = io.connect();
+        //Connect to a room
+        let connectButton = document.querySelector("#connect");
+        connectButton.onclick = e => {
+            e.preventDefault();
 
-        let userInput   = document.querySelector("#username").value;
-        let roomInput   = parseInt(document.querySelector("#room").value);
-        let radio       = document.getElementsByName("team")
-        let teamInput   = "";
-        for(let i = 0; i < radio.length; i++){
-            if(radio[i].checked){
-                teamInput = radio[i].value;
+            let userInput   = document.querySelector("#username").value;
+            let roomInput   = parseInt(document.querySelector("#room").value);
+            let radio       = document.getElementsByName("team")
+            let teamInput   = "";
+            for(let i = 0; i < radio.length; i++){
+                if(radio[i].checked){
+                    teamInput = radio[i].value;
+                }
             }
-        }
 
-        if(userInput == null || roomInput == null || teamInput == ""){
-            alert("Missing informations.")
-        }
-        else{
-            socket.emit('roomConnect', userInput, roomInput, teamInput, (data) => {
-                if(data === "roomValid"){
+            if(userInput == null || roomInput == null || teamInput == ""){
+                alert("Missing informations.")
+            }
+            else{
+                socket.emit('roomConnect', userInput, roomInput, teamInput, (data) => {
+                    if(data === "roomValid"){
+                    
+                        document.querySelector("#login-screen").style.display = "none";
+                        document.querySelector("#controller").style.display = "grid";
+                        document.documentElement.webkitRequestFullScreen();
+                    }
+                    else if(data === "roomFull"){
+                        alert("This room is full.");
+                    }
+                    else if(data === "roomNull"){
+                        alert("This room doesn't exist.");
+                    }
+                    else if(data === "teamFull"){
+                        alert("The team you selected is full.");
+                    }
+                });
+            }
     
-                    document.querySelector("#login-screen").style.display = "none";
-                    document.querySelector("#controller").style.display = "grid";
-                    document.documentElement.webkitRequestFullScreen();
-                }
-                else if(data === "roomFull"){
-                    alert("This room is full.");
-                }
-                else if(data === "roomNull"){
-                    alert("This room doesn't exist.");
-                }
-                else if(data === "teamFull"){
-                    alert("The team you selected is full.");
-                }
-            });
         }
-    
     }
+    else{
+        socket = sessionStorage.getItem("socket");
+        document.querySelector("#login-screen").style.display = "none";
+        document.querySelector("#controller").style.display = "grid";
+    }
+    
+    
 
     //Controller
     let up      = document.querySelector("#up");    
@@ -100,6 +109,6 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener("onbeforeunload", () => {
-    alert("YOUR BROWSER DECIDED TO REFRESH, BUM");
-    window.location.href = "tinyhockey.club/mobile/mobileIndex.html";
+    sessionStorage.setItem("socket", socket);
+    //window.location.href = "tinyhockey.club/mobile/mobileIndex.html";
 })
