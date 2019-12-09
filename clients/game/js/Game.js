@@ -1,8 +1,12 @@
+let roomSocket = null;
+let teamRed = [];
+let teamBlue = [];
+
 class Game {
     
-    constructor(teamRed, teamBlue, socket){
+    constructor(lobbyTeamRed, lobbyTeamBlue, socket){
         this.firstRequest = true;
-        this.socket = socket;
+        roomSocket = socket;
 
         // canvas = document.querySelector("canvas");
         // ctx = canvas.getContext("2d");
@@ -15,29 +19,27 @@ class Game {
         this.spriteList.push(this.puck);
 
         //Creations of the players
-        this.teamRed = [];
         for(let i = 0; i < 2; i++){
             let temp = null;
-            if(teamRed[i]){
-                temp = new Player(i, teamRed[i][0], "RED", this.puck);
+            if(lobbyTeamRed[i]){
+                temp = new Player(i, lobbyTeamRed[i][0], "RED", this.puck);
             }
             else{
                 temp = new AI(i, "RED");
             }
-            this.teamRed.push(temp);
+            teamRed.push(temp);
             this.spriteList.push(temp);
         }
 
-        this.teamBlue = [];
         for(let i = 0; i < 2; i++){
             let temp = null;
-            if(teamBlue[i]){
-                temp = new Player(i, teamBlue[i][0], "BLUE", this.puck);
+            if(lobbyTeamBlue[i]){
+                temp = new Player(i, lobbyTeamBlue[i][0], "BLUE", this.puck);
             }
             else{
                 temp = new AI(i, "BLUE");
             }
-            this.teamBlue.push(temp);
+            teamBlue.push(temp);
             this.spriteList.push(temp);
         }
 
@@ -68,20 +70,20 @@ class Game {
     }
 
     fetchData(){
-        this.socket.emit('fetch', (data) =>{
+        roomSocket.emit('fetch', (data) =>{
             if(data){
                 for(let i = 0; i < data.length; i++){
                     if(data[i][0] === "RED"){
-                        this.teamRed[data[i][1]].move(data[i][2]);
+                        teamRed[data[i][1]].move(data[i][2]);
                     }
                     if(data[i][0] === "BLUE"){
-                        this.teamBlue[data[i][1]].move(data[i][2]);
+                        teamBlue[data[i][1]].move(data[i][2]);
                     }
                 }
             }
         });
 
-        setInterval(this.fetchData(), 20);
+        setInterval(this.fetchData, 20);
     }
 }
 
