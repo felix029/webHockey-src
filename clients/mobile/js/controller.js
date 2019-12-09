@@ -1,6 +1,6 @@
 window.addEventListener("load", () => {
 
-    let socket = io.connect();
+    let socket = io.connect('http://localhost:8000', {resource: '/node_modules/socket.io'} );
 
     let room = sessionStorage.getItem("room");
     let team = sessionStorage.getItem("team");
