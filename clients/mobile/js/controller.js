@@ -119,4 +119,10 @@ window.addEventListener("load", () => {
         socket.emit('action-b');  
     }
 
+    socket.on('roomclosed', () => {
+        sessionStorage.clear();
+        document.querySelector("#login-screen").style.display = "block";
+        document.querySelector("#controller").style.display = "none";
+    });
+
 });

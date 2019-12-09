@@ -24,6 +24,12 @@ io.sockets.on('connection', socket => {
     //Disconnect
     socket.on('disconnect', () => {
         if(socket.type === "Game"){
+            for(let i = 0; i < rooms[socket.room]["RED"].length; i++){
+                rooms[socket.room]["RED"][i].emit('roomclosed');
+            }
+            for(let i = 0; i < rooms[socket.room]["BLUE"].length; i++){
+                rooms[socket.room]["BLUE"][i].emit('roomclosed');
+            }
             delete rooms[socket.room];
             connections.splice(connections.indexOf(socket), 1);
             console.log('Game room %s closed. %s sockets connected.', socket.room, connections.length);
