@@ -7,7 +7,7 @@ window.addEventListener("load", () => {
         let connectButton = document.querySelector("#connect");
         connectButton.onclick = e => {
             e.preventDefault();
-
+            console.log(e);
             let userInput   = document.querySelector("#username").value;
             let roomInput   = parseInt(document.querySelector("#room").value);
             let radio       = document.getElementsByName("team")
@@ -23,12 +23,7 @@ window.addEventListener("load", () => {
             }
             else{
                 socket.emit('roomConnect', userInput, roomInput, teamInput, (data, id) => {
-                    if(data === "roomValid"){
-                        
-                        console.log("roomvalid");
-                        console.log(data);
-                        console.log(id);
-                        
+                    if(data === "roomValid"){                       
                         document.querySelector("#login-screen").style.display = "none";
                         document.querySelector("#controller").style.display = "grid";
                         sessionStorage.setItem("room", roomInput);
@@ -54,18 +49,22 @@ window.addEventListener("load", () => {
         let room = sessionStorage.getItem("room");
         let team = sessionStorage.getItem("team");
         let id = sessionStorage.getItem("id");
+
         socket.emit('checkConnection', room, team, id, (data) => {
 
             if(data == 'reconnect'){
-                console.log("reconnected");
+                document.querySelector("#login-screen").style.display = "none";
+                document.querySelector("#controller").style.display = "grid";
             }
-            else if(data == 'firstconnect'){
-                Storage.clear();
-                window.location.href = "http://www.tinyhockey.club";
+            else{
+                sessionStorage.clear();
+                document.querySelector("#login-screen").style.display = "block";
+                document.querySelector("#controller").style.display = "none";
+                location.reload(true);
             }
+
         });
-        document.querySelector("#login-screen").style.display = "none";
-        document.querySelector("#controller").style.display = "grid";
+        
     }
     
     

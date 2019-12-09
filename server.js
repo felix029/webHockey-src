@@ -37,8 +37,10 @@ io.sockets.on('connection', socket => {
             console.log('%s left %s team in room %s. %s sockets connected.', socket.username, socket.team, socket.room, connections.length);
         }
         else{
-            connections.splice(connections.indexOf(socket), 1);
-            console.log('Mobile client disconnected in main menu. %s sockets connected.', connections.length);
+            if(typeof rooms[socket.room] === 'undefined'){
+                console.log('Mobile client disconnected in main menu. %s sockets connected.', connections.length);
+                connections.splice(connections.indexOf(socket), 1);
+            }
         }
         
 
@@ -51,7 +53,7 @@ io.sockets.on('connection', socket => {
 
         do{
             //retirer le commentaire apres les tests
-            roomNumber = Math.floor(100000 + Math.random() * 900000);
+            //roomNumber = Math.floor(100000 + Math.random() * 900000);
             
             if(roomNumber in rooms){
                 roomCheck = false;
@@ -71,29 +73,30 @@ io.sockets.on('connection', socket => {
 
         console.log("Room " + roomNumber + " created.")
     })
-
+    
     //Checking if the socket already exists
     socket.on('checkConnection', (room, team, id, callback) => {
+        let valid = false;
 
-        if(rooms[room][team]){
+        if(typeof rooms[room] !== 'undefined' && typeof rooms[room][team] !== 'undefined'){
             for(let i = 0; i < rooms[room][team].length; i++){
                 if(rooms[room][team][i].id == id){
+                    valid = true;
                     socket.username = rooms[room][team][i].username;
                     socket.room = room;
                     socket.team = team;
                     socket.id = id;
                     rooms[room][team][i] = socket;
-                    console.log("Socket reassigned");
-                    callback("reconnect");
+                    console.log("%s socket in room %s reloaded.", socket.username, socket.room);
+                    callback('reconnect');
                     break;
                 }
             }
         }
-        else{
-            console.log("Socket doesn't exists... :(");
-            callback("firstconnect");
+        if(!valid){
+            callback('firstconnect');
         }
-
+    
     });
 
     //Connecting to room from a mobile browser, validating informations sent by user    

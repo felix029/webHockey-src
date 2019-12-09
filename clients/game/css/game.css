@@ -113,9 +113,9 @@ li:before{
     display: inline-block;
     height: 41px;
     width: 52px;
-    background-image: url("../images/puck.png");
+    background-image: url("../images/puckMenu.png");
     background-repeat: no-repeat;
-    padding-right: 10px;
+    margin-right: 10px;
 }
 
 /* ----------------- GAME ------------------ */

@@ -12,23 +12,31 @@ class Game {
         //Creations of the players
         this.teamRed = [];
         for(let i = 0; i < 2; i++){
+            let temp = null;
             if(teamRed[i]){
-                this.teamRed.push(new Player(i, teamRed[i][0], "RED", this.ctx));
+                temp = new Player(i, teamRed[i][0], "RED", this.ctx);
             }
             else{
-                this.teamRed.push(new AI(i, "RED"));
+                temp = new AI(i, "RED");
             }
+            this.teamRed.push(temp);
+            this.spriteList.push(temp);
         }
 
         this.teamBlue = [];
         for(let i = 0; i < 2; i++){
+            let temp = null;
             if(teamBlue[i]){
-                this.teamBlue.push(new Player(i, teamBlue[i][0], "BLUE", this.ctx));
+                temp = new Player(i, teamBlue[i][0], "BLUE", this.ctx);
             }
             else{
-                this.teamBlue.push(new AI(i, "BLUE"));
+                temp = new AI(i, "BLUE");
             }
+            this.teamBlue.push(temp);
+            this.spriteList.push(temp);
         }
+
+        this.spriteList.push(new Puck(this.ctx));
 
         this.scoreRed = 0;
         this.scoreBlue = 0;
@@ -55,9 +63,9 @@ class Game {
             }
         });
 
-        for(let i = 0; i < 2; i++){
-            this.teamRed[i].tick();
-            this.teamBlue[i].tick();
+        for(let i = 0; i < this.spriteList.length; i++){
+            let sprite = this.spriteList[i];
+            sprite.tick();
         }
     }
 }

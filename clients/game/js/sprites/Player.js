@@ -5,10 +5,6 @@ class Player{
         this.team = team;
         this.ctx = ctx;
 
-        this.maxVelocity = 3;
-        this.Xvelocity = 0;
-        this.Yvelocity = 0;
-
         this.gotPuck = false;
         this.dizzy = false;
 
@@ -24,6 +20,10 @@ class Player{
         let scale = 3.0;
         let spriteImg = "";
         this.flipped = false;
+
+        this.maxVelocity = 3;
+        this.Xvelocity = 0;
+        this.Yvelocity = 0;
 
         if(this.team == "RED"){
             spriteImg = "images/sprites/pRed.png";
