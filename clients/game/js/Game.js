@@ -1,6 +1,7 @@
 class Game {
     
     constructor(teamRed, teamBlue, socket){
+        this.firstRequest = true;
         this.socket = socket;
 
         // canvas = document.querySelector("canvas");
@@ -54,6 +55,19 @@ class Game {
         //     this.ctx.drawImage(this.bg, 0, 0, 1500, 600);
         // }
 
+        if(this.firstRequest){
+            this.firstRequest = false;
+            this.fetchData();
+        }
+        
+
+        for(let i = 0; i < this.spriteList.length; i++){
+            let sprite = this.spriteList[i];
+            sprite.tick();
+        }
+    }
+
+    fetchData(){
         this.socket.emit('fetch', (data) =>{
             if(data){
                 for(let i = 0; i < data.length; i++){
@@ -67,10 +81,7 @@ class Game {
             }
         });
 
-        for(let i = 0; i < this.spriteList.length; i++){
-            let sprite = this.spriteList[i];
-            sprite.tick();
-        }
+        setInterval(this.fetchData(), 20);
     }
 }
 
