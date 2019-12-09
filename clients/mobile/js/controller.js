@@ -60,7 +60,7 @@ window.addEventListener("load", () => {
                 sessionStorage.clear();
                 document.querySelector("#login-screen").style.display = "block";
                 document.querySelector("#controller").style.display = "none";
-                document.location.href = "http://www.tinyhockey.club:8000";
+                location.reload();
             }
 
         });
