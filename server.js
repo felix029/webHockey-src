@@ -76,7 +76,9 @@ io.sockets.on('connection', socket => {
     
     //Checking if the socket already exists
     socket.on('checkConnection', (room, team, id, callback) => {
-        let valid = false;
+	console.log("checkConnection. Room: " + room + " Team: " + team + " ID: " + id);
+        console.log("Mobile page reloaded, checking informations...");
+	let valid = false;
         if(room != null && team != null && id != null){
             if(typeof rooms[room] !== 'undefined' && typeof rooms[room][team] !== 'undefined'){
                 for(let i = 0; i < rooms[room][team].length; i++){
@@ -88,13 +90,14 @@ io.sockets.on('connection', socket => {
                         socket.id = id;
                         rooms[room][team][i] = socket;
                         console.log("%s socket in room %s reloaded.", socket.username, socket.room);
-                        callback('reconnect');
+			callback('reconnect');
                         break;
                     }
                 }
             }
         }
         if(!valid){
+	    console.log("Invalid... returning firstconnect");
             callback('firstconnect');
         }
     
