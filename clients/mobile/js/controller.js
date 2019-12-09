@@ -6,17 +6,13 @@ window.addEventListener("load", () => {
     let team = sessionStorage.getItem("team");
     let id = sessionStorage.getItem("id");
 
-    console.log("before check");
     socket.emit('checkConnection', room, team, id, (data) => {
-        console.log("in check");
         if(data == 'reconnect'){
-            console.log("reconnect");
             document.querySelector("#login-screen").style.display = "none";
             document.querySelector("#controller").style.display = "grid";
 
         }
         else{
-            console.log("first");
             sessionStorage.clear();
             document.querySelector("#login-screen").style.display = "block";
             document.querySelector("#controller").style.display = "none";
@@ -63,7 +59,6 @@ window.addEventListener("load", () => {
         }
     });
 
-    console.log("after check");
     //Controller
     let up      = document.querySelector("#up");    
     let right   = document.querySelector("#right");

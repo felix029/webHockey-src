@@ -1,9 +1,10 @@
 class Player{
-    constructor(id, name, team, ctx){
+    constructor(id, name, team, ctx, puck){
         this.id = id;
         this.name = name;
         this.team = team;
         this.ctx = ctx;
+        this.puck = puck;
 
         this.gotPuck = false;
         this.dizzy = false;
@@ -180,6 +181,9 @@ class Player{
             !Rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
             
                 this.x += this.Xvelocity;
+                if(this.gotPuck){
+
+                }
         }
 
         if( !Rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
@@ -187,9 +191,17 @@ class Player{
             !Rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
             
                 this.y += this.Yvelocity;
+                if(this.gotPuck){
+                    this.puck.move();
+                }
+        }
+
+        if(this.puck.collision(this.x, this.y)){
+             this.gotPuck = true;
         }
 
         this.ctx.font = "15px sport-content";
+        this.ctx.fillStyle = "rgb(0,0,0)";
         this.ctx.fillText(this.name, this.x-20, this.y-25);
         this.tiledImage.tick(this.x, this.y, this.ctx);
         return true;

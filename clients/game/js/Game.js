@@ -9,12 +9,16 @@ class Game {
         this.bg = new Image();
         this.bg.src = "images/rink.png"
 
+        //Creating the puck
+        this.puck = new Puck(this.ctx);
+        this.spriteList.push(this.puck);
+
         //Creations of the players
         this.teamRed = [];
         for(let i = 0; i < 2; i++){
             let temp = null;
             if(teamRed[i]){
-                temp = new Player(i, teamRed[i][0], "RED", this.ctx);
+                temp = new Player(i, teamRed[i][0], "RED", this.ctx, this.puck);
             }
             else{
                 temp = new AI(i, "RED");
@@ -27,7 +31,7 @@ class Game {
         for(let i = 0; i < 2; i++){
             let temp = null;
             if(teamBlue[i]){
-                temp = new Player(i, teamBlue[i][0], "BLUE", this.ctx);
+                temp = new Player(i, teamBlue[i][0], "BLUE", this.ctx, this.puck);
             }
             else{
                 temp = new AI(i, "BLUE");
@@ -36,7 +40,7 @@ class Game {
             this.spriteList.push(temp);
         }
 
-        this.spriteList.push(new Puck(this.ctx));
+       
 
         this.scoreRed = 0;
         this.scoreBlue = 0;
