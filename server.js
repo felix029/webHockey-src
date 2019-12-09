@@ -57,6 +57,14 @@ io.sockets.on('connection', socket => {
         let roomCheck = true;
         let roomNumber = 0;
 
+        if(typeof socket.room !== 'undefined'){
+            for(let i = 0; i < rooms[socket.room]["RED"].length; i++){
+                rooms[socket.room]["RED"][i].emit('roomclosed');
+            }
+            for(let i = 0; i < rooms[socket.room]["BLUE"].length; i++){
+                rooms[socket.room]["BLUE"][i].emit('roomclosed');
+            }
+        }
         do{
             //retirer le commentaire apres les tests
             roomNumber = Math.floor(100000 + Math.random() * 900000);
