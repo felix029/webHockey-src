@@ -60,7 +60,7 @@ window.addEventListener("load", () => {
                 sessionStorage.clear();
                 document.querySelector("#login-screen").style.display = "block";
                 document.querySelector("#controller").style.display = "none";
-                location.reload();
+                window.location = "159.89.115.31";
             }
 
         });
