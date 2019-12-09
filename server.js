@@ -77,19 +77,20 @@ io.sockets.on('connection', socket => {
     //Checking if the socket already exists
     socket.on('checkConnection', (room, team, id, callback) => {
         let valid = false;
-
-        if(typeof rooms[room] !== 'undefined' && typeof rooms[room][team] !== 'undefined'){
-            for(let i = 0; i < rooms[room][team].length; i++){
-                if(rooms[room][team][i].id == id){
-                    valid = true;
-                    socket.username = rooms[room][team][i].username;
-                    socket.room = room;
-                    socket.team = team;
-                    socket.id = id;
-                    rooms[room][team][i] = socket;
-                    console.log("%s socket in room %s reloaded.", socket.username, socket.room);
-                    callback('reconnect');
-                    break;
+        if(room != null && team != null && id != null){
+            if(typeof rooms[room] !== 'undefined' && typeof rooms[room][team] !== 'undefined'){
+                for(let i = 0; i < rooms[room][team].length; i++){
+                    if(rooms[room][team][i].id == id){
+                        valid = true;
+                        socket.username = rooms[room][team][i].username;
+                        socket.room = room;
+                        socket.team = team;
+                        socket.id = id;
+                        rooms[room][team][i] = socket;
+                        console.log("%s socket in room %s reloaded.", socket.username, socket.room);
+                        callback('reconnect');
+                        break;
+                    }
                 }
             }
         }

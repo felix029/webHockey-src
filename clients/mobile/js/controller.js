@@ -2,73 +2,65 @@ window.addEventListener("load", () => {
 
     let socket = io.connect();
 
-    if(sessionStorage.getItem("room") == null && sessionStorage.getItem("team") == null && sessionStorage.getItem("id") == null && sessionStorage.getItem("reloaded") === "true"){
-        sessionStorage.removeItem("reloaded");
-        //Connect to a room
-        let connectButton = document.querySelector("#connect");
-        connectButton.onclick = e => {
-            e.preventDefault();
-            console.log(e);
-            let userInput   = document.querySelector("#username").value;
-            let roomInput   = parseInt(document.querySelector("#room").value);
-            let radio       = document.getElementsByName("team")
-            let teamInput   = "";
-            for(let i = 0; i < radio.length; i++){
-                if(radio[i].checked){
-                    teamInput = radio[i].value;
-                }
-            }
 
-            if(userInput == null || roomInput == null || teamInput == ""){
-                alert("Missing informations.")
-            }
-            else{
-                socket.emit('roomConnect', userInput, roomInput, teamInput, (data, id) => {
-                    if(data === "roomValid"){                       
-                        document.querySelector("#login-screen").style.display = "none";
-                        document.querySelector("#controller").style.display = "grid";
-                        sessionStorage.setItem("room", roomInput);
-                        sessionStorage.setItem("team", teamInput);
-                        sessionStorage.setItem("id", id);
-                        //document.documentElement.webkitRequestFullScreen();
-                    }
-                    else if(data === "roomFull"){
-                        alert("This room is full.");
-                    }
-                    else if(data === "roomNull"){
-                        alert("This room doesn't exist.");
-                    }
-                    else if(data === "teamFull"){
-                        alert("The team you selected is full.");
-                    }
-                });
-            }
-    
+
+    let room = sessionStorage.getItem("room");
+    let team = sessionStorage.getItem("team");
+    let id = sessionStorage.getItem("id");
+
+    socket.emit('checkConnection', room, team, id, (data) => {
+
+        if(data == 'reconnect'){
+            document.querySelector("#login-screen").style.display = "none";
+            document.querySelector("#controller").style.display = "grid";
+
         }
-    }
-    else{
-        let room = sessionStorage.getItem("room");
-        let team = sessionStorage.getItem("team");
-        let id = sessionStorage.getItem("id");
+        else if(data == 'firstconnect'){
+            sessionStorage.clear();
+            document.querySelector("#login-screen").style.display = "block";
+            document.querySelector("#controller").style.display = "none";
+            //Connect to a room
+            let connectButton = document.querySelector("#connect");
+            connectButton.onclick = e => {
+                e.preventDefault();
+                let userInput   = document.querySelector("#username").value;
+                let roomInput   = parseInt(document.querySelector("#room").value);
+                let radio       = document.getElementsByName("team")
+                let teamInput   = "";
+                for(let i = 0; i < radio.length; i++){
+                    if(radio[i].checked){
+                        teamInput = radio[i].value;
+                    }
+                }
+            
+                if(userInput == null || roomInput == null || teamInput == ""){
+                    alert("Missing informations.")
+                }
+                else{
+                    socket.emit('roomConnect', userInput, roomInput, teamInput, (data, id) => {
+                        if(data === "roomValid"){                       
+                            document.querySelector("#login-screen").style.display = "none";
+                            document.querySelector("#controller").style.display = "grid";
+                            sessionStorage.setItem("room", roomInput);
+                            sessionStorage.setItem("team", teamInput);
+                            sessionStorage.setItem("id", id);
+                            //document.documentElement.webkitRequestFullScreen();
+                        }
+                        else if(data === "roomFull"){
+                            alert("This room is full.");
+                        }
+                        else if(data === "roomNull"){
+                            alert("This room doesn't exist.");
+                        }
+                        else if(data === "teamFull"){
+                            alert("The team you selected is full.");
+                        }
+                    });
+                }
 
-        socket.emit('checkConnection', room, team, id, (data) => {
-
-            if(data == 'reconnect'){
-                document.querySelector("#login-screen").style.display = "none";
-                document.querySelector("#controller").style.display = "grid";
             }
-            else{
-                sessionStorage.clear();
-                document.querySelector("#login-screen").style.display = "block";
-                document.querySelector("#controller").style.display = "none";
-                sessionsStorage.setItem("reloaded", "true");
-            }
-
-        });
-        
-    }
-    
-    
+        }
+    });
 
     //Controller
     let up      = document.querySelector("#up");    
