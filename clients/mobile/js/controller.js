@@ -60,7 +60,7 @@ window.addEventListener("load", () => {
                 sessionStorage.clear();
                 document.querySelector("#login-screen").style.display = "block";
                 document.querySelector("#controller").style.display = "none";
-                window.location.href = "mobileIndex.html";
+                location.reload(false);
             }
 
         });
