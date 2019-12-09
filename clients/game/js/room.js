@@ -1,15 +1,18 @@
 let game = null;
-// let canvas = null;
-// let ctx = null;
-// let bg = new Image();
+let canvas = null;
+let ctx = null;
+let bg = new Image();
 
 window.addEventListener("load", () => {
     
     let socket = io.connect();
     let teamRed = [];
     let teamBlue = [];
-
     let roomNumber = 0;
+
+    canvas = document.querySelector("canvas");
+    ctx = canvas.getContext("2d");
+    bg.src = "images/rink.png";
 
     //Players list
     let p1 = document.querySelector("#j1");
@@ -56,6 +59,7 @@ window.addEventListener("load", () => {
 
     document.querySelector("#start").onclick = e =>{
         e.preventDefault();
+        
 
         if(teamRed.length + teamBlue.length == 0){
             alert("You need at least one player to start the game!");
@@ -72,6 +76,10 @@ window.addEventListener("load", () => {
 });
 
 const tick = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if(bg.complete){
+        ctx.drawImage(bg, 0, 0, 1500, 600);
+    }
     game.tick();
 
     window.requestAnimationFrame(tick);

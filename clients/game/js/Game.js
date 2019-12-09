@@ -3,14 +3,14 @@ class Game {
     constructor(teamRed, teamBlue, socket){
         this.socket = socket;
 
-        this.canvas = document.querySelector("canvas");
-        this.ctx = this.canvas.getContext("2d");
+        // canvas = document.querySelector("canvas");
+        // ctx = canvas.getContext("2d");
         this.spriteList = [];
-        this.bg = new Image();
-        this.bg.src = "images/rink.png"
+        // this.bg = new Image();
+        // this.bg.src = "images/rink.png"
 
         //Creating the puck
-        this.puck = new Puck(this.ctx);
+        this.puck = new Puck();
         this.spriteList.push(this.puck);
 
         //Creations of the players
@@ -18,7 +18,7 @@ class Game {
         for(let i = 0; i < 2; i++){
             let temp = null;
             if(teamRed[i]){
-                temp = new Player(i, teamRed[i][0], "RED", this.ctx, this.puck);
+                temp = new Player(i, teamRed[i][0], "RED", this.puck);
             }
             else{
                 temp = new AI(i, "RED");
@@ -31,7 +31,7 @@ class Game {
         for(let i = 0; i < 2; i++){
             let temp = null;
             if(teamBlue[i]){
-                temp = new Player(i, teamBlue[i][0], "BLUE", this.ctx, this.puck);
+                temp = new Player(i, teamBlue[i][0], "BLUE", this.puck);
             }
             else{
                 temp = new AI(i, "BLUE");
@@ -50,9 +50,9 @@ class Game {
     }
 
     tick () {
-        if(this.bg.complete){
-            this.ctx.drawImage(this.bg, 0, 0, 1500, 600);
-        }
+        // if(this.bg.complete){
+        //     this.ctx.drawImage(this.bg, 0, 0, 1500, 600);
+        // }
 
         this.socket.emit('fetch', (data) =>{
             if(data){

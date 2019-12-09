@@ -1,6 +1,7 @@
 class Puck {
-    constructor(ctx){
-        this.ctx = ctx;
+    constructor(){
+        let canvas = document.querySelector("canvas");
+        this.ctx = canvas.getContext("2d");
         this.image = new Image();
         this.image.src = "images/sprites/puck.png";
         
@@ -29,7 +30,7 @@ class Puck {
     }
 
     move(x, y, force){
-        
+
     }
 
     tick() {
@@ -38,6 +39,6 @@ class Puck {
         this.ctx.arc(this.x, this.y, 15, 0, 2 * Math.PI)
         this.ctx.fillStyle = "rgba(10, 10, 10, 0.3)"
         this.ctx.fill();
-        return true;
+        return false;
     }
 }

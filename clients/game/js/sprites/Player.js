@@ -1,9 +1,12 @@
 class Player{
-    constructor(id, name, team, ctx, puck){
+    constructor(id, name, team, puck){
+
+        let canvas = document.querySelector("canvas");
+        this.ctx = canvas.getContext("2d");
+
         this.id = id;
         this.name = name;
         this.team = team;
-        this.ctx = ctx;
         this.puck = puck;
 
         this.gotPuck = false;
@@ -203,7 +206,8 @@ class Player{
         this.ctx.font = "15px sport-content";
         this.ctx.fillStyle = "rgb(0,0,0)";
         this.ctx.fillText(this.name, this.x-20, this.y-25);
+        this.ctx.fillRect(this.x, this.y, 10, 10);
         this.tiledImage.tick(this.x, this.y, this.ctx);
-        return true;
+        return false;
     }
 }
