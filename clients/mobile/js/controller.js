@@ -2,7 +2,8 @@ window.addEventListener("load", () => {
 
     let socket = io.connect();
 
-    if(sessionStorage.getItem("room") == null && sessionStorage.getItem("team") == null && sessionStorage.getItem("id") == null){
+    if(sessionStorage.getItem("room") == null && sessionStorage.getItem("team") == null && sessionStorage.getItem("id") == null && sessionStorage.getItem("reloaded") === "true"){
+        sessionStorage.removeItem("reloaded");
         //Connect to a room
         let connectButton = document.querySelector("#connect");
         connectButton.onclick = e => {
@@ -60,7 +61,7 @@ window.addEventListener("load", () => {
                 sessionStorage.clear();
                 document.querySelector("#login-screen").style.display = "block";
                 document.querySelector("#controller").style.display = "none";
-                //location.reload(false);
+                sessionsStorage.setItem("reloaded", "true");
             }
 
         });
