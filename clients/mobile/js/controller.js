@@ -1,6 +1,8 @@
+let socket = null;
+
 window.addEventListener("load", () => {
 
-    let socket = io.connect();
+    socket = io.connect();
 
     let room = sessionStorage.getItem("room");
     let team = sessionStorage.getItem("team");

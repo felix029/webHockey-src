@@ -26,9 +26,11 @@ io.sockets.on('connection', socket => {
         if(socket.type === "Game"){
             for(let i = 0; i < rooms[socket.room]["RED"].length; i++){
                 rooms[socket.room]["RED"][i].emit('roomclosed');
+                console.log('Emitted room closed');
             }
             for(let i = 0; i < rooms[socket.room]["BLUE"].length; i++){
                 rooms[socket.room]["BLUE"][i].emit('roomclosed');
+                console.log("Emitted room closed");
             }
             delete rooms[socket.room];
             connections.splice(connections.indexOf(socket), 1);
@@ -64,6 +66,7 @@ io.sockets.on('connection', socket => {
             for(let i = 0; i < rooms[socket.room]["BLUE"].length; i++){
                 rooms[socket.room]["BLUE"][i].emit('roomclosed');
             }
+            console.log("Emitted room closed");
         }
         do{
             //retirer le commentaire apres les tests
@@ -91,7 +94,6 @@ io.sockets.on('connection', socket => {
     //Checking if the socket already exists
     socket.on('checkConnection', (room, team, id, callback) => {
 	console.log("checkConnection. Room: " + room + " Team: " + team + " ID: " + id);
-    console.log("Mobile page reloaded, checking informations...");
 	let valid = false;
         if(room != null && team != null && id != null){
             if(typeof rooms[room] !== 'undefined' && typeof rooms[room][team] !== 'undefined'){
@@ -104,7 +106,7 @@ io.sockets.on('connection', socket => {
                         socket.id = id;
                         rooms[room][team][i] = socket;
                         console.log("%s socket in room %s reloaded.", socket.username, socket.room);
-			callback('reconnect');
+			            callback('reconnect');
                         break;
                     }
                 }
@@ -151,6 +153,7 @@ io.sockets.on('connection', socket => {
     
     //This function will change the game state to 1, meaning the game is going on
     socket.on('startGame', () => {
+        console.log("Game started in room %s", socket.room);
         rooms[socket.room]["STATUS"] = 1;
     });
     
@@ -164,13 +167,13 @@ io.sockets.on('connection', socket => {
                 teamRed.push([rooms[room]["RED"][i].username, rooms[room]["RED"][i].id]);
             }
             else{
-                teamRed.push("...");
+                teamRed.push(["J" + (1+i)]);
             }
             if(rooms[room]["BLUE"][i]){
                 teamBlue.push([rooms[room]["BLUE"][i].username, rooms[room]["BLUE"][i].id]);
             }
             else{
-                teamBlue.push("...");
+                teamBlue.push(["J" + (3+i)]);
             }
         }
         
@@ -248,7 +251,6 @@ io.sockets.on('connection', socket => {
     socket.on('fetch', callback =>{
         //Sending back the list of actions that as been added since the last tick
         callback(socket.actions);
-
         //Clearing the actions list
         socket.actions = [];
     });

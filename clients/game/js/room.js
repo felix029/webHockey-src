@@ -2,17 +2,23 @@ let game = null;
 let canvas = null;
 let ctx = null;
 let bg = new Image();
-let times = [];
+let socket = null;
+
+let teamRed = [];
+let teamBlue = [];
+
+// let times = [];
 
 window.addEventListener("load", () => {
     
-    let socket = io.connect();
-    let teamRed = [];
-    let teamBlue = [];
+    socket = io.connect();
+    teamRed = [["P1", 0], ["P2", 1]];
+    teamBlue = [["P3", 0], ["P4", 1]];
     let roomNumber = 0;
 
     canvas = document.querySelector("canvas");
     ctx = canvas.getContext("2d");
+    ctx.font = "15px sport-content";
     bg.src = "images/rink.png";
 
     //Players list
@@ -21,10 +27,10 @@ window.addEventListener("load", () => {
     let p3 = document.querySelector("#j3");
     let p4 = document.querySelector("#j4");
 
-    let nameP1 = document.createTextNode("...");
-    let nameP2 = document.createTextNode("...");
-    let nameP3 = document.createTextNode("...");
-    let nameP4 = document.createTextNode("...");
+    let nameP1 = document.createTextNode("J1");
+    let nameP2 = document.createTextNode("J2");
+    let nameP3 = document.createTextNode("J3");
+    let nameP4 = document.createTextNode("J4");
 
     p1.appendChild(nameP1);
     p2.appendChild(nameP2);
@@ -70,30 +76,29 @@ window.addEventListener("load", () => {
             document.querySelector('#waiting-room').style.display = "none";
             document.querySelector('#game').style.display = "grid";
     
-            game = new Game(teamRed, teamBlue, socket);
+            game = new Game();
             tick();
         }
     }
+    
 });
 
 const tick = () => {
-    if(times.length < 500){
-        times.push(Date.now());
-    }
-    else{
-        let total = 0;
-        for(let i = 0; i < times.length; i++){
-            total += times[i];
-        }
-        let avg = Date.now() - (total / times.length);
-        console.log("Average time for the last 500 ticks: " + avg);
-        times = [];
-    }
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if(bg.complete){
-        ctx.drawImage(bg, 0, 0, 1500, 600);
-    }
+    //TICK TIMER
+    // if(times.length < 500){
+    //     times.push(Date.now());
+    // }
+    // else{
+    //     let total = 0;
+    //     for(let i = 0; i < times.length; i++){
+    //         total += times[i];
+    //     }
+    //     let avg = Date.now() - (total / times.length);
+    //     console.log("Average time for last 500 ticks: " + avg);
+    //     times = [];
+    // }
+
     game.tick();
 
     window.requestAnimationFrame(tick);

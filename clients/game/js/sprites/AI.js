@@ -5,5 +5,6 @@ class AI extends Player{
 
     tick(){
         
+        return true;
     }
 }

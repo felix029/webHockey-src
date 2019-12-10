@@ -1,13 +1,9 @@
 class Player{
-    constructor(id, name, team, puck){
-
-        let canvas = document.querySelector("canvas");
-        this.ctx = canvas.getContext("2d");
-
+    constructor(id, name, team){
+        this.times = [];
         this.id = id;
         this.name = name;
         this.team = team;
-        this.puck = puck;
 
         this.gotPuck = false;
         this.dizzy = false;
@@ -28,6 +24,24 @@ class Player{
         this.maxVelocity = 3;
         this.Xvelocity = 0;
         this.Yvelocity = 0;
+
+        //REMOVE AFTER TESTS ******************************************
+        if(team == "RED" && id == 0){
+            document.onkeyup = e => {
+                if(e.which == 87) this.up =             false;
+                else if (e.which == 65) this.left =     false;
+                else if (e.which == 83) this.down =     false;
+                else if (e.which == 68) this.right =    false;
+            };
+
+            document.onkeydown = e => {
+                if(e.which == 87) this.up = true;
+                else if (e.which == 65) this.left = true;
+                else if (e.which == 83) this.down = true;
+                else if (e.which == 68) this.right = true;
+            };
+        }
+        //*************************************************************
 
         if(this.team == "RED"){
             spriteImg = "images/sprites/pRed.png";
@@ -63,20 +77,20 @@ class Player{
     move(action){
 
         //Directions
-        if(action === "up")     {   this.up = !this.up;         }
-        if(action === "down")   {   this.down = !this.down;     }
-        if(action === "left")   {   this.left = !this.left;     }
-        if(action === "right")  {   this.right = !this.right;   }
+        if(action == "up")     {   this.up = !this.up;         }
+        if(action == "down")   {   this.down = !this.down;     }
+        if(action == "left")   {   this.left = !this.left;     }
+        if(action == "right")  {   this.right = !this.right;   }
 
         //Actions
-        if(action === "action-a"){
+        if(action == "action-a"){
             if(this.gotPuck){
                 this.shoot();
             }
 
         }
 
-        if(action === "action-b"){
+        if(action == "action-b"){
             if(this.gotPuck){
                 this.pass();
             }
@@ -100,6 +114,21 @@ class Player{
 
     tick() {
 
+         //TICK TIMER *********************************************************************
+        // if(this.times.length < 500){
+        //     this.times.push(Date.now());
+        // }
+        // else{
+        //     let total = 0;
+        //     for(let i = 0; i < this.times.length; i++){
+        //         total += this.times[i];
+        //     }
+        //     let avg = Date.now() - (total / this.times.length);
+        //     console.log("Average time for " + this.name + " last 500 ticks: " + avg);
+        //     this.times = [];
+        // }
+        //*********************************************************************************
+
         if(this.up){
             this.tiledImage.changeRow(4);
 
@@ -109,6 +138,7 @@ class Player{
             
             this.tiledImage.setLooped(true);
         }
+
         if(this.down){
             this.tiledImage.changeRow(2);
 
@@ -119,6 +149,7 @@ class Player{
             this.tiledImage.setLooped(true);
           
         }
+
         if(this.left){
             this.tiledImage.changeRow(0);
 
@@ -179,34 +210,33 @@ class Player{
 
         }
 
-        if( !Rink.boardCollision((this.x + this.Xvelocity), this.y) &&
-            !Rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
-            !Rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
+        if( !rink.boardCollision((this.x + this.Xvelocity), this.y) &&
+            !rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
+            !rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
             
                 this.x += this.Xvelocity;
-                if(this.gotPuck){
-
-                }
+                // if(this.gotPuck){
+                //     puck.move();
+                // }
         }
 
-        if( !Rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
-            !Rink.redZoneCollision(this.x, (this.y + this.Yvelocity)) &&
-            !Rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
+        if( !rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
+            !rink.redZoneCollision(this.x, (this.y + this.Yvelocity)) &&
+            !rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
             
                 this.y += this.Yvelocity;
-                if(this.gotPuck){
-                    this.puck.move();
-                }
+                // if(this.gotPuck){
+                //     puck.move();
+                // }
         }
 
-        if(this.puck.collision(this.x, this.y)){
+        if(puckFree && puck.collision(this.x, this.y)){
              this.gotPuck = true;
         }
 
-        this.ctx.font = "15px sport-content";
-        this.ctx.fillStyle = "rgb(0,0,0)";
-        this.ctx.fillText(this.name, this.x-20, this.y-25);
-        this.tiledImage.tick(this.x, this.y, this.ctx);
-        return false;
+        ctx.fillStyle = "rgb(0,0,0)";
+        ctx.fillText(this.name, this.x-20, this.y-25);
+        this.tiledImage.tick(this.x, this.y, ctx);
+        return true;
     }
 }
