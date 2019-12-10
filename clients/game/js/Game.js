@@ -8,6 +8,7 @@ class Game {
         this.firstRequest = true;
         roomSocket = socket;
 
+        console.log("new game!");
         // canvas = document.querySelector("canvas");
         // ctx = canvas.getContext("2d");
         this.spriteList = [];

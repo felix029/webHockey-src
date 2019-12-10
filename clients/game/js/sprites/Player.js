@@ -1,6 +1,7 @@
 class Player{
     constructor(id, name, team, rink, puck){
 
+        console.log("new player!")
         let canvas = document.querySelector("canvas");
         this.ctx = canvas.getContext("2d");
 
