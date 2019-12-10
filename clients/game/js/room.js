@@ -11,7 +11,7 @@ let teamBlue = [];
 
 window.addEventListener("load", () => {
     
-    //socket = io.connect();
+    socket = io.connect();
     teamRed = [["P1", 0], ["P2", 1]];
     teamBlue = [["P3", 0], ["P4", 1]];
     let roomNumber = 0;
@@ -37,30 +37,30 @@ window.addEventListener("load", () => {
     p3.appendChild(nameP3);
     p4.appendChild(nameP4);
 
-    // //Creating the room
-    // socket.emit('newRoom', data => {
-    //     if(data){
-    //         roomNumber = data;
+    //Creating the room
+    socket.emit('newRoom', data => {
+        if(data){
+            roomNumber = data;
         
-    //         let newNode = document.createElement("h2");
-    //         let newTextNode = document.createTextNode("Room number: " + roomNumber);
-    //         newNode.appendChild(newTextNode);
-    //         document.querySelector("#title").appendChild(newNode);
-    //     }
-    // });
+            let newNode = document.createElement("h2");
+            let newTextNode = document.createTextNode("Room number: " + roomNumber);
+            newNode.appendChild(newTextNode);
+            document.querySelector("#title").appendChild(newNode);
+        }
+    });
 
-    // //Updating the players list
-    // socket.on('updatePlayers', (red, blue) => {
+    //Updating the players list
+    socket.on('updatePlayers', (red, blue) => {
 
-    //     nameP1.nodeValue = red[0][0];
-    //     nameP2.nodeValue = red[1][0];
-    //     nameP3.nodeValue = blue[0][0];
-    //     nameP4.nodeValue = blue[1][0];
+        nameP1.nodeValue = red[0][0];
+        nameP2.nodeValue = red[1][0];
+        nameP3.nodeValue = blue[0][0];
+        nameP4.nodeValue = blue[1][0];
 
-    //     teamRed = red;
-    //     teamBlue = blue;
+        teamRed = red;
+        teamBlue = blue;
 
-    // });
+    });
 
 
 
@@ -68,17 +68,17 @@ window.addEventListener("load", () => {
         e.preventDefault();
         
 
-        // if(teamRed.length + teamBlue.length == 0){
-        //     alert("You need at least one player to start the game!");
-        // }
-        // else{
-            //socket.emit('startGame');
+        if(teamRed.length + teamBlue.length == 0){
+            alert("You need at least one player to start the game!");
+        }
+        else{
+            socket.emit('startGame');
             document.querySelector('#waiting-room').style.display = "none";
             document.querySelector('#game').style.display = "grid";
     
             game = new Game();
             tick();
-        //}
+        }
     }
     
 });

@@ -112,29 +112,29 @@ class Player{
 
     tick() {
 
-         //TICK TIMER
-        if(this.times.length < 500){
-            this.times.push(Date.now());
-        }
-        else{
-            let total = 0;
-            for(let i = 0; i < this.times.length; i++){
-                total += this.times[i];
-            }
-            let avg = Date.now() - (total / this.times.length);
-            console.log("Average time for " + this.name + " last 500 ticks: " + avg);
-            this.times = [];
-        }
+        //  //TICK TIMER
+        // if(this.times.length < 500){
+        //     this.times.push(Date.now());
+        // }
+        // else{
+        //     let total = 0;
+        //     for(let i = 0; i < this.times.length; i++){
+        //         total += this.times[i];
+        //     }
+        //     let avg = Date.now() - (total / this.times.length);
+        //     console.log("Average time for " + this.name + " last 500 ticks: " + avg);
+        //     this.times = [];
+        // }
 
-        if(this.up){
-            this.tiledImage.changeRow(4);
+        // if(this.up){
+        //     this.tiledImage.changeRow(4);
 
-            if(Math.abs(this.Yvelocity) < this.maxVelocity){
-                this.Yvelocity -= 0.1;
-            }
+        //     if(Math.abs(this.Yvelocity) < this.maxVelocity){
+        //         this.Yvelocity -= 0.1;
+        //     }
             
-            this.tiledImage.setLooped(true);
-        }
+        //     this.tiledImage.setLooped(true);
+        // }
 
         if(this.down){
             this.tiledImage.changeRow(2);

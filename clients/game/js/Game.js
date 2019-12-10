@@ -58,7 +58,7 @@ class Game {
         }
         if(firstRequest){
             firstRequest = false;
-            //setInterval(this.fetchData, 30);
+            setInterval(this.fetchData, 30);
         }
         
 
@@ -68,21 +68,21 @@ class Game {
         }
     }
 
-    // fetchData(){
-    //     socket.emit('fetch', (data) =>{
-    //         if(data){
-    //             for(let i = 0; i < data.length; i++){
-    //                 if(data[i][0] === "RED"){
-    //                     pRed[data[i][1]].move(data[i][2]);
-    //                 }
-    //                 if(data[i][0] === "BLUE"){
-    //                     pBlue[data[i][1]].move(data[i][2]);
-    //                 }
-    //             }
-    //         }
-    //     });
+    fetchData(){
+        socket.emit('fetch', (data) =>{
+            if(data){
+                for(let i = 0; i < data.length; i++){
+                    if(data[i][0] === "RED"){
+                        pRed[data[i][1]].move(data[i][2]);
+                    }
+                    if(data[i][0] === "BLUE"){
+                        pBlue[data[i][1]].move(data[i][2]);
+                    }
+                }
+            }
+        });
 
-    //     
-    // }
+        
+    }
 }
 
