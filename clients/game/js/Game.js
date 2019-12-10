@@ -1,53 +1,45 @@
-let roomSocket = null;
-let teamRed = [];
-let teamBlue = [];
+let spriteList = [];
+let pBlue = [];
+let pRed = [];
+let rink = null;
+let puck = null;
+let firstRequest = true;
 
 class Game {
     
-    constructor(lobbyTeamRed, lobbyTeamBlue, socket){
-        this.firstRequest = true;
-        roomSocket = socket;
-
-        console.log("new game!");
-        // canvas = document.querySelector("canvas");
-        // ctx = canvas.getContext("2d");
-        this.spriteList = [];
-        // this.bg = new Image();
-        // this.bg.src = "images/rink.png"
+    constructor(){
 
         //Creating the rink
-        this.rink = new Rink();
-        this.spriteList.push(this.rink);
+        rink = new Rink();
+        spriteList.push(rink);
 
         //Creating the puck
-        this.puck = new Puck();
-        this.spriteList.push(this.puck);
-
+        puck = new Puck();
+        spriteList.push(puck);
         
-
         //Creations of the players
         for(let i = 0; i < 2; i++){
             let temp = null;
-            if(lobbyTeamRed[i]){
-                temp = new Player(i, lobbyTeamRed[i][0], "RED", this.rink, this.puck);
+            if(teamRed[i]){
+                temp = new Player(i, teamRed[i][0], "RED");
             }
             else{
                 temp = new AI(i, "RED");
             }
-            teamRed.push(temp);
-            this.spriteList.push(temp);
+            pRed.push(temp);
+            spriteList.push(temp);
         }
 
         for(let i = 0; i < 2; i++){
             let temp = null;
-            if(lobbyTeamBlue[i]){
-                temp = new Player(i, lobbyTeamBlue[i][0], "BLUE", this.rink, this.puck);
+            if(teamBlue[i]){
+                temp = new Player(i, teamBlue[i][0], "BLUE");
             }
             else{
                 temp = new AI(i, "BLUE");
             }
-            teamBlue.push(temp);
-            this.spriteList.push(temp);
+            pBlue.push(temp);
+            spriteList.push(temp);
         }
 
        
@@ -60,31 +52,31 @@ class Game {
     }
 
     tick () {
-        // if(this.bg.complete){
-        //     this.ctx.drawImage(this.bg, 0, 0, 1500, 600);
-        // }
-
-        if(this.firstRequest){
-            this.firstRequest = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if(bg.complete){
+            ctx.drawImage(bg, 0, 0, 1500, 600);
+        }
+        if(firstRequest){
+            firstRequest = false;
             //setInterval(this.fetchData, 30);
         }
         
 
-        for(let i = 0; i < this.spriteList.length; i++){
-            let sprite = this.spriteList[i];
+        for(let i = 0; i < spriteList.length; i++){
+            const sprite = spriteList[i]; 
             sprite.tick();
         }
     }
 
     // fetchData(){
-    //     roomSocket.emit('fetch', (data) =>{
+    //     socket.emit('fetch', (data) =>{
     //         if(data){
     //             for(let i = 0; i < data.length; i++){
     //                 if(data[i][0] === "RED"){
-    //                     teamRed[data[i][1]].move(data[i][2]);
+    //                     pRed[data[i][1]].move(data[i][2]);
     //                 }
     //                 if(data[i][0] === "BLUE"){
-    //                     teamBlue[data[i][1]].move(data[i][2]);
+    //                     pBlue[data[i][1]].move(data[i][2]);
     //                 }
     //             }
     //         }

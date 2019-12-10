@@ -1,15 +1,9 @@
 class Player{
-    constructor(id, name, team, rink, puck){
-
-        console.log("new player!")
-        let canvas = document.querySelector("canvas");
-        this.ctx = canvas.getContext("2d");
-
+    constructor(id, name, team){
+        this.times = [];
         this.id = id;
         this.name = name;
         this.team = team;
-        this.puck = puck;
-        this.rink = rink;
 
         this.gotPuck = false;
         this.dizzy = false;
@@ -81,20 +75,20 @@ class Player{
     move(action){
 
         //Directions
-        if(action === "up")     {   this.up = !this.up;         }
-        if(action === "down")   {   this.down = !this.down;     }
-        if(action === "left")   {   this.left = !this.left;     }
-        if(action === "right")  {   this.right = !this.right;   }
+        if(action == "up")     {   this.up = !this.up;         }
+        if(action == "down")   {   this.down = !this.down;     }
+        if(action == "left")   {   this.left = !this.left;     }
+        if(action == "right")  {   this.right = !this.right;   }
 
         //Actions
-        if(action === "action-a"){
+        if(action == "action-a"){
             if(this.gotPuck){
                 this.shoot();
             }
 
         }
 
-        if(action === "action-b"){
+        if(action == "action-b"){
             if(this.gotPuck){
                 this.pass();
             }
@@ -118,6 +112,20 @@ class Player{
 
     tick() {
 
+         //TICK TIMER
+        if(this.times.length < 500){
+            this.times.push(Date.now());
+        }
+        else{
+            let total = 0;
+            for(let i = 0; i < this.times.length; i++){
+                total += this.times[i];
+            }
+            let avg = Date.now() - (total / this.times.length);
+            console.log("Average time for " + this.name + " last 500 ticks: " + avg);
+            this.times = [];
+        }
+
         if(this.up){
             this.tiledImage.changeRow(4);
 
@@ -127,6 +135,7 @@ class Player{
             
             this.tiledImage.setLooped(true);
         }
+
         if(this.down){
             this.tiledImage.changeRow(2);
 
@@ -137,6 +146,7 @@ class Player{
             this.tiledImage.setLooped(true);
           
         }
+
         if(this.left){
             this.tiledImage.changeRow(0);
 
@@ -176,16 +186,16 @@ class Player{
             
             //Gliding effect when controls are released
             if(this.Yvelocity != 0 && this.Yvelocity < 0){
-                this.Yvelocity += 0.1;
+                this.Yvelocity += 0.05;
             }
             if(this.Yvelocity != 0 && this.Yvelocity > 0){
-                this.Yvelocity -= 0.1;
+                this.Yvelocity -= 0.05;
             }
             if(this.Xvelocity != 0 && this.Xvelocity < 0){
-                this.Xvelocity += 0.1;
+                this.Xvelocity += 0.05;
             }
             if(this.Xvelocity != 0 && this.Xvelocity > 0){
-                this.Xvelocity -= 0.1;
+                this.Xvelocity -= 0.05;
             }
 
             if(Math.abs(this.Yvelocity) <= 0.1){
@@ -197,37 +207,33 @@ class Player{
 
         }
 
-        if( !this.rink.boardCollision((this.x + this.Xvelocity), this.y) &&
-            !this.rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
-            !this.rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
+        if( !rink.boardCollision((this.x + this.Xvelocity), this.y) &&
+            !rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
+            !rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
             
                 this.x += this.Xvelocity;
-                if(this.gotPuck){
-                    this.puck.move();
-                }
+                // if(this.gotPuck){
+                //     puck.move();
+                // }
         }
 
-        if( !this.rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
-            !this.rink.redZoneCollision(this.x, (this.y + this.Yvelocity)) &&
-            !this.rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
+        if( !rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
+            !rink.redZoneCollision(this.x, (this.y + this.Yvelocity)) &&
+            !rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
             
                 this.y += this.Yvelocity;
-                if(this.gotPuck){
-                    this.puck.move();
-                }
+                // if(this.gotPuck){
+                //     puck.move();
+                // }
         }
 
-        // this.x += this.Xvelocity;
-        // this.y += this.Yvelocity;
+        if(puckFree && puck.collision(this.x, this.y)){
+             this.gotPuck = true;
+        }
 
-        // if(this.puck.collision(this.x, this.y)){
-        //      this.gotPuck = true;
-        // }
-
-        this.ctx.font = "15px sport-content";
-        this.ctx.fillStyle = "rgb(0,0,0)";
-        this.ctx.fillText(this.name, this.x-20, this.y-25);
-        this.tiledImage.tick(this.x, this.y, this.ctx);
-        return false;
+        ctx.fillStyle = "rgb(0,0,0)";
+        ctx.fillText(this.name, this.x-20, this.y-25);
+        this.tiledImage.tick(this.x, this.y, ctx);
+        return true;
     }
 }

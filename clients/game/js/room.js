@@ -3,17 +3,22 @@ let canvas = null;
 let ctx = null;
 let bg = new Image();
 let socket = null;
-let times = [];
+
+let teamRed = [];
+let teamBlue = [];
+
+// let times = [];
 
 window.addEventListener("load", () => {
     
     //socket = io.connect();
-    let teamRed = [[0, "papa"], [1, "popo"]];
-    let teamBlue = [[0, "papa"], [1, "popo"]];
+    teamRed = [["P1", 0], ["P2", 1]];
+    teamBlue = [["P3", 0], ["P4", 1]];
     let roomNumber = 0;
 
     canvas = document.querySelector("canvas");
     ctx = canvas.getContext("2d");
+    ctx.font = "15px sport-content";
     bg.src = "images/rink.png";
 
     //Players list
@@ -22,17 +27,17 @@ window.addEventListener("load", () => {
     let p3 = document.querySelector("#j3");
     let p4 = document.querySelector("#j4");
 
-    let nameP1 = document.createTextNode("...");
-    let nameP2 = document.createTextNode("...");
-    let nameP3 = document.createTextNode("...");
-    let nameP4 = document.createTextNode("...");
+    let nameP1 = document.createTextNode("(empty)");
+    let nameP2 = document.createTextNode("(empty)");
+    let nameP3 = document.createTextNode("(empty)");
+    let nameP4 = document.createTextNode("(empty)");
 
     p1.appendChild(nameP1);
     p2.appendChild(nameP2);
     p3.appendChild(nameP3);
     p4.appendChild(nameP4);
 
-    //Creating the room
+    // //Creating the room
     // socket.emit('newRoom', data => {
     //     if(data){
     //         roomNumber = data;
@@ -44,7 +49,7 @@ window.addEventListener("load", () => {
     //     }
     // });
 
-    //Updating the players list
+    // //Updating the players list
     // socket.on('updatePlayers', (red, blue) => {
 
     //     nameP1.nodeValue = red[0][0];
@@ -71,7 +76,7 @@ window.addEventListener("load", () => {
             document.querySelector('#waiting-room').style.display = "none";
             document.querySelector('#game').style.display = "grid";
     
-            game = new Game(teamRed, teamBlue, socket);
+            game = new Game();
             tick();
         //}
     }
@@ -80,22 +85,20 @@ window.addEventListener("load", () => {
 
 const tick = () => {
 
-    if(times.length < 500){
-        times.push(Date.now());
-    }
-    else{
-        let total = 0;
-        for(let i = 0; i < times.length; i++){
-            total += times[i];
-        }
-        let avg = Date.now() - (total / times.length);
-        console.log("Average time for the last 500 ticks: " + avg);
-        times = [];
-    }
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if(bg.complete){
-        ctx.drawImage(bg, 0, 0, 1500, 600);
-    }
+    //TICK TIMER
+    // if(times.length < 500){
+    //     times.push(Date.now());
+    // }
+    // else{
+    //     let total = 0;
+    //     for(let i = 0; i < times.length; i++){
+    //         total += times[i];
+    //     }
+    //     let avg = Date.now() - (total / times.length);
+    //     console.log("Average time for last 500 ticks: " + avg);
+    //     times = [];
+    // }
+
     game.tick();
 
     window.requestAnimationFrame(tick);

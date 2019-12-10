@@ -1,7 +1,6 @@
 class Rink {
-    constructor(){
-        console.log("new rink");
-    }
+    constructor(){}
+
     //General collision
     boardCollision(x, y){
 
@@ -10,7 +9,7 @@ class Rink {
                         [1391, 526], [1381, 542], [1370, 550], [114, 550], [104, 541], [90, 526] 
                     ];
         
-        return !Utils.inside([x, y], rink);
+        return !inside([x, y], rink);
     }
 
     //Player collision
@@ -18,14 +17,14 @@ class Rink {
 
         let zone = [ [113, 204], [197, 204], [197, 384], [113, 384] ];
 
-        return Utils.inside([x, y], zone);
+        return inside([x, y], zone);
     }
 
     blueZoneCollision(x, y){
 
         let zone = [ [1290, 204], [1370, 204], [1370, 384], [1290, 384] ];
 
-        return Utils.inside([x, y], zone);
+        return inside([x, y], zone);
     }
 
     //Puck collision
