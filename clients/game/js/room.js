@@ -2,6 +2,7 @@ let game = null;
 let canvas = null;
 let ctx = null;
 let bg = new Image();
+let times = [];
 
 window.addEventListener("load", () => {
     
@@ -76,6 +77,19 @@ window.addEventListener("load", () => {
 });
 
 const tick = () => {
+    if(times.length < 500){
+        times.push(Date.now());
+    }
+    else{
+        let total = 0;
+        for(let i = 0; i < times.length; i++){
+            total += times[i];
+        }
+        let avg = Date.now() - (total / times.length);
+        console.log("Average time for the last 500 ticks: " + avg);
+        times = [];
+    }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if(bg.complete){
         ctx.drawImage(bg, 0, 0, 1500, 600);
