@@ -1,4 +1,5 @@
 function TiledImage(imagePath, columns, rows, refreshInterval, horizontal, scale, nodeID) {
+	console.log("new tiled image");
 	this.nodeID = nodeID;
 
 	if (this.nodeID != null) {

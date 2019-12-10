@@ -1,5 +1,8 @@
 class Utils{
 
+    constructor(){
+        console.log("new util");
+    }
     //Source for this function: https://github.com/substack/point-in-polygon
     static inside(point, vs) {
         // ray-casting algorithm based on

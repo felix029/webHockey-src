@@ -1,5 +1,7 @@
 class Rink {
-
+    constructor(){
+        console.log("new rink");
+    }
     //General collision
     boardCollision(x, y){
 
