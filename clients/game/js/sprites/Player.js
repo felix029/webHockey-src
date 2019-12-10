@@ -175,16 +175,16 @@ class Player{
             
             //Gliding effect when controls are released
             if(this.Yvelocity != 0 && this.Yvelocity < 0){
-                this.Yvelocity += 0.05;
+                this.Yvelocity += 0.1;
             }
             if(this.Yvelocity != 0 && this.Yvelocity > 0){
-                this.Yvelocity -= 0.05;
+                this.Yvelocity -= 0.1;
             }
             if(this.Xvelocity != 0 && this.Xvelocity < 0){
-                this.Xvelocity += 0.05;
+                this.Xvelocity += 0.1;
             }
             if(this.Xvelocity != 0 && this.Xvelocity > 0){
-                this.Xvelocity -= 0.05;
+                this.Xvelocity -= 0.1;
             }
 
             if(Math.abs(this.Yvelocity) <= 0.1){
@@ -216,11 +216,13 @@ class Player{
                 }
         }
 
-        if(this.puck.collision(this.x, this.y)){
-             this.gotPuck = true;
-        }
+        // this.x += this.Xvelocity;
+        // this.y += this.Yvelocity;
 
-        console.log("X " + this.Xvelocity + " Y " + this.Yvelocity);
+        // if(this.puck.collision(this.x, this.y)){
+        //      this.gotPuck = true;
+        // }
+
         this.ctx.font = "15px sport-content";
         this.ctx.fillStyle = "rgb(0,0,0)";
         this.ctx.fillText(this.name, this.x-20, this.y-25);
