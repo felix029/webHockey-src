@@ -25,6 +25,7 @@ class Player{
         this.Xvelocity = 0;
         this.Yvelocity = 0;
 
+        //REMOVE AFTER TESTS ******************************************
         if(team == "RED" && id == 0){
             document.onkeyup = e => {
                 if(e.which == 87) this.up =             false;
@@ -40,6 +41,7 @@ class Player{
                 else if (e.which == 68) this.right = true;
             };
         }
+        //*************************************************************
 
         if(this.team == "RED"){
             spriteImg = "images/sprites/pRed.png";
@@ -112,7 +114,7 @@ class Player{
 
     tick() {
 
-        //  //TICK TIMER
+         //TICK TIMER *********************************************************************
         // if(this.times.length < 500){
         //     this.times.push(Date.now());
         // }
@@ -125,16 +127,17 @@ class Player{
         //     console.log("Average time for " + this.name + " last 500 ticks: " + avg);
         //     this.times = [];
         // }
+        //*********************************************************************************
 
-        // if(this.up){
-        //     this.tiledImage.changeRow(4);
+        if(this.up){
+            this.tiledImage.changeRow(4);
 
-        //     if(Math.abs(this.Yvelocity) < this.maxVelocity){
-        //         this.Yvelocity -= 0.1;
-        //     }
+            if(Math.abs(this.Yvelocity) < this.maxVelocity){
+                this.Yvelocity -= 0.1;
+            }
             
-        //     this.tiledImage.setLooped(true);
-        // }
+            this.tiledImage.setLooped(true);
+        }
 
         if(this.down){
             this.tiledImage.changeRow(2);

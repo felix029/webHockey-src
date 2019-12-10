@@ -27,10 +27,10 @@ window.addEventListener("load", () => {
     let p3 = document.querySelector("#j3");
     let p4 = document.querySelector("#j4");
 
-    let nameP1 = document.createTextNode("(empty)");
-    let nameP2 = document.createTextNode("(empty)");
-    let nameP3 = document.createTextNode("(empty)");
-    let nameP4 = document.createTextNode("(empty)");
+    let nameP1 = document.createTextNode("J1");
+    let nameP2 = document.createTextNode("J2");
+    let nameP3 = document.createTextNode("J3");
+    let nameP4 = document.createTextNode("J4");
 
     p1.appendChild(nameP1);
     p2.appendChild(nameP2);
