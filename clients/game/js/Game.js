@@ -3,6 +3,10 @@ let pBlue = [];
 let pRed = [];
 let rink = null;
 let puck = null;
+let scoreRed = 0;
+let scoreBlue = 0;
+let period = 1;
+let time = 0;
 let firstRequest = true;
 
 class Game {
@@ -41,13 +45,6 @@ class Game {
             pBlue.push(temp);
             spriteList.push(temp);
         }
-
-       
-
-        this.scoreRed = 0;
-        this.scoreBlue = 0;
-        this.period = 1;
-        this.time = 0;
 
     }
 
