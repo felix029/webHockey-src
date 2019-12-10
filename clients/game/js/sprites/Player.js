@@ -206,7 +206,6 @@ class Player{
         this.ctx.font = "15px sport-content";
         this.ctx.fillStyle = "rgb(0,0,0)";
         this.ctx.fillText(this.name, this.x-20, this.y-25);
-        this.ctx.fillRect(this.x, this.y, 10, 10);
         this.tiledImage.tick(this.x, this.y, this.ctx);
         return false;
     }
