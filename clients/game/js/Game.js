@@ -65,7 +65,7 @@ class Game {
 
         if(this.firstRequest){
             this.firstRequest = false;
-            //this.fetchData();
+            //setInterval(this.fetchData, 30);
         }
         
 
@@ -89,7 +89,7 @@ class Game {
     //         }
     //     });
 
-    //     setInterval(this.fetchData, 50);
+    //     
     // }
 }
 
