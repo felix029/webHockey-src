@@ -220,7 +220,12 @@ class Player{
              this.gotPuck = true;
         }
 
-        console.log("X " + this.Xvelocity + " Y " + this.Yvelocity);
+        if(this.team == "RED" && this.id == 0){
+            console.log("Position");
+            console.log("X: " + this.x + " Y: " + this.y);
+            console.log("Velocity");
+            console.log("X " + this.Xvelocity + " Y " + this.Yvelocity);
+        }
         this.ctx.font = "15px sport-content";
         this.ctx.fillStyle = "rgb(0,0,0)";
         this.ctx.fillText(this.name, this.x-20, this.y-25);
