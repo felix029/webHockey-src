@@ -14,15 +14,21 @@ class Game {
         // this.bg = new Image();
         // this.bg.src = "images/rink.png"
 
+        //Creating the rink
+        this.rink = new Rink();
+        this.spriteList.push(this.rink);
+
         //Creating the puck
         this.puck = new Puck();
         this.spriteList.push(this.puck);
+
+        
 
         //Creations of the players
         for(let i = 0; i < 2; i++){
             let temp = null;
             if(lobbyTeamRed[i]){
-                temp = new Player(i, lobbyTeamRed[i][0], "RED", this.puck);
+                temp = new Player(i, lobbyTeamRed[i][0], "RED", this.rink, this.puck);
             }
             else{
                 temp = new AI(i, "RED");
@@ -34,7 +40,7 @@ class Game {
         for(let i = 0; i < 2; i++){
             let temp = null;
             if(lobbyTeamBlue[i]){
-                temp = new Player(i, lobbyTeamBlue[i][0], "BLUE", this.puck);
+                temp = new Player(i, lobbyTeamBlue[i][0], "BLUE", this.rink, this.puck);
             }
             else{
                 temp = new AI(i, "BLUE");
@@ -59,7 +65,7 @@ class Game {
 
         if(this.firstRequest){
             this.firstRequest = false;
-            this.fetchData();
+            //this.fetchData();
         }
         
 
@@ -69,21 +75,21 @@ class Game {
         }
     }
 
-    fetchData(){
-        roomSocket.emit('fetch', (data) =>{
-            if(data){
-                for(let i = 0; i < data.length; i++){
-                    if(data[i][0] === "RED"){
-                        teamRed[data[i][1]].move(data[i][2]);
-                    }
-                    if(data[i][0] === "BLUE"){
-                        teamBlue[data[i][1]].move(data[i][2]);
-                    }
-                }
-            }
-        });
+    // fetchData(){
+    //     roomSocket.emit('fetch', (data) =>{
+    //         if(data){
+    //             for(let i = 0; i < data.length; i++){
+    //                 if(data[i][0] === "RED"){
+    //                     teamRed[data[i][1]].move(data[i][2]);
+    //                 }
+    //                 if(data[i][0] === "BLUE"){
+    //                     teamBlue[data[i][1]].move(data[i][2]);
+    //                 }
+    //             }
+    //         }
+    //     });
 
-        setInterval(this.fetchData, 20);
-    }
+    //     setInterval(this.fetchData, 50);
+    // }
 }
 

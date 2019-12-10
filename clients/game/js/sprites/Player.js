@@ -1,5 +1,5 @@
 class Player{
-    constructor(id, name, team, puck){
+    constructor(id, name, team, rink, puck){
 
         let canvas = document.querySelector("canvas");
         this.ctx = canvas.getContext("2d");
@@ -8,6 +8,7 @@ class Player{
         this.name = name;
         this.team = team;
         this.puck = puck;
+        this.rink = rink;
 
         this.gotPuck = false;
         this.dizzy = false;
@@ -28,6 +29,22 @@ class Player{
         this.maxVelocity = 3;
         this.Xvelocity = 0;
         this.Yvelocity = 0;
+
+        if(team == "RED" && id == 0){
+            document.onkeyup = e => {
+                if(e.which == 87) this.up =             false;
+                else if (e.which == 65) this.left =     false;
+                else if (e.which == 83) this.down =     false;
+                else if (e.which == 68) this.right =    false;
+            };
+
+            document.onkeydown = e => {
+                if(e.which == 87) this.up = true;
+                else if (e.which == 65) this.left = true;
+                else if (e.which == 83) this.down = true;
+                else if (e.which == 68) this.right = true;
+            };
+        }
 
         if(this.team == "RED"){
             spriteImg = "images/sprites/pRed.png";
@@ -179,19 +196,19 @@ class Player{
 
         }
 
-        if( !Rink.boardCollision((this.x + this.Xvelocity), this.y) &&
-            !Rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
-            !Rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
+        if( !this.rink.boardCollision((this.x + this.Xvelocity), this.y) &&
+            !this.rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
+            !this.rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
             
                 this.x += this.Xvelocity;
                 if(this.gotPuck){
-
+                    this.puck.move();
                 }
         }
 
-        if( !Rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
-            !Rink.redZoneCollision(this.x, (this.y + this.Yvelocity)) &&
-            !Rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
+        if( !this.rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
+            !this.rink.redZoneCollision(this.x, (this.y + this.Yvelocity)) &&
+            !this.rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
             
                 this.y += this.Yvelocity;
                 if(this.gotPuck){
@@ -203,10 +220,10 @@ class Player{
              this.gotPuck = true;
         }
 
+        console.log("X " + this.Xvelocity + " Y " + this.Yvelocity);
         this.ctx.font = "15px sport-content";
         this.ctx.fillStyle = "rgb(0,0,0)";
         this.ctx.fillText(this.name, this.x-20, this.y-25);
-        this.ctx.fillRect(this.x, this.y, 10, 10);
         this.tiledImage.tick(this.x, this.y, this.ctx);
         return false;
     }
