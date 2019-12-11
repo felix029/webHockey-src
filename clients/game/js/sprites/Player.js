@@ -26,6 +26,8 @@ class Player{
         this.maxVelocity = 3;
         this.Xvelocity = 0;
         this.Yvelocity = 0;
+        this.adjustedX = 0;
+        this.adjustedY = 0
 
         //REMOVE AFTER TESTS ******************************************
         if(team == "RED" && id == 0){
@@ -139,6 +141,8 @@ class Player{
         //*********************************************************************************
 
         if(this.up){
+            this.adjustedY = -20;
+
             this.tiledImage.changeRow(4);
 
             if(Math.abs(this.Yvelocity) < this.maxVelocity){
@@ -149,6 +153,8 @@ class Player{
         }
 
         if(this.down){
+            this.adjustedY = 20;
+
             this.tiledImage.changeRow(2);
 
             if(Math.abs(this.Yvelocity) < this.maxVelocity){
@@ -160,6 +166,8 @@ class Player{
         }
 
         if(this.left){
+            this.adjustedX = -20;
+
             this.tiledImage.changeRow(0);
 
             if(this.team == "RED"){
@@ -177,6 +185,8 @@ class Player{
            
         }
         if(this.right){
+            this.adjustedX = 20;
+
             this.tiledImage.changeRow(0);
 
             if(this.team == "BLUE"){
@@ -226,24 +236,24 @@ class Player{
             const sprite = spriteList[i];
             if(sprite.type === "player"){
                 if(sprite.name !== this.name){
-                    if(sprite.collision((this.x + this.Xvelocity), this.y)){
+                    if(sprite.collision((this.x + this.Xvelocity) + this.adjustedX, this.y + this.adjustedY)){
                         collisionX = true;
                     }
-                    if(sprite.collision(this.x, (this.y + this.Yvelocity))){
+                    if(sprite.collision(this.x + this.adjustedX, (this.y + this.Yvelocity) + this.adjustedY)){
                         collisionY = true;
                     }
                 }
             }
             else if(sprite.type === "puck"){
-                if(puckFree && sprite.collision(this.x, this.y)){
+                if(puckFree && sprite.collision(this.x + this.adjustedX, this.y + this.adjustedY)){
                     this.gotPuck = true;
                 }
             }
             else{
-                if(sprite.collision((this.x + this.Xvelocity), this.y)){
+                if(sprite.collision((this.x + this.Xvelocity) + this.adjustedX, this.y + this.adjustedY)){
                     collisionX = true;
                 }
-                if(sprite.collision(this.x, (this.y + this.Yvelocity))){
+                if(sprite.collision(this.x + this.adjustedX, (this.y + this.Yvelocity) + this.adjustedY)){
                     collisionY = true;
                 }
             }
