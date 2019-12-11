@@ -112,6 +112,38 @@ class Player{
 
     }
 
+    collision(){
+
+        let collision = false;
+
+        if(this.team == "RED"){
+            if(this.id == 0){
+                collision = inside([this.x, this.y], [])
+            }
+            else{
+
+            }
+
+            for(let i = 0; i < pBlue.length; i++){
+
+            }
+        }
+        else{
+            if(this.id == 0){
+
+            }
+            else{
+                
+            }
+
+            for(let i = 0; i < pRed.length; i++){
+                
+            }
+        }
+
+        return collision;
+    }
+
     tick() {
 
          //TICK TIMER *********************************************************************
@@ -210,6 +242,10 @@ class Player{
 
         }
 
+        for(let i = 0; i < spritesList.length; i++){
+            const sprite = spriteList[i];
+            console.log(typeof sprite);
+        }
         if( !rink.boardCollision((this.x + this.Xvelocity), this.y) &&
             !rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
             !rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){

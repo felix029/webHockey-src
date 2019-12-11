@@ -1,6 +1,19 @@
 class Rink {
     constructor(){}
 
+    collision(x, y){
+        let collision = true;
+
+        if(!this.boardCollision(x, y) && !this.redZoneCollision(x, y) && !this.blueZoneCollision(x, y)){
+            collision = false;
+        }
+        else{
+            collision = true;
+        }
+
+        return collision;
+    }
+
     //General collision
     boardCollision(x, y){
 
