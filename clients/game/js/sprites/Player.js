@@ -1,5 +1,7 @@
 class Player{
     constructor(id, name, team){
+        this.type = "player";
+
         this.times = [];
         this.id = id;
         this.name = name;
@@ -112,53 +114,28 @@ class Player{
 
     }
 
-    collision(){
+    collision(x, y){
 
-        let collision = false;
+        let player = [ [this.x-20, this.y-20], [this.x+20, this.y-20], [this.x+20, this.y+20], [this.x-20, this.y+20] ];
 
-        if(this.team == "RED"){
-            if(this.id == 0){
-                collision = inside([this.x, this.y], [])
-            }
-            else{
-
-            }
-
-            for(let i = 0; i < pBlue.length; i++){
-
-            }
-        }
-        else{
-            if(this.id == 0){
-
-            }
-            else{
-                
-            }
-
-            for(let i = 0; i < pRed.length; i++){
-                
-            }
-        }
-
-        return collision;
+        return inside([x, y], player);
     }
 
     tick() {
 
          //TICK TIMER *********************************************************************
-        // if(this.times.length < 500){
-        //     this.times.push(Date.now());
-        // }
-        // else{
-        //     let total = 0;
-        //     for(let i = 0; i < this.times.length; i++){
-        //         total += this.times[i];
-        //     }
-        //     let avg = Date.now() - (total / this.times.length);
-        //     console.log("Average time for " + this.name + " last 500 ticks: " + avg);
-        //     this.times = [];
-        // }
+        if(this.times.length < 500){
+            this.times.push(Date.now());
+        }
+        else{
+            let total = 0;
+            for(let i = 0; i < this.times.length; i++){
+                total += this.times[i];
+            }
+            let avg = Date.now() - (total / this.times.length);
+            console.log("Average time for " + this.name + " last 500 ticks: " + avg);
+            this.times = [];
+        }
         //*********************************************************************************
 
         if(this.up){
@@ -242,32 +219,49 @@ class Player{
 
         }
 
-        for(let i = 0; i < spritesList.length; i++){
+        let collisionX = false;
+        let collisionY = false;
+        for(let i = 0; i < spriteList.length; i++){
+            
             const sprite = spriteList[i];
-            console.log(typeof sprite);
-        }
-        if( !rink.boardCollision((this.x + this.Xvelocity), this.y) &&
-            !rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
-            !rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
-            
-                this.x += this.Xvelocity;
-                // if(this.gotPuck){
-                //     puck.move();
-                // }
+            if(sprite.type === "player"){
+                if(sprite.name !== this.name){
+                    if(sprite.collision((this.x + this.Xvelocity), this.y)){
+                        collisionX = true;
+                    }
+                    if(sprite.collision(this.x, (this.y + this.Yvelocity))){
+                        collisionY = true;
+                    }
+                }
+            }
+            else if(sprite.type === "puck"){
+                if(puckFree && sprite.collision(this.x, this.y)){
+                    this.gotPuck = true;
+                }
+            }
+            else{
+                if(sprite.collision((this.x + this.Xvelocity), this.y)){
+                    collisionX = true;
+                }
+                if(sprite.collision(this.x, (this.y + this.Yvelocity))){
+                    collisionY = true;
+                }
+            }
         }
 
-        if( !rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
-            !rink.redZoneCollision(this.x, (this.y + this.Yvelocity)) &&
-            !rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
-            
-                this.y += this.Yvelocity;
-                // if(this.gotPuck){
-                //     puck.move();
-                // }
+        if(!collisionX){
+            this.x += this.Xvelocity;
+            // if(this.gotPuck){
+            //     puck.move();
+            // }
+                
         }
 
-        if(puckFree && puck.collision(this.x, this.y)){
-             this.gotPuck = true;
+        if(!collisionY){
+            this.y += this.Yvelocity;
+            // if(this.gotPuck){
+            //     puck.move();
+            // }
         }
 
         ctx.fillStyle = "rgb(0,0,0)";

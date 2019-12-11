@@ -3,6 +3,8 @@ let imgPuck = new Image();
 
 class Puck {
     constructor(){
+        this.type = "puck";
+        
         imgPuck.src = "images/sprites/puck.png";
         
         this.x = 750;

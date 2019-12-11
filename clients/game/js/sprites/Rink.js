@@ -1,5 +1,7 @@
 class Rink {
-    constructor(){}
+    constructor(){
+        this.type = "rink";
+    }
 
     collision(x, y){
         let collision = true;
