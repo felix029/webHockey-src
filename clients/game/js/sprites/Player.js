@@ -242,9 +242,8 @@ class Player{
 
         }
 
-        for(let i = 0; i < spritesList.length; i++){
+        for(let i = 0; i < spriteList.length; i++){
             const sprite = spriteList[i];
-            console.log(typeof sprite);
         }
         if( !rink.boardCollision((this.x + this.Xvelocity), this.y) &&
             !rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
