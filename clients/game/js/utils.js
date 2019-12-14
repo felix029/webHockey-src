@@ -17,3 +17,16 @@ const inside = (point, vs) => {
 
     return inside;
 };
+
+const boxCollision = (box1, box2) => {
+    //box parameters must be a dict {x: , y: , width: , height: }
+    let collision = false;
+
+    if (box1.x < box2.x + box2.w && box1.x + box1.w > box2.x &&
+        box1.y < box2.y + box2.h && box1.h + box1.y > box2.y) {
+            
+            collision = true;
+    }
+
+    return collision;
+}
