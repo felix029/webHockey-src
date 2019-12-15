@@ -41,10 +41,30 @@ class Player{
             };
 
             document.onkeydown = e => {
-                if(e.which == 87) this.up = true;
-                else if (e.which == 65) this.left = true;
-                else if (e.which == 83) this.down = true;
-                else if (e.which == 68) this.right = true;
+                if(e.which == 87){
+                    this.up = true;
+                    if(this.gotPuck){
+                        puck.direction = "up";        
+                    } 
+                } 
+                else if (e.which == 65){
+                    this.left = true;
+                    if(this.gotPuck){
+                        puck.direction = "left";        
+                    } 
+                } 
+                else if (e.which == 83){
+                    this.down = true;
+                    if(this.gotPuck){
+                        puck.direction = "down";        
+                    } 
+                } 
+                else if (e.which == 68){
+                    this.right = true;
+                    if(this.gotPuck){
+                        puck.direction = "right";        
+                    } 
+                } 
             };
         }
         //*************************************************************
@@ -83,10 +103,30 @@ class Player{
     move(action){
 
         //Directions
-        if(action == "up")     {   this.up = !this.up;         }
-        if(action == "down")   {   this.down = !this.down;     }
-        if(action == "left")   {   this.left = !this.left;     }
-        if(action == "right")  {   this.right = !this.right;   }
+        if(action == "up"){
+            this.up = !this.up; 
+            if(this.gotPuck){
+                puck.direction = action;        
+            }   
+        }
+        if(action == "down"){
+            this.down = !this.down; 
+            if(this.gotPuck){ 
+                puck.direction = action;    
+            }      
+        }
+        if(action == "left"){
+            this.left = !this.left; 
+            if(this.gotPuck){ 
+                puck.direction = action;    
+            }      
+        }
+       if(action == "right"){
+            this.right = !this.right; 
+            if(this.gotPuck){ 
+                puck.direction = action;  
+            }   
+        }
 
         //Actions
         if(action == "action-a"){
@@ -158,18 +198,18 @@ class Player{
     tick() {
 
         //TICK TIMER *********************************************************************
-        if(this.times.length < 500){
-            this.times.push(Date.now());
-        }
-        else{
-            let total = 0;
-            for(let i = 0; i < this.times.length; i++){
-                total += this.times[i];
-            }
-            let avg = Date.now() - (total / this.times.length);
-            console.log("Average time for " + this.name + " last 500 ticks: " + avg);
-            this.times = [];
-        }
+        // if(this.times.length < 500){
+        //     this.times.push(Date.now());
+        // }
+        // else{
+        //     let total = 0;
+        //     for(let i = 0; i < this.times.length; i++){
+        //         total += this.times[i];
+        //     }
+        //     let avg = Date.now() - (total / this.times.length);
+        //     console.log("Average time for " + this.name + " last 500 ticks: " + avg);
+        //     this.times = [];
+        // }
         //*********************************************************************************
 
         //Adjustment of position in case it's stuck in a board collision
@@ -206,6 +246,7 @@ class Player{
             else if(sprite.type === "puck"){
                 if(puckFree && sprite.collision(this.x, this.y) && !this.dizzy){
                     this.gotPuck = true;
+                   
                 }
             }
             else{
@@ -343,18 +384,15 @@ class Player{
         }
 
         if(!collisionX){
-            this.x += this.Xvelocity;
-            // if(this.gotPuck){
-            //     puck.move();
-            // }
-                
+            this.x += this.Xvelocity;               
         }
 
         if(!collisionY){
             this.y += this.Yvelocity;
-            // if(this.gotPuck){
-            //     puck.move();
-            // }
+        }
+
+        if(this.gotPuck){
+            puck.move(this.x, this.y, 0);
         }
 
         if(this.hitFrame){
