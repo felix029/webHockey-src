@@ -49,7 +49,7 @@ window.addEventListener("load", () => {
         }
     });
 
-    Updating the players list
+    //Updating the players list
     socket.on('updatePlayers', (red, blue) => {
 
         nameP1.nodeValue = red[0][0];
