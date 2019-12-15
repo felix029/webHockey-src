@@ -24,14 +24,13 @@ class Player{
         let loopInColumns = true;
         let scale = 3.0;
         let spriteImg = "";
-        this.flipped = false;
 
         this.maxVelocity = 3;
         this.Xvelocity = 0;
         this.Yvelocity = 0;
 
         //REMOVE AFTER TESTS ******************************************
-        if(team == "RED" && id == 0){
+        if(team == "BLUE" && id == 0){
             document.onkeyup = e => {
                 if(e.which == 87) this.up =             false;
                 else if (e.which == 65) this.left =     false;
@@ -278,6 +277,13 @@ class Player{
         }
 
         if(this.up && !this.dizzy){
+            if(this.team == "RED"){
+                this.tiledImage.setFlipped(true);
+            }
+            else{
+                this.tiledImage.setFlipped(false);
+            }
+
             this.tiledImage.changeRow(4);
 
             if(!collisionY){
@@ -295,7 +301,14 @@ class Player{
         }
 
         if(this.down && !this.dizzy){  
+            if(this.team == "RED"){
+                this.tiledImage.setFlipped(false);
+            }
+            else{
+                this.tiledImage.setFlipped(true);
+            }
             this.tiledImage.changeRow(2);
+
 
             if(!collisionY){
                 if(Math.abs(this.Yvelocity) < this.maxVelocity){

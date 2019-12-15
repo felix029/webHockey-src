@@ -38,14 +38,14 @@ class Puck {
             console.log('in force 0');
             if(this.direction == "up"){
                 console.log('in up');
-                this.x = x+25;
-                this.y = y-10;
+                this.x = x+20;
+                this.y = y+16;
 
             }
             if(this.direction == "down"){
                 console.log('in down');
-                this.x = x+25;
-                this.y = y+10;
+                this.x = x+14;
+                this.y = y+23;
             }
             if(this.direction == "left"){
                 console.log('in left');
