@@ -1,5 +1,7 @@
 class Player{
     constructor(id, name, team){
+        this.type = "player";
+
         this.times = [];
         this.id = id;
         this.name = name;
@@ -7,6 +9,9 @@ class Player{
 
         this.gotPuck = false;
         this.dizzy = false;
+        this.dizzyCounter = 150;
+        this.hitFrame = false;
+        this.hitFrameCounter = 10;
 
         this.up = false;
         this.down = false;
@@ -19,26 +24,46 @@ class Player{
         let loopInColumns = true;
         let scale = 3.0;
         let spriteImg = "";
-        this.flipped = false;
 
         this.maxVelocity = 3;
         this.Xvelocity = 0;
         this.Yvelocity = 0;
 
         //REMOVE AFTER TESTS ******************************************
-        if(team == "RED" && id == 0){
+        if(team == "BLUE" && id == 0){
             document.onkeyup = e => {
                 if(e.which == 87) this.up =             false;
                 else if (e.which == 65) this.left =     false;
                 else if (e.which == 83) this.down =     false;
                 else if (e.which == 68) this.right =    false;
+                else if (e.which == 17) this.hit();
             };
 
             document.onkeydown = e => {
-                if(e.which == 87) this.up = true;
-                else if (e.which == 65) this.left = true;
-                else if (e.which == 83) this.down = true;
-                else if (e.which == 68) this.right = true;
+                if(e.which == 87){
+                    this.up = true;
+                    if(this.gotPuck){
+                        puck.direction = "up";        
+                    } 
+                } 
+                else if (e.which == 65){
+                    this.left = true;
+                    if(this.gotPuck){
+                        puck.direction = "left";        
+                    } 
+                } 
+                else if (e.which == 83){
+                    this.down = true;
+                    if(this.gotPuck){
+                        puck.direction = "down";        
+                    } 
+                } 
+                else if (e.which == 68){
+                    this.right = true;
+                    if(this.gotPuck){
+                        puck.direction = "right";        
+                    } 
+                } 
             };
         }
         //*************************************************************
@@ -77,10 +102,30 @@ class Player{
     move(action){
 
         //Directions
-        if(action == "up")     {   this.up = !this.up;         }
-        if(action == "down")   {   this.down = !this.down;     }
-        if(action == "left")   {   this.left = !this.left;     }
-        if(action == "right")  {   this.right = !this.right;   }
+        if(action == "up"){
+            this.up = !this.up; 
+            if(this.gotPuck){
+                puck.direction = action;        
+            }   
+        }
+        if(action == "down"){
+            this.down = !this.down; 
+            if(this.gotPuck){ 
+                puck.direction = action;    
+            }      
+        }
+        if(action == "left"){
+            this.left = !this.left; 
+            if(this.gotPuck){ 
+                puck.direction = action;    
+            }      
+        }
+       if(action == "right"){
+            this.right = !this.right; 
+            if(this.gotPuck){ 
+                puck.direction = action;  
+            }   
+        }
 
         //Actions
         if(action == "action-a"){
@@ -110,43 +155,48 @@ class Player{
 
     hit(){
 
+        this.hitFrame = true;
+        for(let i = 0; i < spriteList.length; i++){
+            const sprite = spriteList[i];
+            if(sprite.type === "player" && sprite.name !== this.name && sprite.team !== this.team){
+                if(this.up){
+                    if(sprite.collision(this.x, this.y - 2)){
+                        sprite.dizzy = true;
+                    }
+                }
+                if(this.down){
+                    if(sprite.collision(this.x, this.y + 2)){
+                        sprite.dizzy = true;
+                    }
+                }
+                if(this.left){
+                    if(sprite.collision(this.x - 2, this.y)){
+                        sprite.dizzy = true;
+                    }
+                }
+                if(this.right){
+                    if(sprite.collision(this.x + 2, this.y)){
+                        sprite.dizzy = true;
+                    }
+                }
+
+                
+            }
+        }
     }
 
-    collision(){
+    collision(x, y){
 
-        let collision = false;
+        let self = {x: this.x-18, y: this.y-20, w: 34, h: 44};
 
-        if(this.team == "RED"){
-            if(this.id == 0){
-                collision = inside([this.x, this.y], [])
-            }
-            else{
+        let player = {x: x-18, y: y-20, w: 34, h: 44};
 
-            }
-
-            for(let i = 0; i < pBlue.length; i++){
-
-            }
-        }
-        else{
-            if(this.id == 0){
-
-            }
-            else{
-                
-            }
-
-            for(let i = 0; i < pRed.length; i++){
-                
-            }
-        }
-
-        return collision;
+        return boxCollision(self, player);
     }
 
     tick() {
 
-         //TICK TIMER *********************************************************************
+        //TICK TIMER *********************************************************************
         // if(this.times.length < 500){
         //     this.times.push(Date.now());
         // }
@@ -161,28 +211,120 @@ class Player{
         // }
         //*********************************************************************************
 
-        if(this.up){
+        //Adjustment of position in case it's stuck in a board collision
+        //x
+        if(this.x < 91){
+            this.x = 92;
+        }
+        if(this.x > 1390){
+            this.x = 1389;
+        }
+        //y
+        if (this.y < 32){
+            this.y = 33
+        }
+        if(this.y > 549){
+            this.y = 548;
+        }
+
+        let collisionX = false;
+        let collisionY = false;
+        for(let i = 0; i < spriteList.length; i++){
+            
+            const sprite = spriteList[i];
+            if(sprite.type === "player"){
+                if(sprite.name !== this.name){
+                    if(sprite.collision((this.x + this.Xvelocity) + 0.1, this.y)){
+                        collisionX = true;
+                    }
+                    if(sprite.collision(this.x, (this.y + this.Yvelocity) + 0.1)){
+                        collisionY = true;
+                    }
+                }
+            }
+            else if(sprite.type === "puck"){
+                if(puckFree && sprite.collision(this.x, this.y) && !this.dizzy){
+                    this.gotPuck = true;
+                   
+                }
+            }
+            else{
+                if(sprite.collision((this.x + this.Xvelocity) + 0.1, this.y)){
+                    collisionX = true;
+                }
+                if(sprite.collision(this.x, (this.y + this.Yvelocity) + 0.1)){
+                    collisionY = true;
+                }
+            }
+        }
+
+        if(this.dizzy){
+            if(this.dizzyCounter > 0){
+                this.tiledImage.changeRow(7);
+                this.Xvelocity = -this.Xvelocity;
+                this.Yvelocity = -this.Yvelocity;
+                if(this.gotPuck){
+                    this.gotPuck = false;
+                    puckFree = true;
+                }
+
+                this.dizzyCounter--;
+            }
+            else{
+                this.dizzy = false;
+                this.dizzyCounter = 150;
+            }
+        }
+
+        if(this.up && !this.dizzy){
+            if(this.team == "RED"){
+                this.tiledImage.setFlipped(true);
+            }
+            else{
+                this.tiledImage.setFlipped(false);
+            }
+
             this.tiledImage.changeRow(4);
 
-            if(Math.abs(this.Yvelocity) < this.maxVelocity){
-                this.Yvelocity -= 0.1;
+            if(!collisionY){
+                if(Math.abs(this.Yvelocity) < this.maxVelocity){
+                    this.Yvelocity -= 0.1;
+                }
             }
+            else{
+                this.Yvelocity = 0;
+                this.y += 1;
+            }
+            
             
             this.tiledImage.setLooped(true);
         }
 
-        if(this.down){
+        if(this.down && !this.dizzy){  
+            if(this.team == "RED"){
+                this.tiledImage.setFlipped(false);
+            }
+            else{
+                this.tiledImage.setFlipped(true);
+            }
             this.tiledImage.changeRow(2);
 
-            if(Math.abs(this.Yvelocity) < this.maxVelocity){
-                this.Yvelocity += 0.1;
+
+            if(!collisionY){
+                if(Math.abs(this.Yvelocity) < this.maxVelocity){
+                    this.Yvelocity += 0.1;
+                }
             }
+            else{
+                this.Yvelocity = 0;
+                this.y -= 1;
+            }
+            
 
             this.tiledImage.setLooped(true);
-          
         }
 
-        if(this.left){
+        if(this.left && !this.dizzy){
             this.tiledImage.changeRow(0);
 
             if(this.team == "RED"){
@@ -192,14 +334,20 @@ class Player{
                 this.tiledImage.setFlipped(false);
             }
 
-            if(Math.abs(this.Xvelocity) < this.maxVelocity){
-                this.Xvelocity -= 0.1;
+            if(!collisionX){
+                if(Math.abs(this.Xvelocity) < this.maxVelocity){
+                    this.Xvelocity -= 0.1;
+                }
             }
+            else{
+                this.Xvelocity = 0;
+                this.x += 1;
+            }
+            
 
             this.tiledImage.setLooped(true);
-           
         }
-        if(this.right){
+        if(this.right && !this.dizzy){
             this.tiledImage.changeRow(0);
 
             if(this.team == "BLUE"){
@@ -209,13 +357,19 @@ class Player{
                 this.tiledImage.setFlipped(false);
             }
 
-            if(Math.abs(this.Xvelocity) < this.maxVelocity){
-                this.Xvelocity += 0.1;
+            if(!collisionX){
+                if(Math.abs(this.Xvelocity) < this.maxVelocity){
+                    this.Xvelocity += 0.1;
+                }
             }
-
-            this.tiledImage.setLooped(true);
-           
+            else{
+                this.Xvelocity = 0;
+                this.x -= 1;
+            }
+        
+            this.tiledImage.setLooped(true);   
         }
+
         if(!this.up && !this.down && !this.left && !this.right){
             this.tiledImage.setLooped(false);
             
@@ -242,31 +396,29 @@ class Player{
 
         }
 
-        for(let i = 0; i < spriteList.length; i++){
-            const sprite = spriteList[i];
-        }
-        if( !rink.boardCollision((this.x + this.Xvelocity), this.y) &&
-            !rink.redZoneCollision((this.x + this.Xvelocity), this.y) &&
-            !rink.blueZoneCollision((this.x + this.Xvelocity), this.y)){
-            
-                this.x += this.Xvelocity;
-                // if(this.gotPuck){
-                //     puck.move();
-                // }
+        if(!collisionX){
+            this.x += this.Xvelocity;               
         }
 
-        if( !rink.boardCollision(this.x, (this.y + this.Yvelocity)) &&
-            !rink.redZoneCollision(this.x, (this.y + this.Yvelocity)) &&
-            !rink.blueZoneCollision(this.x, (this.y + this.Yvelocity))){
-            
-                this.y += this.Yvelocity;
-                // if(this.gotPuck){
-                //     puck.move();
-                // }
+        if(!collisionY){
+            this.y += this.Yvelocity;
         }
 
-        if(puckFree && puck.collision(this.x, this.y)){
-             this.gotPuck = true;
+        if(this.gotPuck){
+            puck.move(this.x, this.y, 0);
+        }
+
+        if(this.hitFrame){
+            if(this.hitFrameCounter > 0){
+                this.tiledImage.setLooped(false);
+                this.tiledImage.changeRow(6);
+                this.hitFrameCounter--;
+            }
+            else{
+                this.tiledImage.setLooped(true);
+                this.hitFrame = false;
+                this.hitFrameCounter = 10;
+            }
         }
 
         ctx.fillStyle = "rgb(0,0,0)";

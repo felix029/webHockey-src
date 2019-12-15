@@ -1,5 +1,7 @@
 class Rink {
-    constructor(){}
+    constructor(){
+        this.type = "rink";
+    }
 
     collision(x, y){
         let collision = true;
@@ -17,12 +19,16 @@ class Rink {
     //General collision
     boardCollision(x, y){
 
-        let rink = [    
-                        [90, 72], [96, 50], [114, 31], [1370, 31], [1383, 50], [1391, 72], 
-                        [1391, 526], [1381, 542], [1370, 550], [114, 550], [104, 541], [90, 526] 
-                    ];
+        let collision = 0;
         
-        return !inside([x, y], rink);
+        if(x <= 90 || x >= 1391){
+            collision++;
+        }
+        if(y <= 31 || y >= 550){
+            collision++;
+        }
+        
+        return collision > 0;
     }
 
     //Player collision
