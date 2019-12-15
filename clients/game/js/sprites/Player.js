@@ -30,42 +30,42 @@ class Player{
         this.Yvelocity = 0;
 
         //REMOVE AFTER TESTS ******************************************
-        if(team == "BLUE" && id == 0){
-            document.onkeyup = e => {
-                if(e.which == 87) this.up =             false;
-                else if (e.which == 65) this.left =     false;
-                else if (e.which == 83) this.down =     false;
-                else if (e.which == 68) this.right =    false;
-                else if (e.which == 17) this.hit();
-            };
+        // if(team == "BLUE" && id == 0){
+        //     document.onkeyup = e => {
+        //         if(e.which == 87) this.up =             false;
+        //         else if (e.which == 65) this.left =     false;
+        //         else if (e.which == 83) this.down =     false;
+        //         else if (e.which == 68) this.right =    false;
+        //         else if (e.which == 17) this.hit();
+        //     };
 
-            document.onkeydown = e => {
-                if(e.which == 87){
-                    this.up = true;
-                    if(this.gotPuck){
-                        puck.direction = "up";        
-                    } 
-                } 
-                else if (e.which == 65){
-                    this.left = true;
-                    if(this.gotPuck){
-                        puck.direction = "left";        
-                    } 
-                } 
-                else if (e.which == 83){
-                    this.down = true;
-                    if(this.gotPuck){
-                        puck.direction = "down";        
-                    } 
-                } 
-                else if (e.which == 68){
-                    this.right = true;
-                    if(this.gotPuck){
-                        puck.direction = "right";        
-                    } 
-                } 
-            };
-        }
+        //     document.onkeydown = e => {
+        //         if(e.which == 87){
+        //             this.up = true;
+        //             if(this.gotPuck){
+        //                 puck.direction = "up";        
+        //             } 
+        //         } 
+        //         else if (e.which == 65){
+        //             this.left = true;
+        //             if(this.gotPuck){
+        //                 puck.direction = "left";        
+        //             } 
+        //         } 
+        //         else if (e.which == 83){
+        //             this.down = true;
+        //             if(this.gotPuck){
+        //                 puck.direction = "down";        
+        //             } 
+        //         } 
+        //         else if (e.which == 68){
+        //             this.right = true;
+        //             if(this.gotPuck){
+        //                 puck.direction = "right";        
+        //             } 
+        //         } 
+        //     };
+        // }
         //*************************************************************
 
         if(this.team == "RED"){
@@ -160,22 +160,22 @@ class Player{
             const sprite = spriteList[i];
             if(sprite.type === "player" && sprite.name !== this.name && sprite.team !== this.team){
                 if(this.up){
-                    if(sprite.collision(this.x, this.y - 2)){
+                    if(sprite.collision(this.x, this.y - 5)){
                         sprite.dizzy = true;
                     }
                 }
                 if(this.down){
-                    if(sprite.collision(this.x, this.y + 2)){
+                    if(sprite.collision(this.x, this.y + 5)){
                         sprite.dizzy = true;
                     }
                 }
                 if(this.left){
-                    if(sprite.collision(this.x - 2, this.y)){
+                    if(sprite.collision(this.x - 5, this.y)){
                         sprite.dizzy = true;
                     }
                 }
                 if(this.right){
-                    if(sprite.collision(this.x + 2, this.y)){
+                    if(sprite.collision(this.x + 5, this.y)){
                         sprite.dizzy = true;
                     }
                 }
