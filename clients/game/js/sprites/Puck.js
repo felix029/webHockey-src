@@ -99,6 +99,14 @@ class Puck {
             }
         }
 
+        if(Math.abs(this.Xvelocity) <= 0.1){
+            this.Xvelocity = 0;
+        }
+        
+        if(Math.abs(this.Yvelocity) <= 0.1){
+            this.Yvelocity = 0;
+        }
+
         if(imgPuck.complete){
             ctx.drawImage(imgPuck, this.x-9, this.y-9, 18, 18);
         }
