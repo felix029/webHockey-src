@@ -147,8 +147,11 @@ class Player{
     }
 
     shoot(){
-        puck.move(this.x, this.y, 10);
-        this.gotPuck = false;
+        if(this.gotPuck){
+            puck.move(this.x, this.y, 10);
+            this.gotPuck = false;
+        }
+        
     }
 
     pass(){
