@@ -30,13 +30,14 @@ class Player{
         this.Yvelocity = 0;
 
         //REMOVE AFTER TESTS ******************************************
-        if(team == "BLUE" && id == 0){
+        if(team == "RED" && id == 0){
             document.onkeyup = e => {
                 if(e.which == 87) this.up =             false;
                 else if (e.which == 65) this.left =     false;
                 else if (e.which == 83) this.down =     false;
                 else if (e.which == 68) this.right =    false;
-                else if (e.which == 17) this.hit();
+                else if (e.which == 38) this.hit();
+                else if (e.which == 40) this.shoot();
             };
 
             document.onkeydown = e => {
@@ -146,7 +147,8 @@ class Player{
     }
 
     shoot(){
-
+        puck.move(this.x, this.y, 10);
+        this.gotPuck = false;
     }
 
     pass(){
@@ -293,7 +295,7 @@ class Player{
             }
             else{
                 this.Yvelocity = 0;
-                this.y += 1;
+                // this.y += 1;
             }
             
             
@@ -317,7 +319,7 @@ class Player{
             }
             else{
                 this.Yvelocity = 0;
-                this.y -= 1;
+                // this.y -= 1;
             }
             
 
@@ -341,7 +343,7 @@ class Player{
             }
             else{
                 this.Xvelocity = 0;
-                this.x += 1;
+                // this.x += 1;
             }
             
 
@@ -364,7 +366,7 @@ class Player{
             }
             else{
                 this.Xvelocity = 0;
-                this.x -= 1;
+                // this.x -= 1;
             }
         
             this.tiledImage.setLooped(true);   

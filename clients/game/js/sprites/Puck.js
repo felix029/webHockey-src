@@ -32,35 +32,73 @@ class Puck {
     }
 
     move(x, y, force){
-        console.log(this.direction);
-        console.log('in move');
+        //skating with the puck
         if(force == 0){
-            console.log('in force 0');
             if(this.direction == "up"){
-                console.log('in up');
                 this.x = x+20;
                 this.y = y+16;
 
             }
             if(this.direction == "down"){
-                console.log('in down');
                 this.x = x+14;
                 this.y = y+23;
             }
             if(this.direction == "left"){
-                console.log('in left');
                 this.x = x-25;
                 this.y = y+20;
             }
             if(this.direction == "right"){
-                console.log('in right');
                 this.x = x+25;
                 this.y = y+20;
+            }
+        }
+        //pass
+        if(force == 5){
+            puckFree = true;
+        }
+        //shot
+        if(force == 10){
+            puckFree = true;
+            if(this.direction == "up"){
+                this.y-=5;
+                this.Yvelocity = -force;
+            }
+            if(this.direction == "down"){
+                this.y-=5;
+                this.Yvelocity = force;
+            }
+            if(this.direction == "left"){
+                this.x-=5;
+                this.Xvelocity = -force;
+            }
+            if(this.direction == "right"){
+                this.x+=5;
+                this.Xvelocity = force;
             }
         }
     }
 
     tick() {
+
+        if(puckFree){
+            if(this.Xvelocity > 0){
+                this.x += this.Xvelocity;
+                this.Xvelocity -= 0.1;
+            }
+            if(this.Xvelocity < 0){
+                this.x += this.Xvelocity;
+                this.Xvelocity += 0.1;
+            }
+            if(this.Yvelocity > 0){
+                this.y += this.Yvelocity;
+                this.Xvelocity -= 0.1;
+            }
+            if(this.Yvelocity < 0){
+                this.y += this.Yvelocity;
+                this.Xvelocity += 0.1;
+            }
+        }
+
         if(imgPuck.complete){
             ctx.drawImage(imgPuck, this.x-9, this.y-9, 18, 18);
         }
