@@ -17,19 +17,30 @@ class Rink {
     }
 
     puckCollision(x, y, dir){
+        let goal = false;
         if(dir === "left"){
-            if(this.blueGoal(x, y)){
-                puck.x = 750;
-                puck.y = 300;
+            if(this.redGoal(x, y)){
                 scoreBlue++;
+                goal = true;
             }
         }
         if(dir === "right"){
-            if(this.redGoal(x, y)){
-                puck.x = 750;
-                puck.y = 300;
+            if(this.blueGoal(x, y)){
                 scoreRed++;
+                goal = true;
             }
+        }
+        if(!goal){
+            if(this.puckBoardCollision(x, y)){
+                puck.rebound();
+            }
+        }
+        else{
+            puckFree = true;
+            puck.x = 750;
+            puck.y = 300;
+            puck.Xvelocity = 0;
+            puck.Yvelocity = 0;
         }
     }
 
@@ -74,14 +85,45 @@ class Rink {
     }
 
     //Puck collision
+    puckBoardCollision(x, y){
+
+        let collision = 0;
+        
+        if(x <= 70 || x >= 1410){
+            collision++;
+        }
+        if(y <= 51 || y >= 570){
+            collision++;
+        }
+        
+        return collision > 0;
+    }
+    
     redGoal(x, y){
         let goal = false;
+        if(y >= 250 && y <= 390){
+            if(x >= 153 && x <= 171){
+                goal = true;
+            }
+            if(x <= 152 && x >= 113){
+                puck.rebound();
+            }
+        }
 
         return goal;
     }
 
     blueGoal(x, y){
         let goal = false;
+
+        if(y >= 250 && y <= 390){
+            if(x >= 1313 && x <= 1327){
+                goal = true;
+            }
+            if(x > 1327 && x <= 1370){
+                puck.rebound();
+            }
+        }
 
         return goal;
     }

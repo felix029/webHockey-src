@@ -30,9 +30,9 @@ class Player{
         this.Yvelocity = 0;
 
         //REMOVE AFTER TESTS ******************************************
-        if(team == "RED" && id == 0){
+        if(team == "BLUE" && id == 0){
             document.onkeyup = e => {
-                if(e.which == 87) this.up =             false;
+                if      (e.which == 87) this.up =       false;
                 else if (e.which == 65) this.left =     false;
                 else if (e.which == 83) this.down =     false;
                 else if (e.which == 68) this.right =    false;
@@ -41,25 +41,25 @@ class Player{
             };
 
             document.onkeydown = e => {
-                if(e.which == 87){
+                if(e.which == 87  && !this.left && !this.right && !this.down){
                     this.up = true;
                     if(this.gotPuck){
                         puck.direction = "up";        
                     } 
                 } 
-                else if (e.which == 65){
+                else if (e.which == 65  && !this.up && !this.right && !this.down){
                     this.left = true;
                     if(this.gotPuck){
                         puck.direction = "left";        
                     } 
                 } 
-                else if (e.which == 83){
+                else if (e.which == 83 && !this.left && !this.right && !this.up){
                     this.down = true;
                     if(this.gotPuck){
                         puck.direction = "down";        
                     } 
                 } 
-                else if (e.which == 68){
+                else if (e.which == 68 && !this.left && !this.up && !this.down){
                     this.right = true;
                     if(this.gotPuck){
                         puck.direction = "right";        
@@ -103,27 +103,27 @@ class Player{
     move(action){
 
         //Directions
-        if(action == "up"){
+        if(action == "up" && !this.left && !this.right && !this.down){
             this.up = !this.up; 
-            if(this.gotPuck && !this.left && !this.right && !this.down){
+            if(this.gotPuck){
                 puck.direction = action;        
             }   
         }
-        if(action == "down"){
+        if(action == "down" && !this.left && !this.right && !this.up){
             this.down = !this.down; 
-            if(this.gotPuck && !this.left && !this.right && !this.up){ 
+            if(this.gotPuck){ 
                 puck.direction = action;    
             }      
         }
-        if(action == "left"){
+        if(action == "left" && !this.up && !this.right && !this.down){
             this.left = !this.left; 
-            if(this.gotPuck && !this.up && !this.right && !this.down){ 
+            if(this.gotPuck){ 
                 puck.direction = action;    
             }      
         }
-       if(action == "right"){
+       if(action == "right" && !this.left && !this.up && !this.down){
             this.right = !this.right; 
-            if(this.gotPuck && !this.left && !this.up && !this.down){ 
+            if(this.gotPuck){
                 puck.direction = action;  
             }   
         }
@@ -273,6 +273,8 @@ class Player{
                 if(this.gotPuck){
                     this.gotPuck = false;
                     puckFree = true;
+                    puck.Xvelocity = Math.floor(Math.random() * 3);
+                    puck.Yvelocity = Math.floor(Math.random() * 3);
                 }
 
                 this.dizzyCounter--;
@@ -377,30 +379,37 @@ class Player{
             this.tiledImage.setLooped(true);   
         }
 
-        if(!this.up && !this.down && !this.left && !this.right){
-            this.tiledImage.setLooped(false);
-            
+        //Y velocity decrement
+        if(!this.up && !this.down){
             //Gliding effect when controls are released
             if(this.Yvelocity != 0 && this.Yvelocity < 0){
-                this.Yvelocity += 0.05;
+                this.Yvelocity += 0.03;
             }
             if(this.Yvelocity != 0 && this.Yvelocity > 0){
-                this.Yvelocity -= 0.05;
-            }
-            if(this.Xvelocity != 0 && this.Xvelocity < 0){
-                this.Xvelocity += 0.05;
-            }
-            if(this.Xvelocity != 0 && this.Xvelocity > 0){
-                this.Xvelocity -= 0.05;
+                this.Yvelocity -= 0.03;
             }
 
             if(Math.abs(this.Yvelocity) <= 0.1 || collisionUp || collisionDown){
                 this.Yvelocity = 0;
             }
+        }
+        //X velocity decrement
+        if(!this.left && !this.right){
+            if(this.Xvelocity != 0 && this.Xvelocity < 0){
+                this.Xvelocity += 0.03;
+            }
+            if(this.Xvelocity != 0 && this.Xvelocity > 0){
+                this.Xvelocity -= 0.03;
+            }
+
             if(Math.abs(this.Xvelocity) <= 0.1 || collisionLeft || collisionRight){
                 this.Xvelocity = 0;
             }
+        }
 
+        //Stopping animation when player stops moving
+        if(!this.up && !this.down && !this.left && !this.right){
+            this.tiledImage.setLooped(false);
         }
 
         if(!collisionLeft || !collisionRight){
@@ -413,6 +422,10 @@ class Player{
 
         if(this.gotPuck){
             puck.move(this.x, this.y, 0);
+        }
+
+        if(puckFree){
+            this.gotPuck = false;
         }
 
         if(this.hitFrame){
