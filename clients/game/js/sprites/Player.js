@@ -247,19 +247,19 @@ class Player{
             }
             else if(sprite.type === "rink"){
                 //left
-                if(sprite.collision((this.x - Math.abs(this.Xvelocity)) - 1, this.y)){
+                if(sprite.collision((this.x + this.Xvelocity) - 4, this.y)){
                     collisionLeft = true;
                 }
                 //right
-                if(sprite.collision((this.x + Math.abs(this.Xvelocity)) + 1, this.y)){
+                if(sprite.collision((this.x + this.Xvelocity) + 4, this.y)){
                     collisionRight = true;
                 }
                 //down
-                if(sprite.collision(this.x, (this.y + Math.abs(this.Yvelocity) + 1))){
+                if(sprite.collision(this.x, (this.y + this.Yvelocity + 4))){
                     collisionDown = true;
                 }
                 //up
-                if(sprite.collision(this.x, (this.y - Math.abs(this.Yvelocity) - 1))){
+                if(sprite.collision(this.x, (this.y + this.Yvelocity - 4))){
                     collisionUp = true;
                 }
             }
@@ -428,9 +428,6 @@ class Player{
             }
         }
 
-        if(this.team == "RED" && this.id == 0){
-            console.log("X: " + this.x + " Y: " + this.y);
-        }
         ctx.fillStyle = "rgb(0,0,0)";
         ctx.fillText(this.name, this.x-20, this.y-25);
         this.tiledImage.tick(this.x, this.y, ctx);

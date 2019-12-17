@@ -139,6 +139,7 @@ class Puck {
             this.Yvelocity = 0;
         }
 
+        console.log('X:' + this.x + ' Y: ' + this.y);
         if(imgPuck.complete){
             ctx.drawImage(imgPuck, this.x-9, this.y-9, 18, 18);
         }
