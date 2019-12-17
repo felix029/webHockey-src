@@ -81,6 +81,37 @@ class Puck {
 
     tick() {
 
+        // let collisionUp = false;
+        // let collisionDown = false;
+        // let collisionLeft = false;
+        // let collisionRight = false;
+        
+        for(let i = 0; i < spriteList.length; i++){
+            
+            const sprite = spriteList[i];
+            if(sprite.type === "rink"){
+                //left
+                if(sprite.puckCollision((this.x - Math.abs(this.Xvelocity)) - 1, this.y, "left")){
+                    // collisionLeft = true;
+                    this.Xvelocity = Math.abs(this.Xvelocity);
+                }
+                //right
+                if(sprite.puckCollision((this.x + Math.abs(this.Xvelocity)) + 1, this.y, "right")){
+                    // collisionRight = true;
+                    this.Xvelocity = -this.Xvelocity;
+                }
+                //down
+                if(sprite.puckCollision(this.x, (this.y + Math.abs(this.Yvelocity) + 1), "down")){
+                    // collisionDown = true;
+                    this.Yvelocity = Math.abs(this.Yvelocity);
+                }
+                //up
+                if(sprite.puckCollision(this.x, (this.y - Math.abs(this.Yvelocity) - 1), "up")){
+                    // collisionUp = true;
+                    this.Yvelocity = -this.Yvelocity;
+                }
+            }
+        }
         if(puckFree){
             if(this.Xvelocity > 0){
                 this.x += this.Xvelocity;
@@ -111,12 +142,6 @@ class Puck {
         if(imgPuck.complete){
             ctx.drawImage(imgPuck, this.x-9, this.y-9, 18, 18);
         }
-        
-        //GREY TRANSPARENT HALO BEHIND THE PUCK TO MAKE IT MORE VISIBLE
-        //FOR SOME REASONS ctx.fill() SLOWS DOWN THE GAME DRASTICALLY
-        // ctx.arc(this.x, this.y, 15, 0, 2 * Math.PI)
-        // ctx.fillStyle = "rgba(10, 10, 10, 0.3)"
-        // ctx.fill();
         
         return true;
     }

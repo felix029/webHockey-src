@@ -394,10 +394,10 @@ class Player{
                 this.Xvelocity -= 0.05;
             }
 
-            if(Math.abs(this.Yvelocity) <= 0.1){
+            if(Math.abs(this.Yvelocity) <= 0.1 || collisionUp || collisionDown){
                 this.Yvelocity = 0;
             }
-            if(Math.abs(this.Xvelocity) <= 0.1){
+            if(Math.abs(this.Xvelocity) <= 0.1 || collisionLeft || collisionRight){
                 this.Xvelocity = 0;
             }
 
