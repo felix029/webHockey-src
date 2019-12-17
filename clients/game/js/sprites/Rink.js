@@ -17,7 +17,20 @@ class Rink {
     }
 
     puckCollision(x, y, dir){
-
+        if(dir === "left"){
+            if(this.blueGoal(x, y)){
+                puck.x = 750;
+                puck.y = 300;
+                scoreBlue++;
+            }
+        }
+        if(dir === "right"){
+            if(this.redGoal(x, y)){
+                puck.x = 750;
+                puck.y = 300;
+                scoreRed++;
+            }
+        }
     }
 
     //General collision
@@ -25,10 +38,10 @@ class Rink {
 
         let collision = 0;
         
-        if(x < 90 || x > 1391){
+        if(x <= 90 || x >= 1391){
             collision++;
         }
-        if(y < 31 || y > 550){
+        if(y <= 31 || y >= 550){
             collision++;
         }
         
@@ -39,8 +52,8 @@ class Rink {
     redZoneCollision(x, y){
 
         let collision = false;
-        if(y > 204 && y < 385){
-            if(x > 113 && x < 197){
+        if(y >= 204 && y <= 385){
+            if(x >= 113 && x <= 197){
                 collision = true;
             }
         }
@@ -51,8 +64,8 @@ class Rink {
     blueZoneCollision(x, y){
 
         let collision = false;
-        if(y > 204 && y < 385){
-            if(x > 1290 && x < 1370){
+        if(y >= 204 && y <= 385){
+            if(x >= 1290 && x <= 1370){
                 collision = true;
             }
         }

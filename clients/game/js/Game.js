@@ -6,12 +6,23 @@ let puck = null;
 let scoreRed = 0;
 let scoreBlue = 0;
 let period = 1;
-let time = 0;
+let timer = new easytimer.Timer();
+let scoreRedDiv = null;
+let scoreBlueDiv = null;
+let periodDiv = null;
+let timeDiv = null;
 let firstRequest = true;
 
 class Game {
     
     constructor(){
+        //Timer
+        timer.start({countdown: true, startValues: {minutes: 2}});
+
+        scoreRedDiv = document.getElementById("score-red");
+        scoreBlueDiv = document.getElementById("score-blue");
+        periodDiv = document.getElementById("period");
+        timeDiv = document.getElementById("time");
 
         //Creating the rink
         rink = new Rink();
@@ -57,6 +68,11 @@ class Game {
             firstRequest = false;
             //setInterval(this.fetchData, 30);
         }
+
+        scoreRedDiv.innerHTML = scoreRed;
+        scoreBlueDiv.innerHTML = scoreBlue;
+        periodDiv.innerHTML = period;
+        timeDiv.innerHTML = timer.getTimeValues().toString(['minutes', 'seconds']);
         
 
         for(let i = 0; i < spriteList.length; i++){
