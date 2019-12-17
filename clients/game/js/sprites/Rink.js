@@ -34,16 +34,26 @@ class Rink {
     //Player collision
     redZoneCollision(x, y){
 
-        let zone = [ [113, 204], [197, 204], [197, 384], [113, 384] ];
+        let collision = false;
+        if(y >= 204 && y <= 385){
+            if(x >= 113 && x <= 197){
+                collision = true;
+            }
+        }
 
-        return inside([x, y], zone);
+        return collision;
     }
 
     blueZoneCollision(x, y){
 
-        let zone = [ [1290, 204], [1370, 204], [1370, 384], [1290, 384] ];
+        let collision = false;
+        if(y >= 204 && y <= 385){
+            if(x >= 1290 && x <= 1370){
+                collision = true;
+            }
+        }
 
-        return inside([x, y], zone);
+        return collision;
     }
 
     //Puck collision

@@ -105,25 +105,25 @@ class Player{
         //Directions
         if(action == "up"){
             this.up = !this.up; 
-            if(this.gotPuck){
+            if(this.gotPuck && !this.left && !this.right && !this.down){
                 puck.direction = action;        
             }   
         }
         if(action == "down"){
             this.down = !this.down; 
-            if(this.gotPuck){ 
+            if(this.gotPuck && !this.left && !this.right && !this.up){ 
                 puck.direction = action;    
             }      
         }
         if(action == "left"){
             this.left = !this.left; 
-            if(this.gotPuck){ 
+            if(this.gotPuck && !this.up && !this.right && !this.down){ 
                 puck.direction = action;    
             }      
         }
        if(action == "right"){
             this.right = !this.right; 
-            if(this.gotPuck){ 
+            if(this.gotPuck && !this.left && !this.up && !this.down){ 
                 puck.direction = action;  
             }   
         }
@@ -232,33 +232,35 @@ class Player{
             this.y = 548;
         }
 
-        let collisionX = false;
-        let collisionY = false;
+        let collisionUp = false;
+        let collisionDown = false;
+        let collisionLeft = false;
+        let collisionRight = false;
+        
         for(let i = 0; i < spriteList.length; i++){
             
             const sprite = spriteList[i];
-            if(sprite.type === "player"){
-                if(sprite.name !== this.name){
-                    if(sprite.collision((this.x + this.Xvelocity) + 0.1, this.y)){
-                        collisionX = true;
-                    }
-                    if(sprite.collision(this.x, (this.y + this.Yvelocity) + 0.1)){
-                        collisionY = true;
-                    }
-                }
-            }
-            else if(sprite.type === "puck"){
+            if(sprite.type === "puck"){
                 if(puckFree && sprite.collision(this.x, this.y) && !this.dizzy){
                     this.gotPuck = true;
-                   
                 }
             }
-            else{
-                if(sprite.collision((this.x + this.Xvelocity) + 0.1, this.y)){
-                    collisionX = true;
+            else if(sprite.type === "rink"){
+                //left
+                if(sprite.collision((this.x - Math.abs(this.Xvelocity)) - 1, this.y)){
+                    collisionLeft = true;
                 }
-                if(sprite.collision(this.x, (this.y + this.Yvelocity) + 0.1)){
-                    collisionY = true;
+                //right
+                if(sprite.collision((this.x + Math.abs(this.Xvelocity)) + 1, this.y)){
+                    collisionRight = true;
+                }
+                //down
+                if(sprite.collision(this.x, (this.y + Math.abs(this.Yvelocity) + 1))){
+                    collisionDown = true;
+                }
+                //up
+                if(sprite.collision(this.x, (this.y - Math.abs(this.Yvelocity) - 1))){
+                    collisionUp = true;
                 }
             }
         }
@@ -291,7 +293,7 @@ class Player{
 
             this.tiledImage.changeRow(4);
 
-            if(!collisionY){
+            if(!collisionUp){
                 if(Math.abs(this.Yvelocity) < this.maxVelocity){
                     this.Yvelocity -= 0.1;
                 }
@@ -315,7 +317,7 @@ class Player{
             this.tiledImage.changeRow(2);
 
 
-            if(!collisionY){
+            if(!collisionDown){
                 if(Math.abs(this.Yvelocity) < this.maxVelocity){
                     this.Yvelocity += 0.1;
                 }
@@ -339,7 +341,7 @@ class Player{
                 this.tiledImage.setFlipped(false);
             }
 
-            if(!collisionX){
+            if(!collisionLeft){
                 if(Math.abs(this.Xvelocity) < this.maxVelocity){
                     this.Xvelocity -= 0.1;
                 }
@@ -362,7 +364,7 @@ class Player{
                 this.tiledImage.setFlipped(false);
             }
 
-            if(!collisionX){
+            if(!collisionRight){
                 if(Math.abs(this.Xvelocity) < this.maxVelocity){
                     this.Xvelocity += 0.1;
                 }
@@ -401,11 +403,11 @@ class Player{
 
         }
 
-        if(!collisionX){
+        if(!collisionLeft || !collisionRight){
             this.x += this.Xvelocity;               
         }
 
-        if(!collisionY){
+        if(!collisionUp || !collisionDown){
             this.y += this.Yvelocity;
         }
 
@@ -426,6 +428,9 @@ class Player{
             }
         }
 
+        if(this.team == "RED" && this.id == 0){
+            console.log("X: " + this.x + " Y: " + this.y);
+        }
         ctx.fillStyle = "rgb(0,0,0)";
         ctx.fillText(this.name, this.x-20, this.y-25);
         this.tiledImage.tick(this.x, this.y, ctx);

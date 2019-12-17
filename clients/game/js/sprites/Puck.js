@@ -21,8 +21,9 @@ class Puck {
         let collision = false;
         
         if(puckFree){
-            let player = [ [(x-20),(y-20)], [(x+20),(y-20)], [(x+20), (y+23)], [(x-20), (y-23)] ];
-            collision = inside([this.x-5,this.y-5], player);
+            let player = {x: x-18, y: y-20, w: 34, h: 44};
+            let puck = {x: this.x-9, y: this.y-9, w: 18, h: 18};
+            collision = boxCollision(puck, player);
             if(collision){
                 puckFree = false;
             }
