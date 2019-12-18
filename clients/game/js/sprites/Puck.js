@@ -39,6 +39,26 @@ class Puck {
         return collision;
     }
 
+    saved(x, y){
+        let saved = false;
+
+        let goalie = {x: x-22, y: y+40, w: 42, h: 65};
+        let puck = {x: this.x-9, y: this.y-9, w: 18, h: 18};
+        saved = boxCollision(puck, goalie);
+        
+        if(saved){
+            if(this.y < 300){
+                this.Yvelocity = -Math.floor(Math.random() * 8);
+                this.direction = "up";
+            }
+            else{
+                this.Yvelocity = Math.floor(Math.random() * 8);
+                this.direction = "down";
+            }
+            this.Xvelocity = -this.Xvelocity;
+        }
+    }
+
     rebound(){
 
         if(this.direction !== "rebound"){
@@ -216,7 +236,7 @@ class Puck {
 
         rink.puckCollision(this.x, this.y, this.direction)
 
-        // console.log(this.Xvelocity + " " + this.Yvelocity);
+        console.log(this.x + " " + this.y);
         if(imgPuck.complete){
             ctx.drawImage(imgPuck, this.x-9, this.y-9, 18, 18);
         }

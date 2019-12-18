@@ -3,7 +3,6 @@ class Player{
     constructor(id, name, team){
         this.type = "player";
 
-        this.times = [];
         this.id = id;
         this.name = name;
         this.team = team;
@@ -204,6 +203,7 @@ class Player{
                 this.gotPuck = false;
             }
 
+            //Maybe one day this thing will be fixed
             // let distX = 0;
             // let distY = 0;
             // let forceX = 0;

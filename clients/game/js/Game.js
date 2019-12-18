@@ -45,6 +45,8 @@ class Game {
             spriteList.push(temp);
         }
 
+        spriteList.push(new Goalie("RED"));
+
         for(let i = 0; i < 2; i++){
             let temp = null;
             if(teamBlue[i]){
@@ -56,6 +58,8 @@ class Game {
             pBlue.push(temp);
             spriteList.push(temp);
         }
+
+        spriteList.push(new Goalie("BLUE"));
 
     }
 
