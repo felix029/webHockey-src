@@ -31,51 +31,6 @@ class Player{
         this.Xvelocity = 0;
         this.Yvelocity = 0;
 
-        //REMOVE AFTER TESTS ******************************************
-        if(team == "BLUE" && id == 1){
-            document.onkeyup = e => {
-                if      (e.which == 87) this.up =       false;
-                else if (e.which == 65) this.left =     false;
-                else if (e.which == 83) this.down =     false;
-                else if (e.which == 68) this.right =    false;
-                else if (e.which == 38) this.hit();
-                else if (e.which == 40) this.shoot();
-                else if (e.which == 39) this.pass();
-            };
-
-            document.onkeydown = e => {
-                if(e.which == 87  && !this.left && !this.right && !this.down){
-                    this.up = true;
-                    this.lastMove = "up";
-                    if(this.gotPuck){
-                        puck.direction = "up";        
-                    } 
-                } 
-                else if (e.which == 65  && !this.up && !this.right && !this.down){
-                    this.left = true;
-                    this.lastMove = "left";
-                    if(this.gotPuck){
-                        puck.direction = "left";        
-                    } 
-                } 
-                else if (e.which == 83 && !this.left && !this.right && !this.up){
-                    this.down = true;
-                    this.lastMove = "down";
-                    if(this.gotPuck){
-                        puck.direction = "down";        
-                    } 
-                } 
-                else if (e.which == 68 && !this.left && !this.up && !this.down){
-                    this.right = true;
-                    this.lastMove = "right";
-                    if(this.gotPuck){
-                        puck.direction = "right";        
-                    } 
-                } 
-            };
-        }
-        //*************************************************************
-
         if(this.team == "RED"){
             spriteImg = "images/sprites/pRed.png";
 
@@ -227,74 +182,6 @@ class Player{
                 puck.pass(this.x, this.y, targetX, targetY);
                 this.gotPuck = false;
             }
-
-            //Maybe one day this thing will be fixed
-            // let distX = 0;
-            // let distY = 0;
-            // let forceX = 0;
-            // let forceY = 0;
-            // if(puck.direction == "up"){
-            //     if(teamMate.y < this.y){
-            //         distY = this.y - targetY;
-            //         forceY = distY / puckAcceleration - tickVar;
-            //         if(teamMate.x < this.x){
-            //             distX = this.x - targetX;
-            //             forceX = distX / puckAcceleration - tickVar;
-            //         }
-            //         else{
-            //             distX = targetX - this.x;
-            //             forceX = distX / puckAcceleration + tickVar;
-            //         }
-
-            //         puck.Xvelocity = forceX;
-            //         puck.Yvelocity = forceY;
-            //     }
-            // }
-            // if(puck.direction == "down"){
-            //     if(teamMate.y > this.y){
-            //         distY = targetY - this.y;
-            //         forceY = distY / puckAcceleration + tickVar;
-            //         if(teamMate.x < this.x){
-            //             distX = this.x - targetX;
-            //             forceX = distX / puckAcceleration - tickVar;
-            //         }
-            //         else{
-            //             distX = targetX - this.x;
-            //             forceX = distX / puckAcceleration + tickVar;
-            //         }
-            //     }
-            // }
-            // if(puck.direction == "left"){
-            //     if(teamMate.x < this.x){
-            //         distX = this.x - targetX;
-            //         forceX = distX / puckAcceleration - tickVar;
-            //         if(teamMate.y < this.y){
-            //             distY = this.y - targetY;
-            //             forceY = distY / puckAcceleration - tickVar;
-            //         }
-            //         else{
-            //             distY = targetY - this.y;
-            //             forceY = distY / puckAcceleration + tickVar;
-            //         }
-            //     }
-            // }
-            // if(puck.direction == "right"){
-            //     if(teamMate.x > this.x){
-            //         distX = targetX - this.x;
-            //         forceX = distX / puckAcceleration + tickVar;
-            //         if(teamMate.y < this.y){
-            //             distY = this.y - targetY;
-            //             forceY = distY / puckAcceleration - tickVar;
-            //         }
-            //         else{
-            //             distY = targetY - this.y;
-            //             forceY = distY / puckAcceleration + tickVar;
-            //         }
-            //     }
-            // }
-
-            // puck.Xvelocity = forceX;
-            // puck.Yvelocity = forceY;
         }
     }
 
@@ -340,21 +227,6 @@ class Player{
     }
 
     tick() {
-
-        //TICK TIMER *********************************************************************
-        // if(this.times.length < 500){
-        //     this.times.push(Date.now());
-        // }
-        // else{
-        //     let total = 0;
-        //     for(let i = 0; i < this.times.length; i++){
-        //         total += this.times[i];
-        //     }
-        //     let avg = Date.now() - (total / this.times.length);
-        //     console.log("Average time for " + this.name + " last 500 ticks: " + avg);
-        //     this.times = [];
-        // }
-        //*********************************************************************************
 
         //Adjustment of position in case it's stuck in a board collision
         //x

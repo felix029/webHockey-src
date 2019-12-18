@@ -7,8 +7,6 @@ let socket = null;
 let teamRed = [];
 let teamBlue = [];
 
-// let times = [];
-
 window.addEventListener("load", () => {
     
     socket = io.connect();
@@ -84,20 +82,6 @@ window.addEventListener("load", () => {
 });
 
 const tick = () => {
-
-    //TICK TIMER
-    // if(times.length < 500){
-    //     times.push(Date.now());
-    // }
-    // else{
-    //     let total = 0;
-    //     for(let i = 0; i < times.length; i++){
-    //         total += times[i];
-    //     }
-    //     let avg = Date.now() - (total / times.length);
-    //     console.log("Average time for last 500 ticks: " + avg);
-    //     times = [];
-    // }
 
     game.tick();
 

@@ -18,9 +18,9 @@ let firstRequest = true;
 class Game {
     
     constructor(){
-        this.pause = false;
         //Timer
         timer.start({countdown: true, startValues: {minutes: 1}});
+        this.pause = false;
 
         scoreRedDiv = document.getElementById("score-red");
         scoreBlueDiv = document.getElementById("score-blue");
@@ -137,8 +137,6 @@ class Game {
                 }
             }
         });
-
-        
     }
 }
 
