@@ -93,7 +93,9 @@ class Game {
 
                 if(timer.getTimeValues().minutes == 0 && timer.getTimeValues().seconds == 0){
                     this.pause = true;
-                    alert("Fin de la periode " + period + ". L'intermission de 10 secondes va commencer.");
+                    if(period < 3){
+                        alert("Fin de la periode " + period + ". L'intermission de 10 secondes va commencer.");
+                    }
                     reset();
                     timer.start({countdown: true, startValues: {seconds: 10}});
                     periodDiv.innerHTML = "P";
