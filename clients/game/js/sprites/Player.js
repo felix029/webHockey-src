@@ -30,7 +30,7 @@ class Player{
         this.Yvelocity = 0;
 
         //REMOVE AFTER TESTS ******************************************
-        if(team == "BLUE" && id == 0){
+        if(team == "BLUE" && id == 1){
             document.onkeyup = e => {
                 if      (e.which == 87) this.up =       false;
                 else if (e.which == 65) this.left =     false;
@@ -149,6 +149,12 @@ class Player{
     shoot(){
         if(this.gotPuck){
             puck.move(this.x, this.y, 10);
+            if(this.team == "RED"){
+                gBlue.puckIncoming = true;
+            }
+            else{
+                gRed.puckIncoming = true;
+            }
             this.gotPuck = false;
         }
     }
@@ -518,6 +524,8 @@ class Player{
 
         if(this.gotPuck){
             puck.move(this.x, this.y, 0);
+            puck.Xvelocity = this.Xvelocity;
+            puck.Yvelocity = this.Yvelocity;
         }
 
         if(puckFree){

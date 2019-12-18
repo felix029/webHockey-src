@@ -3,6 +3,8 @@ let pBlue = [];
 let pRed = [];
 let rink = null;
 let puck = null;
+let gRed = null;
+let gBlue = null;
 let scoreRed = 0;
 let scoreBlue = 0;
 let period = 1;
@@ -45,7 +47,8 @@ class Game {
             spriteList.push(temp);
         }
 
-        spriteList.push(new Goalie("RED"));
+        gRed = new Goalie("RED");
+        spriteList.push(gRed);
 
         for(let i = 0; i < 2; i++){
             let temp = null;
@@ -59,8 +62,8 @@ class Game {
             spriteList.push(temp);
         }
 
-        spriteList.push(new Goalie("BLUE"));
-
+        gBlue = new Goalie("BLUE");
+        spriteList.push(gBlue);
     }
 
     tick () {

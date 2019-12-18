@@ -20,12 +20,14 @@ class Rink {
         let goal = false;
         if(dir === "left"){
             if(this.redGoal(x, y)){
+                gRed.puckIncoming = false;
                 scoreBlue++;
                 goal = true;
             }
         }
         if(dir === "right"){
             if(this.blueGoal(x, y)){
+                gBlue.puckIncoming = false;
                 scoreRed++;
                 goal = true;
             }

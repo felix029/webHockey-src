@@ -57,6 +57,8 @@ class Puck {
             }
             this.Xvelocity = -this.Xvelocity;
         }
+
+        return saved;
     }
 
     rebound(){
