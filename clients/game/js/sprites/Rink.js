@@ -23,6 +23,7 @@ class Rink {
                 gRed.puckIncoming = false;
                 scoreBlue++;
                 goal = true;
+                alert("Et le but de l'équipe Bleu!");
             }
         }
         if(dir === "right"){
@@ -30,6 +31,7 @@ class Rink {
                 gBlue.puckIncoming = false;
                 scoreRed++;
                 goal = true;
+                alert("Et le but de l'équipe Rouge!");
             }
         }
         if(!goal){
@@ -38,11 +40,7 @@ class Rink {
             }
         }
         else{
-            puckFree = true;
-            puck.x = 750;
-            puck.y = 300;
-            puck.Xvelocity = 0;
-            puck.Yvelocity = 0;
+            reset();
         }
     }
 

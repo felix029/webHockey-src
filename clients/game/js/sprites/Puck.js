@@ -139,7 +139,6 @@ class Puck {
         puckFree = true;
         this.targetX = tx;
         this.targetY = ty;
-        console.log(tx + " " + ty);
         let distX = tx - x;
         let distY = ty - y;
         let prct = 0;
@@ -178,8 +177,6 @@ class Puck {
                 this.forcePassX = -prct * 0.08;
             }
         }
-
-        console.log(this.forcePassX +  " " + this.forcePassY);
     }
 
     tick() {

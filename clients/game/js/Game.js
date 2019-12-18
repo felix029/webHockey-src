@@ -18,8 +18,9 @@ let firstRequest = true;
 class Game {
     
     constructor(){
+        this.pause = false;
         //Timer
-        timer.start({countdown: true, startValues: {minutes: 2}});
+        timer.start({countdown: true, startValues: {minutes: 1}});
 
         scoreRedDiv = document.getElementById("score-red");
         scoreBlueDiv = document.getElementById("score-blue");
@@ -76,16 +77,51 @@ class Game {
             //setInterval(this.fetchData, 30);
         }
 
-        scoreRedDiv.innerHTML = scoreRed;
-        scoreBlueDiv.innerHTML = scoreBlue;
-        periodDiv.innerHTML = period;
-        timeDiv.innerHTML = timer.getTimeValues().toString(['minutes', 'seconds']);
-        
 
-        for(let i = 0; i < spriteList.length; i++){
-            const sprite = spriteList[i]; 
-            sprite.tick();
+        if(period < 4){
+            if(!this.pause){
+    
+                scoreRedDiv.innerHTML = scoreRed;
+                scoreBlueDiv.innerHTML = scoreBlue;
+                periodDiv.innerHTML = period;
+                timeDiv.innerHTML = timer.getTimeValues().toString(['minutes', 'seconds']);
+                
+                for(let i = 0; i < spriteList.length; i++){
+                    const sprite = spriteList[i]; 
+                    sprite.tick();
+                }
+
+                if(timer.getTimeValues().minutes == 0 && timer.getTimeValues().seconds == 0){
+                    this.pause = true;
+                    alert("Fin de la periode " + period + ". L'intermission de 10 secondes va commencer.");
+                    reset();
+                    timer.start({countdown: true, startValues: {seconds: 10}});
+                    periodDiv.innerHTML = "P";
+                    period++;
+                }
+            }
+            else{
+                timeDiv.innerHTML = timer.getTimeValues().toString(['minutes', 'seconds']);
+                if(timer.getTimeValues().seconds == 0){
+                    this.pause = false;
+                    timer.start({countdown: true, startValues: {minutes: 1}});
+                }
+            }
         }
+        else{
+            if(scoreRed > scoreBlue){
+                alert("L'équipe rouge gagne " + scoreRed + " à " + scoreBlue + ", félicitations!");
+            }
+            else if(scoreRed < scoreBlue){
+                alert("L'équipe bleu gagne " + scoreBlue + " à " + scoreRed + ", félicitations!");
+            }
+            else if(scoreRed == scoreBlue){
+                alert("Aucun perdant, aucun gagnant, ça a fini " + scoreBlue + " " + scoreBlue + "!");
+            }
+
+            alert("Recharger la page pour commencer une nouvelle partie.");
+        }
+        
     }
 
     // fetchData(){

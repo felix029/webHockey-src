@@ -6,6 +6,7 @@ class Player{
         this.id = id;
         this.name = name;
         this.team = team;
+        this.initPos = {x: 0, y: 0};
 
         this.gotPuck = false;
         this.dizzy = false;
@@ -81,10 +82,14 @@ class Player{
             if(this.id == 0){
                 this.x = 720;
                 this.y = 300;
+                this.initPos.x = 720;
+                this.initPos.y = 300;
             }
             else{
                 this.x = 600;
                 this.y = 200;
+                this.initPos.x = 600;
+                this.initPos.y = 200;
             }
         }
         else{
@@ -92,10 +97,14 @@ class Player{
             if(this.id == 0){
                 this.x = 780;
                 this.y = 300;
+                this.initPos.x = 780;
+                this.initPos.y = 300;
             }
             else{
                 this.x = 900;
                 this.y = 400;
+                this.initPos.x = 900;
+                this.initPos.y = 400;
             }
         }
 
@@ -386,13 +395,14 @@ class Player{
                 if(this.gotPuck){
                     this.gotPuck = false;
                     puckFree = true;
-                    puck.Xvelocity = Math.floor(Math.random() * 3);
-                    puck.Yvelocity = Math.floor(Math.random() * 3);
+                    puck.Xvelocity = Math.floor(Math.random() * 5) + 2;
+                    puck.Yvelocity = Math.floor(Math.random() * 5) + 2;
                 }
 
                 this.dizzyCounter--;
             }
             else{
+                this.tiledImage.changeRow(0);
                 this.dizzy = false;
                 this.dizzyCounter = 150;
             }
