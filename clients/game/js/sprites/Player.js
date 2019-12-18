@@ -32,44 +32,6 @@ class Player{
         this.Yvelocity = 0;
 
         //REMOVE AFTER TESTS ******************************************
-<<<<<<< HEAD
-        // if(team == "BLUE" && id == 0){
-        //     document.onkeyup = e => {
-        //         if(e.which == 87) this.up =             false;
-        //         else if (e.which == 65) this.left =     false;
-        //         else if (e.which == 83) this.down =     false;
-        //         else if (e.which == 68) this.right =    false;
-        //         else if (e.which == 17) this.hit();
-        //     };
-
-        //     document.onkeydown = e => {
-        //         if(e.which == 87){
-        //             this.up = true;
-        //             if(this.gotPuck){
-        //                 puck.direction = "up";        
-        //             } 
-        //         } 
-        //         else if (e.which == 65){
-        //             this.left = true;
-        //             if(this.gotPuck){
-        //                 puck.direction = "left";        
-        //             } 
-        //         } 
-        //         else if (e.which == 83){
-        //             this.down = true;
-        //             if(this.gotPuck){
-        //                 puck.direction = "down";        
-        //             } 
-        //         } 
-        //         else if (e.which == 68){
-        //             this.right = true;
-        //             if(this.gotPuck){
-        //                 puck.direction = "right";        
-        //             } 
-        //         } 
-        //     };
-        // }
-=======
         if(team == "BLUE" && id == 1){
             document.onkeyup = e => {
                 if      (e.which == 87) this.up =       false;
@@ -112,7 +74,6 @@ class Player{
                 } 
             };
         }
->>>>>>> c4828c6a88768fe53df0127293ff7b7e20f003ed
         //*************************************************************
 
         if(this.team == "RED"){
