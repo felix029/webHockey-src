@@ -17,6 +17,7 @@ class Player{
         this.down = false;
         this.left = false;
         this.right = false;
+        this.lastMove = "none";
 
         let columnCount = 2;
         let rowCount = 9;
@@ -38,29 +39,34 @@ class Player{
                 else if (e.which == 68) this.right =    false;
                 else if (e.which == 38) this.hit();
                 else if (e.which == 40) this.shoot();
+                else if (e.which == 39) this.pass();
             };
 
             document.onkeydown = e => {
                 if(e.which == 87  && !this.left && !this.right && !this.down){
                     this.up = true;
+                    this.lastMove = "up";
                     if(this.gotPuck){
                         puck.direction = "up";        
                     } 
                 } 
                 else if (e.which == 65  && !this.up && !this.right && !this.down){
                     this.left = true;
+                    this.lastMove = "left";
                     if(this.gotPuck){
                         puck.direction = "left";        
                     } 
                 } 
                 else if (e.which == 83 && !this.left && !this.right && !this.up){
                     this.down = true;
+                    this.lastMove = "down";
                     if(this.gotPuck){
                         puck.direction = "down";        
                     } 
                 } 
                 else if (e.which == 68 && !this.left && !this.up && !this.down){
                     this.right = true;
+                    this.lastMove = "right";
                     if(this.gotPuck){
                         puck.direction = "right";        
                     } 
@@ -104,25 +110,29 @@ class Player{
 
         //Directions
         if(action == "up" && !this.left && !this.right && !this.down){
-            this.up = !this.up; 
+            this.up = !this.up;
+            this.lastMove = "up"; 
             if(this.gotPuck){
                 puck.direction = action;        
             }   
         }
         if(action == "down" && !this.left && !this.right && !this.up){
-            this.down = !this.down; 
+            this.down = !this.down;
+            this.lastMove = "down"; 
             if(this.gotPuck){ 
                 puck.direction = action;    
             }      
         }
         if(action == "left" && !this.up && !this.right && !this.down){
-            this.left = !this.left; 
+            this.left = !this.left;
+            this.lastMove = "left"; 
             if(this.gotPuck){ 
                 puck.direction = action;    
             }      
         }
        if(action == "right" && !this.left && !this.up && !this.down){
-            this.right = !this.right; 
+            this.right = !this.right;
+            this.lastMove = "right"; 
             if(this.gotPuck){
                 puck.direction = action;  
             }   
@@ -345,6 +355,7 @@ class Player{
             if(sprite.type === "puck"){
                 if(puckFree && sprite.collision(this.x, this.y) && !this.dizzy){
                     this.gotPuck = true;
+                    puck.direction = this.lastMove;
                 }
             }
             else if(sprite.type === "rink"){

@@ -43,12 +43,18 @@ class Goalie{
                 else{
                     if(Math.abs(this.x - puck.x) <= 100){
                         if(this.Yrandom == 0){
-                            this.Yrandom = Math.floor(Math.random() * 8);
+                            this.Yrandom = Math.floor(Math.random() * 7);
                             if(Math.round(Math.random() * 1) <= 0.5){
                                 this.Yrandom = -this.Yrandom;
                             }                            
                         }
                         else{
+                            if(this.team == "RED"){
+                                this.tiledImage.changeCol(0);
+                            }
+                            else{
+                                this.tiledImage.changeCol(2);
+                            }
                             this.y+=this.Yrandom;
                             if(this.Yrandom > 0){
                                 this.Yrandom-=0.1;

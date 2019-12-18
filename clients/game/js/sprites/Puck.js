@@ -84,6 +84,9 @@ class Puck {
 
             this.direction = "rebound";
         }
+
+        gBlue.puckIncoming = false;
+        gRed.puckIncoming = false;
     }
 
     move(x, y, force){
@@ -112,7 +115,7 @@ class Puck {
             puckFree = true;
             
             if(this.direction == "up"){
-                this.x+=5;
+                this.x+=10;
                 this.y-=20;
                 this.Yvelocity = -force;
             }
@@ -238,7 +241,6 @@ class Puck {
 
         rink.puckCollision(this.x, this.y, this.direction)
 
-        console.log(this.x + " " + this.y);
         if(imgPuck.complete){
             ctx.drawImage(imgPuck, this.x-9, this.y-9, 18, 18);
         }
