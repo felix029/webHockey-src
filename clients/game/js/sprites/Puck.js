@@ -13,6 +13,11 @@ class Puck {
         this.Xvelocity = 0;
         this.Yvelocity = 0;
 
+        this.targetX = 0;
+        this.targetY = 0;
+        this.forcePassX = 0;
+        this.forcePassY = 0;
+
         this.direction = "none";
         this.tempDirection = "none";
         this.reboundResetTimer = 5;
@@ -80,10 +85,6 @@ class Puck {
                 this.y = y+20;
             }
         }
-        //pass
-        if(force == 5){
-            puckFree = true;
-        }
         //shot
         if(force == 10){
             puckFree = true;
@@ -109,16 +110,67 @@ class Puck {
         }
     }
 
+    pass(x, y, tx, ty){
+        puckFree = true;
+        this.targetX = tx;
+        this.targetY = ty;
+        console.log(tx + " " + ty);
+        let distX = tx - x;
+        let distY = ty - y;
+        let prct = 0;
+
+        if(Math.abs(distX) > Math.abs(distY)){
+            prct = Math.abs(distY) * 100 / Math.abs(distX);
+            
+            if(distX >= 0){
+                this.forcePassX = 8;
+            }
+            else{
+                this.forcePassX = -8;
+            }
+
+            if(distY >= 0){
+                this.forcePassY = prct * 0.08;
+            }
+            else{
+                this.forcePassY = -prct * 0.08;
+            }
+        }
+        else{
+            prct = Math.abs(distX) * 100 / Math.abs(distY);
+            
+            if(distY >= 0){
+                this.forcePassY = 8;
+            }
+            else{
+                this.forcePassY = -8;
+            }
+
+            if(distX >= 0){
+                this.forcePassX = prct * 0.08;
+            }
+            else{
+                this.forcePassX = -prct * 0.08;
+            }
+        }
+
+        console.log(this.forcePassX +  " " + this.forcePassY);
+    }
+
     tick() {
 
-        // let collisionUp = false;
-        // let collisionDown = false;
-        // let collisionLeft = false;
-        // let collisionRight = false;
-        
-        
-            
         if(puckFree){
+            if(this.targetX != 0 && this.targetY != 0){
+                this.Xvelocity = 0;
+                this.Yvelocity = 0;
+                if(this.x != this.targetX){
+                    this.x+=this.forcePassX;
+                }
+                if(this.y != this.targetY){
+                    this.y+=this.forcePassY;
+                }
+            }
+            
             if(this.Xvelocity > 0){
                 this.x += this.Xvelocity;
                 this.Xvelocity -= 0.1;
@@ -136,6 +188,12 @@ class Puck {
                 this.Yvelocity += 0.1;
             }
         }
+        else{
+            this.targetX = 0;
+            this.targetY = 0;
+            this.forcePassX = 0;
+            this.forcePassY = 0;
+        }
 
         if(this.direction == "rebound"){
             if(this.reboundResetTimer > 0){
@@ -148,17 +206,17 @@ class Puck {
             }
         }
 
-        if(Math.abs(this.Xvelocity) <= 0.1){
+        if(Math.abs(this.Xvelocity) <= 0.1 || !puckFree){
             this.Xvelocity = 0;
         }
         
-        if(Math.abs(this.Yvelocity) <= 0.1){
+        if(Math.abs(this.Yvelocity) <= 0.1 || !puckFree){
             this.Yvelocity = 0;
         }
 
         rink.puckCollision(this.x, this.y, this.direction)
 
-        // console.log(this.x + " " + this.y);
+        // console.log(this.Xvelocity + " " + this.Yvelocity);
         if(imgPuck.complete){
             ctx.drawImage(imgPuck, this.x-9, this.y-9, 18, 18);
         }

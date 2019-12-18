@@ -1,3 +1,4 @@
+
 class Player{
     constructor(id, name, team){
         this.type = "player";
@@ -151,11 +152,125 @@ class Player{
             puck.move(this.x, this.y, 10);
             this.gotPuck = false;
         }
-        
     }
 
     pass(){
+        if(this.gotPuck){
+            let teamMate = null;
+            if(this.team == "RED"){
+                if(this.id == 0){
+                    teamMate = pRed[1];
+                }
+                else{
+                    teamMate = pRed[0];
+                }
+            }
+            else{
+                if(this.id == 0){
+                    teamMate = pBlue[1];
+                }
+                else{
+                    teamMate = pBlue[0];
+                }
+            }
 
+            //Verifying if teamMate is face the player
+            let targetX = teamMate.x + (teamMate.Xvelocity * 1.5);
+            let targetY = teamMate.y + (teamMate.Yvelocity * 1.5);
+            let facing = false;
+            if(puck.direction == "up"){
+                if(teamMate.y < this.y){
+                    facing = true;
+                }
+            }
+            if(puck.direction == "down"){
+                if(teamMate.y > this.y){
+                    facing = true;
+                }
+            }
+            if(puck.direction == "left"){
+                if(teamMate.x < this.x){
+                    facing = true;
+                }
+            }
+            if(puck.direction == "right"){
+                if(teamMate.x > this.x){
+                    facing = true;
+                }
+            }
+
+            if(facing){
+                puck.pass(this.x, this.y, targetX, targetY);
+                this.gotPuck = false;
+            }
+
+            // let distX = 0;
+            // let distY = 0;
+            // let forceX = 0;
+            // let forceY = 0;
+            // if(puck.direction == "up"){
+            //     if(teamMate.y < this.y){
+            //         distY = this.y - targetY;
+            //         forceY = distY / puckAcceleration - tickVar;
+            //         if(teamMate.x < this.x){
+            //             distX = this.x - targetX;
+            //             forceX = distX / puckAcceleration - tickVar;
+            //         }
+            //         else{
+            //             distX = targetX - this.x;
+            //             forceX = distX / puckAcceleration + tickVar;
+            //         }
+
+            //         puck.Xvelocity = forceX;
+            //         puck.Yvelocity = forceY;
+            //     }
+            // }
+            // if(puck.direction == "down"){
+            //     if(teamMate.y > this.y){
+            //         distY = targetY - this.y;
+            //         forceY = distY / puckAcceleration + tickVar;
+            //         if(teamMate.x < this.x){
+            //             distX = this.x - targetX;
+            //             forceX = distX / puckAcceleration - tickVar;
+            //         }
+            //         else{
+            //             distX = targetX - this.x;
+            //             forceX = distX / puckAcceleration + tickVar;
+            //         }
+            //     }
+            // }
+            // if(puck.direction == "left"){
+            //     if(teamMate.x < this.x){
+            //         distX = this.x - targetX;
+            //         forceX = distX / puckAcceleration - tickVar;
+            //         if(teamMate.y < this.y){
+            //             distY = this.y - targetY;
+            //             forceY = distY / puckAcceleration - tickVar;
+            //         }
+            //         else{
+            //             distY = targetY - this.y;
+            //             forceY = distY / puckAcceleration + tickVar;
+            //         }
+            //     }
+            // }
+            // if(puck.direction == "right"){
+            //     if(teamMate.x > this.x){
+            //         distX = targetX - this.x;
+            //         forceX = distX / puckAcceleration + tickVar;
+            //         if(teamMate.y < this.y){
+            //             distY = this.y - targetY;
+            //             forceY = distY / puckAcceleration - tickVar;
+            //         }
+            //         else{
+            //             distY = targetY - this.y;
+            //             forceY = distY / puckAcceleration + tickVar;
+            //         }
+            //     }
+            // }
+
+            // puck.Xvelocity = forceX;
+            // puck.Yvelocity = forceY;
+        }
     }
 
     hit(){
@@ -164,28 +279,9 @@ class Player{
         for(let i = 0; i < spriteList.length; i++){
             const sprite = spriteList[i];
             if(sprite.type === "player" && sprite.name !== this.name && sprite.team !== this.team){
-                if(this.up){
-                    if(sprite.collision(this.x, this.y - 2)){
+                if(sprite.collision(this.x, this.y)){
                         sprite.dizzy = true;
-                    }
-                }
-                if(this.down){
-                    if(sprite.collision(this.x, this.y + 2)){
-                        sprite.dizzy = true;
-                    }
-                }
-                if(this.left){
-                    if(sprite.collision(this.x - 2, this.y)){
-                        sprite.dizzy = true;
-                    }
-                }
-                if(this.right){
-                    if(sprite.collision(this.x + 2, this.y)){
-                        sprite.dizzy = true;
-                    }
-                }
-
-                
+                }    
             }
         }
     }
@@ -440,6 +536,9 @@ class Player{
                 this.hitFrameCounter = 10;
             }
         }
+
+        this.x = Math.floor(this.x * 100)/100;
+        this.y = Math.floor(this.y * 100)/100;
 
         ctx.fillStyle = "rgb(0,0,0)";
         ctx.fillText(this.name, this.x-20, this.y-25);
