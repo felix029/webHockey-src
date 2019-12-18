@@ -74,7 +74,7 @@ class Game {
         }
         if(firstRequest){
             firstRequest = false;
-            setInterval(this.fetchData, 30);
+            setInterval(this.fetchData, 20);
         }
 
 

@@ -105,14 +105,14 @@ class Player{
         //Actions
         if(action == "action-a"){
             if(this.gotPuck){
-                this.shoot();
+                this.pass();
             }
 
         }
 
         if(action == "action-b"){
             if(this.gotPuck){
-                this.pass();
+                this.shoot();
             }
             else{
                 this.hit();
