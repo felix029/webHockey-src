@@ -25,8 +25,7 @@ Cette commande partira le serveur sur le port 8000 de l'ordinateur et le jeu est
 
 ### Utilisateur général
 
-Simplement ouvrir un navigateur web et accéder l'adresse de l'ordinateur sur lequel le serveur s'execute au port 8000. Par exemple, si un ordinateur en réseau local dont l'adresse IP est
-192.168.1.3, vous n'avez qu'a écrire `http:\\192.168.1.3:8000` pour y acceder.
+Simplement ouvrir un navigateur web et accéder l'adresse de l'ordinateur sur lequel le serveur s'execute au port 8000. Par exemple, si un ordinateur en réseau local dont l'adresse IP est 192.168.1.3, vous n'avez qu'a écrire `http:\\192.168.1.3:8000` pour y acceder.
 
 ## Sources
 
