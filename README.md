@@ -31,7 +31,10 @@ Simplement ouvrir un navigateur web et accéder l'adresse de l'ordinateur sur le
 ## Sources
 
 [**Express**](https://expressjs.com/fr/)
+
 [**Socket.io**](https://socket.io/)
+
 [**Sprites utilisés**](https://www.spriters-resource.com/nes/icehockey/sheet/27216/)
+
 
 Et un gros merci à [**Frédéric Thériault**](https://github.com/ftheriault) pour la classe d'animation TiledImage et son [**créateur de "sprite sheets" normaliés**](https://apps-de-cours.com/utils/sprite-sheet-creator/)!
